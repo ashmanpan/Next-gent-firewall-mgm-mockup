@@ -13,8 +13,8 @@ export default function Header() {
               <Shield className="w-6 h-6 text-black" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-white">Cisco AI Monitor</h1>
-              <p className="text-xs text-gray-400">Firewall Management</p>
+              <h1 className="text-lg font-bold text-white">Cisco Security AI</h1>
+              <p className="text-xs text-gray-400">Management Center</p>
             </div>
           </div>
 

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Cisco Firewall AI Monitor | Agentic AI Solution',
+  title: 'Cisco Security AI Management Center',
   description: 'Centralized AI-powered monitoring for Cisco FTD/FMC environments with predictive analytics and autonomous operations',
 }
 
