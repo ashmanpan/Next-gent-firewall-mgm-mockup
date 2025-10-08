@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Shield, Activity, Network, AlertTriangle, Database, Cpu, FileText, TrendingUp } from 'lucide-react'
+import { Shield, Activity, Network, AlertTriangle, Database, Cpu, FileText, TrendingUp, Bot } from 'lucide-react'
 import Header from '@/src/components/layout/Header'
 import ProtocolMonitor from '@/src/components/dashboards/ProtocolMonitor'
 import ZoneFlowAnalytics from '@/src/components/dashboards/ZoneFlowAnalytics'
@@ -10,11 +10,13 @@ import InterfaceValidation from '@/src/components/dashboards/InterfaceValidation
 import SessionAnalytics from '@/src/components/dashboards/SessionAnalytics'
 import CPUMonitor from '@/src/components/dashboards/CPUMonitor'
 import FMCShowtech from '@/src/components/dashboards/FMCShowtech'
+import AIAgentConsole from '@/src/components/dashboards/AIAgentConsole'
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('protocol')
 
   const tabs = [
+    { id: 'ai-console', label: 'AI Agent Console', icon: Bot, description: 'Live agent investigations', featured: true },
     { id: 'protocol', label: 'Protocol Monitor', icon: Activity, description: 'CPU threshold monitoring' },
     { id: 'zones', label: 'Zone Analytics', icon: Network, description: 'Flow & top talkers' },
     { id: 'logs', label: 'Log Collection', icon: FileText, description: 'Proactive showtech' },
@@ -65,12 +67,19 @@ export default function Home() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all ${
+                  className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all relative ${
                     activeTab === tab.id
                       ? 'bg-gradient-cisco text-black font-semibold'
+                      : tab.featured
+                      ? 'bg-gradient-to-r from-primary/20 to-blue-500/20 text-white border border-primary/50 hover:border-primary'
                       : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
                   }`}
                 >
+                  {tab.featured && activeTab !== tab.id && (
+                    <span className="absolute -top-1 -right-1 px-2 py-0.5 bg-primary text-black text-[10px] font-bold rounded-full">
+                      NEW
+                    </span>
+                  )}
                   <Icon className="w-5 h-5" />
                   <div className="text-left">
                     <div className="text-sm font-semibold">{tab.label}</div>
@@ -84,6 +93,7 @@ export default function Home() {
 
         {/* Dashboard Content */}
         <div className="animate-fade-in-up">
+          {activeTab === 'ai-console' && <AIAgentConsole />}
           {activeTab === 'protocol' && <ProtocolMonitor />}
           {activeTab === 'zones' && <ZoneFlowAnalytics />}
           {activeTab === 'logs' && <LogCollection />}
