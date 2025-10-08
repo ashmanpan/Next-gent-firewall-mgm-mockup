@@ -1,9 +1,19 @@
 'use client'
 
-import { Network, ArrowRight, TrendingUp, AlertTriangle } from 'lucide-react'
+import { Network, ArrowRight, TrendingUp, AlertTriangle, Bot } from 'lucide-react'
 import MetricCard from '../ui/MetricCard'
 
-export default function ZoneFlowAnalytics() {
+interface ZoneFlowAnalyticsProps {
+  onInvestigate?: (context: {
+    scenarioType: 'traffic_anomaly'
+    device: string
+    metric: string
+    timestamp: string
+    severity: string
+  }) => void
+}
+
+export default function ZoneFlowAnalytics({ onInvestigate }: ZoneFlowAnalyticsProps) {
   const zones = ['DMZ', 'Internal', 'External', 'Management']
 
   const flowData = [
@@ -66,6 +76,38 @@ export default function ZoneFlowAnalytics() {
           subtitle="Detected"
         />
       </div>
+
+      {/* Anomaly Alert */}
+      {flowData.some(f => f.anomaly) && onInvestigate && (
+        <div className="card bg-gradient-to-r from-red-500/10 to-orange-500/10 border-red-500/30">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-red-500/20 rounded-lg">
+                <AlertTriangle className="w-6 h-6 text-red-500" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white">Traffic Anomaly Detected</h3>
+                <p className="text-sm text-gray-400">
+                  Unusual traffic pattern detected in External → Internal zone (45 Gbps - 5x normal)
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => onInvestigate({
+                scenarioType: 'traffic_anomaly',
+                device: 'FTD-Mumbai-DC1',
+                metric: '45 Gbps (5x normal)',
+                timestamp: new Date().toLocaleString(),
+                severity: 'Critical'
+              })}
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-red-500/50 transition-all"
+            >
+              <Bot className="w-5 h-5" />
+              Investigate Anomaly
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Flow Visualization */}
       <div className="card">

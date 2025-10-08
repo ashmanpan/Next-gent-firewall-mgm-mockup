@@ -12,8 +12,22 @@ import CPUMonitor from '@/src/components/dashboards/CPUMonitor'
 import FMCShowtech from '@/src/components/dashboards/FMCShowtech'
 import AIAgentConsole from '@/src/components/dashboards/AIAgentConsole'
 
+interface InvestigationTrigger {
+  scenarioType: 'cpu_spike' | 'traffic_anomaly' | 'interface_validation'
+  device: string
+  metric: string
+  timestamp: string
+  severity: string
+}
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState('protocol')
+  const [investigationTrigger, setInvestigationTrigger] = useState<InvestigationTrigger | null>(null)
+
+  const handleInvestigate = (context: InvestigationTrigger) => {
+    setInvestigationTrigger(context)
+    setActiveTab('ai-console')
+  }
 
   const tabs = [
     { id: 'ai-console', label: 'AI Agent Console', icon: Bot, description: 'Live agent investigations', featured: true },
@@ -93,11 +107,16 @@ export default function Home() {
 
         {/* Dashboard Content */}
         <div className="animate-fade-in-up">
-          {activeTab === 'ai-console' && <AIAgentConsole />}
-          {activeTab === 'protocol' && <ProtocolMonitor />}
-          {activeTab === 'zones' && <ZoneFlowAnalytics />}
+          {activeTab === 'ai-console' && (
+            <AIAgentConsole
+              externalTrigger={investigationTrigger}
+              onTriggerProcessed={() => setInvestigationTrigger(null)}
+            />
+          )}
+          {activeTab === 'protocol' && <ProtocolMonitor onInvestigate={handleInvestigate} />}
+          {activeTab === 'zones' && <ZoneFlowAnalytics onInvestigate={handleInvestigate} />}
           {activeTab === 'logs' && <LogCollection />}
-          {activeTab === 'interface' && <InterfaceValidation />}
+          {activeTab === 'interface' && <InterfaceValidation onInvestigate={handleInvestigate} />}
           {activeTab === 'sessions' && <SessionAnalytics />}
           {activeTab === 'cpu' && <CPUMonitor />}
           {activeTab === 'showtech' && <FMCShowtech />}

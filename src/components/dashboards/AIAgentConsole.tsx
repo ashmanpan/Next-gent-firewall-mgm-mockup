@@ -311,11 +311,25 @@ const scenarios = {
   }
 }
 
-export default function AIAgentConsole() {
+interface InvestigationContext {
+  scenarioType: 'cpu_spike' | 'traffic_anomaly' | 'interface_validation'
+  device?: string
+  metric?: string
+  timestamp?: string
+  severity?: string
+}
+
+interface AIAgentConsoleProps {
+  externalTrigger?: InvestigationContext | null
+  onTriggerProcessed?: () => void
+}
+
+export default function AIAgentConsole({ externalTrigger, onTriggerProcessed }: AIAgentConsoleProps) {
   const [activeScenario, setActiveScenario] = useState<string | null>(null)
   const [displayedSteps, setDisplayedSteps] = useState<AgentStep[]>([])
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [isTyping, setIsTyping] = useState(false)
+  const [contextInfo, setContextInfo] = useState<InvestigationContext | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
@@ -325,6 +339,15 @@ export default function AIAgentConsole() {
   useEffect(() => {
     scrollToBottom()
   }, [displayedSteps, isTyping])
+
+  // Handle external triggers
+  useEffect(() => {
+    if (externalTrigger && !activeScenario) {
+      setContextInfo(externalTrigger)
+      startScenario(externalTrigger.scenarioType)
+      onTriggerProcessed?.()
+    }
+  }, [externalTrigger])
 
   const startScenario = (scenarioKey: string) => {
     setActiveScenario(scenarioKey)
@@ -444,6 +467,24 @@ export default function AIAgentConsole() {
               New Investigation
             </button>
           </div>
+
+          {/* Context Info Banner */}
+          {contextInfo && (
+            <div className="mb-6 p-4 bg-primary/10 border border-primary/30 rounded-lg">
+              <div className="flex items-start gap-3">
+                <Zap className="w-5 h-5 text-primary mt-0.5" />
+                <div>
+                  <div className="text-sm font-semibold text-primary mb-1">Investigation Triggered from Dashboard</div>
+                  <div className="text-xs text-gray-400 space-y-1">
+                    {contextInfo.device && <div>Device: <span className="text-white">{contextInfo.device}</span></div>}
+                    {contextInfo.metric && <div>Metric: <span className="text-white">{contextInfo.metric}</span></div>}
+                    {contextInfo.timestamp && <div>Time: <span className="text-white">{contextInfo.timestamp}</span></div>}
+                    {contextInfo.severity && <div>Severity: <span className="text-red-400">{contextInfo.severity}</span></div>}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
             {displayedSteps.map((step, index) => (

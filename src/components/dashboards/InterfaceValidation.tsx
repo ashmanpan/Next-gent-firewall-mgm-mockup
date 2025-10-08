@@ -1,10 +1,20 @@
 'use client'
 
-import { Activity, TrendingUp, AlertCircle, CheckCircle, Network } from 'lucide-react'
+import { Activity, TrendingUp, AlertCircle, CheckCircle, Network, Bot } from 'lucide-react'
 import MetricCard from '../ui/MetricCard'
 import ProgressBar from '../ui/ProgressBar'
 
-export default function InterfaceValidation() {
+interface InterfaceValidationProps {
+  onInvestigate?: (context: {
+    scenarioType: 'interface_validation'
+    device: string
+    metric: string
+    timestamp: string
+    severity: string
+  }) => void
+}
+
+export default function InterfaceValidation({ onInvestigate }: InterfaceValidationProps) {
   const interfaces = [
     {
       name: 'GigabitEthernet0/0',
@@ -111,6 +121,38 @@ export default function InterfaceValidation() {
           subtitle="AI validation"
         />
       </div>
+
+      {/* Discrepancy Alert */}
+      {interfaces.some(i => i.status === 'investigate') && onInvestigate && (
+        <div className="card bg-gradient-to-r from-orange-500/10 to-yellow-500/10 border-orange-500/30">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-orange-500/20 rounded-lg">
+                <AlertCircle className="w-6 h-6 text-orange-500" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white">Interface Discrepancy Detected</h3>
+                <p className="text-sm text-gray-400">
+                  {issueCount} interface(s) show significant variance between FTD and Switch readings
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => onInvestigate({
+                scenarioType: 'interface_validation',
+                device: 'FTD-Delhi-DC1',
+                metric: `${issueCount} discrepancies found`,
+                timestamp: new Date().toLocaleString(),
+                severity: 'Medium'
+              })}
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-black font-semibold rounded-lg hover:shadow-lg hover:shadow-orange-500/50 transition-all"
+            >
+              <Bot className="w-5 h-5" />
+              Investigate Discrepancy
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Interface Details */}
       <div className="space-y-4">

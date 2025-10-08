@@ -1,10 +1,20 @@
 'use client'
 
-import { Activity, TrendingUp, AlertTriangle, Cpu, Zap } from 'lucide-react'
+import { Activity, TrendingUp, AlertTriangle, Cpu, Zap, Bot } from 'lucide-react'
 import MetricCard from '../ui/MetricCard'
 import ProgressBar from '../ui/ProgressBar'
 
-export default function ProtocolMonitor() {
+interface ProtocolMonitorProps {
+  onInvestigate?: (context: {
+    scenarioType: 'cpu_spike'
+    device: string
+    metric: string
+    timestamp: string
+    severity: string
+  }) => void
+}
+
+export default function ProtocolMonitor({ onInvestigate }: ProtocolMonitorProps) {
   const protocols = [
     {
       name: 'RTSP',
@@ -68,9 +78,26 @@ export default function ProtocolMonitor() {
               </p>
             </div>
           </div>
-          <div className="text-right">
-            <div className="text-sm text-gray-400">Next CPU Spike Prediction</div>
-            <div className="text-2xl font-bold text-warning">⚠️ in {nextPrediction}</div>
+          <div className="flex items-center gap-4">
+            <div className="text-right">
+              <div className="text-sm text-gray-400">Next CPU Spike Prediction</div>
+              <div className="text-2xl font-bold text-warning">⚠️ in {nextPrediction}</div>
+            </div>
+            {overallCPU > 60 && onInvestigate && (
+              <button
+                onClick={() => onInvestigate({
+                  scenarioType: 'cpu_spike',
+                  device: 'FTD-Mumbai-DC1',
+                  metric: `${overallCPU}%`,
+                  timestamp: new Date().toLocaleString(),
+                  severity: 'High'
+                })}
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary to-blue-500 text-black font-semibold rounded-lg hover:shadow-lg hover:shadow-primary/50 transition-all"
+              >
+                <Bot className="w-5 h-5" />
+                Investigate with AI
+              </button>
+            )}
           </div>
         </div>
       </div>
