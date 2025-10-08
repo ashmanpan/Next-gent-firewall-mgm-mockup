@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { Bot, Cpu, Activity, Network, Zap, Download, CheckCircle, Clock, AlertTriangle } from 'lucide-react'
+import { Bot, Cpu, Activity, Network, Zap, Download, CheckCircle, Clock, AlertTriangle, MessageSquare } from 'lucide-react'
+import ClaudeChatbot from '../chatbot/ClaudeChatbot'
 
 interface AgentStep {
   agent: string
@@ -325,6 +326,7 @@ interface AIAgentConsoleProps {
 }
 
 export default function AIAgentConsole({ externalTrigger, onTriggerProcessed }: AIAgentConsoleProps) {
+  const [mode, setMode] = useState<'investigation' | 'chat'>('investigation')
   const [activeScenario, setActiveScenario] = useState<string | null>(null)
   const [displayedSteps, setDisplayedSteps] = useState<AgentStep[]>([])
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
@@ -403,18 +405,53 @@ export default function AIAgentConsole({ externalTrigger, onTriggerProcessed }: 
             </div>
             <div>
               <h2 className="text-2xl font-bold text-white">AI Agent Console</h2>
-              <p className="text-sm text-gray-400">Live multi-agent investigation and remediation</p>
+              <p className="text-sm text-gray-400">Live multi-agent investigation and Claude AI chat</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
-            <span className="text-sm text-success font-semibold">Agents Active</span>
+          <div className="flex items-center gap-4">
+            {/* Mode Toggle */}
+            <div className="flex bg-black/30 border border-dark-border rounded-lg p-1">
+              <button
+                onClick={() => setMode('investigation')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all ${
+                  mode === 'investigation'
+                    ? 'bg-gradient-cisco text-black font-semibold'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                <Zap className="w-4 h-4" />
+                Investigation
+              </button>
+              <button
+                onClick={() => setMode('chat')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all ${
+                  mode === 'chat'
+                    ? 'bg-gradient-cisco text-black font-semibold'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                <MessageSquare className="w-4 h-4" />
+                Chat with Claude
+              </button>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+              <span className="text-sm text-success font-semibold">Agents Active</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Quick Actions */}
-      {!activeScenario && (
+      {/* Chat Mode */}
+      {mode === 'chat' && (
+        <ClaudeChatbot />
+      )}
+
+      {/* Investigation Mode */}
+      {mode === 'investigation' && (
+        <>
+          {/* Quick Actions */}
+          {!activeScenario && (
         <div className="bg-dark-card border border-dark-border rounded-lg p-6">
           <h3 className="text-lg font-semibold text-white mb-4">🚀 Start Investigation</h3>
           <p className="text-gray-400 mb-6">Select an investigation type to see AI agents in action</p>
@@ -588,6 +625,8 @@ export default function AIAgentConsole({ externalTrigger, onTriggerProcessed }: 
             <div ref={messagesEndRef} />
           </div>
         </div>
+      )}
+        </>
       )}
     </div>
   )
