@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-dark-bg text-white antialiased;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white/5 border border-dark-border rounded-2xl p-6 transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10;
+  }
+
+  .card-header {
+    @apply flex items-center justify-between mb-4;
+  }
+
+  .card-title {
+    @apply text-xl font-semibold text-white;
+  }
+
+  .card-subtitle {
+    @apply text-sm text-gray-400;
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 bg-gradient-cisco text-black rounded-lg font-semibold transition-all hover:scale-105 hover:shadow-lg hover:shadow-primary/30;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 bg-white/10 text-white rounded-lg font-semibold border border-dark-border transition-all hover:bg-white/20 hover:border-primary/50;
+  }
+
+  .badge {
+    @apply px-2 py-1 text-xs rounded-full font-medium;
+  }
+
+  .badge-success {
+    @apply bg-success/20 text-success border border-success/30;
+  }
+
+  .badge-warning {
+    @apply bg-warning/20 text-warning border border-warning/30;
+  }
+
+  .badge-danger {
+    @apply bg-danger/20 text-danger border border-danger/30;
+  }
+
+  .badge-info {
+    @apply bg-secondary/20 text-secondary border border-secondary/30;
+  }
+
+  .metric-card {
+    @apply card flex flex-col gap-2;
+  }
+
+  .metric-value {
+    @apply text-3xl font-bold;
+  }
+
+  .metric-label {
+    @apply text-sm text-gray-400 uppercase tracking-wide;
+  }
+
+  .progress-bar {
+    @apply w-full h-2 bg-dark-card rounded-full overflow-hidden;
+  }
+
+  .progress-fill {
+    @apply h-full transition-all duration-500;
+  }
+
+  .nav-link {
+    @apply text-gray-400 hover:text-primary transition-colors relative;
+  }
+
+  .nav-link-active {
+    @apply text-primary font-semibold;
+  }
+
+  .modal-overlay {
+    @apply fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4;
+  }
+
+  .modal-content {
+    @apply bg-dark-card border-2 border-primary rounded-2xl p-8 max-w-4xl max-h-[90vh] overflow-y-auto;
+  }
+
+  .stat-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4;
+  }
+
+  .data-table {
+    @apply w-full border-collapse;
+  }
+
+  .data-table th {
+    @apply text-left text-sm font-semibold text-gray-400 uppercase tracking-wide pb-3 border-b border-dark-border;
+  }
+
+  .data-table td {
+    @apply py-3 border-b border-dark-border/50;
+  }
+
+  .status-dot {
+    @apply w-2 h-2 rounded-full inline-block mr-2;
+  }
+
+  .status-healthy {
+    @apply bg-success animate-pulse-slow;
+  }
+
+  .status-warning {
+    @apply bg-warning animate-pulse-slow;
+  }
+
+  .status-critical {
+    @apply bg-danger animate-pulse-slow;
+  }
+}
+
+@layer utilities {
+  .text-gradient-cisco {
+    @apply bg-gradient-cisco bg-clip-text text-transparent;
+  }
+
+  .text-gradient-purple {
+    @apply bg-gradient-purple bg-clip-text text-transparent;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00ff88;
+}
