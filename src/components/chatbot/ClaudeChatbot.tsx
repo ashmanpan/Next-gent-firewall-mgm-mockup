@@ -13,7 +13,7 @@ export default function ClaudeChatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: 'Hello! I\'m Claude, your AI assistant for Cisco firewall management. I can help you with troubleshooting, security analysis, configuration questions, and more. What would you like to know?',
+      content: 'Hello! I\'m Cisco AI Model, your intelligent assistant for firewall management. I can help you with troubleshooting, security analysis, configuration questions, and more. What would you like to know?',
       timestamp: new Date(),
     },
   ])
@@ -101,7 +101,7 @@ export default function ClaudeChatbot() {
           <Bot className="w-6 h-6 text-black" />
         </div>
         <div>
-          <h3 className="font-semibold text-white">Claude 4.5 Sonnet</h3>
+          <h3 className="font-semibold text-white">Cisco AI Model</h3>
           <p className="text-xs text-gray-400">Firewall Management Expert</p>
         </div>
       </div>
@@ -157,7 +157,7 @@ export default function ClaudeChatbot() {
             <div className="bg-black/30 border border-dark-border p-3 rounded-lg">
               <div className="flex items-center gap-2">
                 <Loader2 className="w-4 h-4 text-primary animate-spin" />
-                <span className="text-sm text-gray-400">Claude is thinking...</span>
+                <span className="text-sm text-gray-400">AI is thinking...</span>
               </div>
             </div>
           </div>
@@ -191,7 +191,7 @@ export default function ClaudeChatbot() {
           </button>
         </div>
         <p className="text-xs text-gray-500 mt-2">
-          Powered by Claude 4.5 Sonnet • Press Enter to send
+          Powered by Cisco AI Model • Press Enter to send
         </p>
       </div>
     </div>

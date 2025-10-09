@@ -405,7 +405,7 @@ export default function AIAgentConsole({ externalTrigger, onTriggerProcessed }: 
             </div>
             <div>
               <h2 className="text-2xl font-bold text-white">AI Agent Console</h2>
-              <p className="text-sm text-gray-400">Live multi-agent investigation and Claude AI chat</p>
+              <p className="text-sm text-gray-400">Live multi-agent investigation and Cisco AI chat</p>
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -431,7 +431,7 @@ export default function AIAgentConsole({ externalTrigger, onTriggerProcessed }: 
                 }`}
               >
                 <MessageSquare className="w-4 h-4" />
-                Chat with Claude
+                Chat with AI
               </button>
             </div>
             <div className="flex items-center gap-2">
