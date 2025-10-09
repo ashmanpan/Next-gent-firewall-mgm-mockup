@@ -49,13 +49,12 @@ export default function ClaudeChatbot() {
         content: msg.content,
       }))
 
-      const response = await fetch('https://bhq3kn2ms0.execute-api.ap-south-1.amazonaws.com/prod/conversation', {
+      const response = await fetch('https://3vu1g7u9qc.execute-api.ap-south-1.amazonaws.com/prod/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          action: 'firewall_chat',
           message: userMessage.content,
           conversationHistory,
         }),
