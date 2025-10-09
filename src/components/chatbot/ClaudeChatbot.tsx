@@ -49,12 +49,13 @@ export default function ClaudeChatbot() {
         content: msg.content,
       }))
 
-      const response = await fetch('/api/chat', {
+      const response = await fetch('https://bhq3kn2ms0.execute-api.ap-south-1.amazonaws.com/prod/conversation', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          action: 'firewall_chat',
           message: userMessage.content,
           conversationHistory,
         }),
@@ -68,7 +69,7 @@ export default function ClaudeChatbot() {
 
       const assistantMessage: Message = {
         role: 'assistant',
-        content: data.response,
+        content: data.response || data.message || 'No response received',
         timestamp: new Date(),
       }
 
