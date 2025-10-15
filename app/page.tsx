@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Shield, Activity, Network, AlertTriangle, Database, Cpu, FileText, TrendingUp, Bot } from 'lucide-react'
+import { Shield, Activity, Network, AlertTriangle, Database, Cpu, FileText, TrendingUp, Bot, Award, GitBranch, Lightbulb, Target } from 'lucide-react'
 import Header from '@/src/components/layout/Header'
 import ProtocolMonitor from '@/src/components/dashboards/ProtocolMonitor'
 import ZoneFlowAnalytics from '@/src/components/dashboards/ZoneFlowAnalytics'
@@ -11,6 +11,10 @@ import SessionAnalytics from '@/src/components/dashboards/SessionAnalytics'
 import CPUMonitor from '@/src/components/dashboards/CPUMonitor'
 import FMCShowtech from '@/src/components/dashboards/FMCShowtech'
 import AIAgentConsole from '@/src/components/dashboards/AIAgentConsole'
+import ConfigComplianceDashboard from '@/src/components/dashboards/ConfigComplianceDashboard'
+import ChangeManagementDashboard from '@/src/components/dashboards/ChangeManagementDashboard'
+import RecommendationDashboard from '@/src/components/dashboards/RecommendationDashboard'
+import ImpactAnalysisDashboard from '@/src/components/dashboards/ImpactAnalysisDashboard'
 
 interface InvestigationTrigger {
   scenarioType: 'cpu_spike' | 'traffic_anomaly' | 'interface_validation'
@@ -31,6 +35,10 @@ export default function Home() {
 
   const tabs = [
     { id: 'ai-console', label: 'AI Agent Console', icon: Bot, description: 'Live agent investigations', featured: true },
+    { id: 'config-compliance', label: 'Config Compliance', icon: Award, description: '10-section scoring', featured: true },
+    { id: 'change-mgmt', label: 'Change Management', icon: GitBranch, description: 'Approve & deploy changes', featured: true },
+    { id: 'recommendations', label: 'Recommendations', icon: Lightbulb, description: 'AI optimization tips', featured: true },
+    { id: 'impact-analysis', label: 'Impact Analysis', icon: Target, description: 'Change impact assessment', featured: true },
     { id: 'protocol', label: 'Protocol Monitor', icon: Activity, description: 'CPU threshold monitoring' },
     { id: 'zones', label: 'Zone Analytics', icon: Network, description: 'Flow & top talkers' },
     { id: 'logs', label: 'Log Collection', icon: FileText, description: 'Proactive showtech' },
@@ -113,6 +121,10 @@ export default function Home() {
               onTriggerProcessed={() => setInvestigationTrigger(null)}
             />
           )}
+          {activeTab === 'config-compliance' && <ConfigComplianceDashboard />}
+          {activeTab === 'change-mgmt' && <ChangeManagementDashboard />}
+          {activeTab === 'recommendations' && <RecommendationDashboard />}
+          {activeTab === 'impact-analysis' && <ImpactAnalysisDashboard />}
           {activeTab === 'protocol' && <ProtocolMonitor onInvestigate={handleInvestigate} />}
           {activeTab === 'zones' && <ZoneFlowAnalytics onInvestigate={handleInvestigate} />}
           {activeTab === 'logs' && <LogCollection />}
