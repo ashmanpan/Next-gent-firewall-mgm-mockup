@@ -1,10 +1,15 @@
 'use client'
 
+import { useState } from 'react'
 import { Shield, TrendingUp, AlertTriangle, CheckCircle, XCircle, Award } from 'lucide-react'
 import MetricCard from '../ui/MetricCard'
 import ProgressBar from '../ui/ProgressBar'
+import AIActionButton from '../ui/AIActionButton'
+import AIResponseModal from '../ui/AIResponseModal'
 
 export default function ConfigComplianceDashboard() {
+  const [aiResponse, setAiResponse] = useState<any>(null)
+  const [showAIModal, setShowAIModal] = useState(false)
   const devices = [
     {
       id: 'ftd-01',
@@ -289,7 +294,120 @@ export default function ConfigComplianceDashboard() {
             </div>
           </div>
         </div>
+
+        {/* AI Action Buttons */}
+        <div className="flex flex-wrap gap-2 mt-6 pt-4 border-t border-warning/30">
+          <AIActionButton
+            config={{
+              action: 'troubleshoot_this',
+              label: 'Troubleshoot',
+              icon: '🔧',
+              color: 'yellow',
+              size: 'sm'
+            }}
+            context={{
+              type: 'compliance_violations',
+              device: 'All Devices',
+              data: { devices, overallAverage }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+
+          <AIActionButton
+            config={{
+              action: 'generate_fix',
+              label: 'Generate Fix',
+              icon: '🛠️',
+              color: 'purple',
+              size: 'sm'
+            }}
+            context={{
+              type: 'compliance_remediation',
+              device: 'All Devices',
+              data: { devices, overallAverage }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+
+          <AIActionButton
+            config={{
+              action: 'validate_config',
+              label: 'Validate Config',
+              icon: '✅',
+              color: 'orange',
+              size: 'sm'
+            }}
+            context={{
+              type: 'config_validation',
+              device: 'All Devices',
+              data: { devices, overallAverage }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+
+          <AIActionButton
+            config={{
+              action: 'ai_explain_why',
+              label: 'Explain Why',
+              icon: '🧠',
+              color: 'pink',
+              size: 'sm'
+            }}
+            context={{
+              type: 'compliance_explanation',
+              device: 'All Devices',
+              data: { devices, overallAverage }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+
+          <AIActionButton
+            config={{
+              action: 'generate_report',
+              label: 'Generate Report',
+              icon: '📄',
+              color: 'teal',
+              size: 'sm'
+            }}
+            context={{
+              type: 'compliance_audit_report',
+              device: 'All Devices',
+              data: { devices, overallAverage }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+        </div>
       </div>
+
+      {/* AI Response Modal */}
+      <AIResponseModal
+        isOpen={showAIModal}
+        onClose={() => setShowAIModal(false)}
+        action={aiResponse?.action || ''}
+        response={aiResponse?.response || ''}
+        context={aiResponse?.context}
+        timestamp={aiResponse?.timestamp}
+      />
     </div>
   )
 }

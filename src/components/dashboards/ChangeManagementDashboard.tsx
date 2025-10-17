@@ -1,9 +1,14 @@
 'use client'
 
+import { useState } from 'react'
 import { GitBranch, Clock, CheckCircle, XCircle, AlertTriangle, Users, Calendar, TrendingUp } from 'lucide-react'
 import MetricCard from '../ui/MetricCard'
+import AIActionButton from '../ui/AIActionButton'
+import AIResponseModal from '../ui/AIResponseModal'
 
 export default function ChangeManagementDashboard() {
+  const [aiResponse, setAiResponse] = useState<any>(null)
+  const [showAIModal, setShowAIModal] = useState(false)
   const pendingApprovals = [
     {
       id: 'CR-2025-001',
@@ -365,7 +370,120 @@ export default function ChangeManagementDashboard() {
             <div className="text-xs text-gray-500">2% of total</div>
           </div>
         </div>
+
+        {/* AI Action Buttons */}
+        <div className="flex flex-wrap gap-2 mt-6 pt-4 border-t border-dark-border">
+          <AIActionButton
+            config={{
+              action: 'impact_simulation',
+              label: 'Impact Simulation',
+              icon: '🎯',
+              color: 'purple',
+              size: 'sm'
+            }}
+            context={{
+              type: 'change_impact',
+              device: 'Multiple',
+              data: { pendingApprovals, scheduledDeployments, recentDeployments }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+
+          <AIActionButton
+            config={{
+              action: 'root_cause_analysis',
+              label: 'Risk Assessment',
+              icon: '🎯',
+              color: 'blue',
+              size: 'sm'
+            }}
+            context={{
+              type: 'risk_analysis',
+              device: 'Multiple',
+              data: { pendingApprovals, scheduledDeployments }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+
+          <AIActionButton
+            config={{
+              action: 'analyze_this',
+              label: 'AI Review',
+              icon: '🔍',
+              color: 'blue',
+              size: 'sm'
+            }}
+            context={{
+              type: 'change_review',
+              device: 'Multiple',
+              data: { pendingApprovals }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+
+          <AIActionButton
+            config={{
+              action: 'prepare_config_change',
+              label: 'Prepare Rollback',
+              icon: '📋',
+              color: 'purple',
+              size: 'sm'
+            }}
+            context={{
+              type: 'rollback_preparation',
+              device: 'Multiple',
+              data: { scheduledDeployments }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+
+          <AIActionButton
+            config={{
+              action: 'validate_config',
+              label: 'Pre-Deploy Check',
+              icon: '✅',
+              color: 'orange',
+              size: 'sm'
+            }}
+            context={{
+              type: 'pre_deployment_validation',
+              device: 'Multiple',
+              data: { pendingApprovals, scheduledDeployments }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+        </div>
       </div>
+
+      {/* AI Response Modal */}
+      <AIResponseModal
+        isOpen={showAIModal}
+        onClose={() => setShowAIModal(false)}
+        action={aiResponse?.action || ''}
+        response={aiResponse?.response || ''}
+        context={aiResponse?.context}
+        timestamp={aiResponse?.timestamp}
+      />
     </div>
   )
 }

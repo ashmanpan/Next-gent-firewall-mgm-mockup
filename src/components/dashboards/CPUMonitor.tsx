@@ -1,10 +1,15 @@
 'use client'
 
+import { useState } from 'react'
 import { Cpu, TrendingUp, Activity, CheckCircle } from 'lucide-react'
 import MetricCard from '../ui/MetricCard'
 import ProgressBar from '../ui/ProgressBar'
+import AIActionButton from '../ui/AIActionButton'
+import AIResponseModal from '../ui/AIResponseModal'
 
 export default function CPUMonitor() {
+  const [aiResponse, setAiResponse] = useState<any>(null)
+  const [showAIModal, setShowAIModal] = useState(false)
   const topCPUSources = [
     { ip: '10.50.2.15', cpuImpact: 18, traffic: '2.1 Gbps', protocol: 'RTSP', validated: true },
     { ip: '10.50.2.22', cpuImpact: 15, traffic: '1.8 Gbps', protocol: 'RTSP', validated: true },
@@ -282,8 +287,163 @@ export default function CPUMonitor() {
               </div>
             </div>
           </div>
+
+          {/* AI Action Buttons */}
+          <div className="flex flex-wrap gap-2 mt-6 pt-4 border-t border-purple-500/30">
+            <AIActionButton
+              config={{
+                action: 'analyze_this',
+                label: 'Analyze Source',
+                icon: '🔍',
+                color: 'blue',
+                size: 'sm'
+              }}
+              context={{
+                type: 'cpu_sources',
+                device: 'FTD-Mumbai-DC1',
+                metric: `${overallCPU}%`,
+                data: { overallCPU, topCPUSources, topCPUDestinations }
+              }}
+              onSuccess={(result) => {
+                setAiResponse(result)
+                setShowAIModal(true)
+              }}
+              onError={(error) => console.error('AI Error:', error)}
+            />
+
+            <AIActionButton
+              config={{
+                action: 'root_cause_analysis',
+                label: 'RCA',
+                icon: '🎯',
+                color: 'blue',
+                size: 'sm'
+              }}
+              context={{
+                type: 'cpu_spike',
+                device: 'FTD-Mumbai-DC1',
+                metric: `${overallCPU}%`,
+                data: { overallCPU, topCPUSources, topCPUDestinations }
+              }}
+              onSuccess={(result) => {
+                setAiResponse(result)
+                setShowAIModal(true)
+              }}
+              onError={(error) => console.error('AI Error:', error)}
+            />
+
+            <AIActionButton
+              config={{
+                action: 'get_recommendation',
+                label: 'Recommend',
+                icon: '💡',
+                color: 'green',
+                size: 'sm'
+              }}
+              context={{
+                type: 'cpu_optimization',
+                device: 'FTD-Mumbai-DC1',
+                data: { overallCPU, topCPUSources, topCPUDestinations }
+              }}
+              onSuccess={(result) => {
+                setAiResponse(result)
+                setShowAIModal(true)
+              }}
+              onError={(error) => console.error('AI Error:', error)}
+            />
+
+            <AIActionButton
+              config={{
+                action: 'prepare_config_change',
+                label: 'Prepare Rate Limit',
+                icon: '📋',
+                color: 'purple',
+                size: 'sm'
+              }}
+              context={{
+                type: 'rate_limiting',
+                device: 'FTD-Mumbai-DC1',
+                data: { topCPUSources }
+              }}
+              onSuccess={(result) => {
+                setAiResponse(result)
+                setShowAIModal(true)
+              }}
+              onError={(error) => console.error('AI Error:', error)}
+            />
+
+            <AIActionButton
+              config={{
+                action: 'find_anomalies',
+                label: 'Find Anomalies',
+                icon: '🚨',
+                color: 'orange',
+                size: 'sm'
+              }}
+              context={{
+                type: 'cpu_anomalies',
+                device: 'FTD-Mumbai-DC1',
+                data: { overallCPU, topCPUSources, topCPUDestinations }
+              }}
+              onSuccess={(result) => {
+                setAiResponse(result)
+                setShowAIModal(true)
+              }}
+              onError={(error) => console.error('AI Error:', error)}
+            />
+
+            <AIActionButton
+              config={{
+                action: 'security_scan',
+                label: 'Security Scan',
+                icon: '🛡️',
+                color: 'orange',
+                size: 'sm'
+              }}
+              context={{
+                type: 'cpu_security_analysis',
+                device: 'FTD-Mumbai-DC1',
+                data: { overallCPU, topCPUSources, topCPUDestinations }
+              }}
+              onSuccess={(result) => {
+                setAiResponse(result)
+                setShowAIModal(true)
+              }}
+              onError={(error) => console.error('AI Error:', error)}
+            />
+
+            <AIActionButton
+              config={{
+                action: 'generate_report',
+                label: 'Generate Report',
+                icon: '📄',
+                color: 'teal',
+                size: 'sm'
+              }}
+              context={{
+                type: 'cpu_summary_report',
+                device: 'FTD-Mumbai-DC1',
+                data: { overallCPU, topCPUSources, topCPUDestinations }
+              }}
+              onSuccess={(result) => {
+                setAiResponse(result)
+                setShowAIModal(true)
+              }}
+              onError={(error) => console.error('AI Error:', error)}
+            />
+          </div>
         </div>
       </div>
+
+      {/* AI Response Modal */}
+      <AIResponseModal
+        isOpen={showAIModal}
+        onClose={() => setShowAIModal(false)}
+        action={aiResponse?.action || ''}
+        response={aiResponse?.response || ''}
+        context={aiResponse?.context}
+        timestamp={aiResponse?.timestamp}
+      />
     </div>
   )
 }

@@ -1,9 +1,14 @@
 'use client'
 
+import { useState } from 'react'
 import { Database, TrendingUp, Users, Activity, Info } from 'lucide-react'
 import MetricCard from '../ui/MetricCard'
+import AIActionButton from '../ui/AIActionButton'
+import AIResponseModal from '../ui/AIResponseModal'
 
 export default function SessionAnalytics() {
+  const [aiResponse, setAiResponse] = useState<any>(null)
+  const [showAIModal, setShowAIModal] = useState(false)
   const topSessions = [
     {
       rank: 1,
@@ -342,7 +347,120 @@ export default function SessionAnalytics() {
             </div>
           </div>
         </div>
+
+        {/* AI Action Buttons */}
+        <div className="flex flex-wrap gap-2 mt-6 pt-4 border-t border-primary/30">
+          <AIActionButton
+            config={{
+              action: 'health_check',
+              label: 'Health Check',
+              icon: '🩺',
+              color: 'blue',
+              size: 'sm'
+            }}
+            context={{
+              type: 'session_health',
+              device: 'FTD-Mumbai-DC1',
+              data: { topSessions, activeSessions: 3490, totalBandwidth: '15.8 Gbps' }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+
+          <AIActionButton
+            config={{
+              action: 'analyze_this',
+              label: 'Trend Analysis',
+              icon: '🔍',
+              color: 'blue',
+              size: 'sm'
+            }}
+            context={{
+              type: 'session_trends',
+              device: 'FTD-Mumbai-DC1',
+              data: { topSessions }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+
+          <AIActionButton
+            config={{
+              action: 'get_recommendation',
+              label: 'Recommend',
+              icon: '💡',
+              color: 'green',
+              size: 'sm'
+            }}
+            context={{
+              type: 'session_optimization',
+              device: 'FTD-Mumbai-DC1',
+              data: { topSessions }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+
+          <AIActionButton
+            config={{
+              action: 'security_scan',
+              label: 'Security Scan',
+              icon: '🛡️',
+              color: 'orange',
+              size: 'sm'
+            }}
+            context={{
+              type: 'session_security',
+              device: 'FTD-Mumbai-DC1',
+              data: { topSessions }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+
+          <AIActionButton
+            config={{
+              action: 'find_anomalies',
+              label: 'Find Anomalies',
+              icon: '🚨',
+              color: 'orange',
+              size: 'sm'
+            }}
+            context={{
+              type: 'session_anomalies',
+              device: 'FTD-Mumbai-DC1',
+              data: { topSessions }
+            }}
+            onSuccess={(result) => {
+              setAiResponse(result)
+              setShowAIModal(true)
+            }}
+            onError={(error) => console.error('AI Error:', error)}
+          />
+        </div>
       </div>
+
+      {/* AI Response Modal */}
+      <AIResponseModal
+        isOpen={showAIModal}
+        onClose={() => setShowAIModal(false)}
+        action={aiResponse?.action || ''}
+        response={aiResponse?.response || ''}
+        context={aiResponse?.context}
+        timestamp={aiResponse?.timestamp}
+      />
     </div>
   )
 }
