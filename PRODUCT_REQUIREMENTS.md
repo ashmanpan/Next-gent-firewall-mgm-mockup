@@ -1,9 +1,9 @@
-# NextGen Firewall Management System - Product Requirements Document (PRD)
+# Cisco Security AI Powered Management Center - Product Requirements Document
 
-**Version:** 2.0
-**Date:** October 15, 2025
-**Document Owner:** Product Management & Engineering Team
+**Version:** 2.2
+**Date:** October 16, 2025
 **Status:** APPROVED FOR DEVELOPMENT
+**Live Demo**: <https://ai-firewall-mgmt.ciscoaidemo.com/>
 
 ---
 
@@ -11,180 +11,129 @@
 
 1. [Executive Summary](#1-executive-summary)
 2. [Product Vision & Objectives](#2-product-vision--objectives)
-3. [Current System Overview](#3-current-system-overview)
-4. [Scope & Boundaries](#4-scope--boundaries)
-5. [System Architecture](#5-system-architecture)
-6. [Detailed Feature Requirements](#6-detailed-feature-requirements)
-7. [AI Agents Catalog](#7-ai-agents-catalog)
-8. [MCP Server Specifications](#8-mcp-server-specifications)
-9. [Database Architecture](#9-database-architecture)
+3. [Scope & Boundaries](#3-scope--boundaries)
+4. [System Architecture](#4-system-architecture)
+5. [Core Features (Summary)](#5-core-features-summary)
+6. [AI Agents](#6-ai-agents)
+7. [MCP Server Specifications](#7-mcp-server-specifications)
+8. [Database Architecture](#8-database-architecture)
+9. [Identity & Access Management (IAM)](#9-identity--access-management-iam)
 10. [API & Integration Requirements](#10-api--integration-requirements)
-11. [Security & Compliance](#11-security--compliance)
-12. [User Interface Requirements](#12-user-interface-requirements)
-13. [Deployment Architecture](#13-deployment-architecture)
-14. [Technical Stack](#14-technical-stack)
-15. [Success Metrics & KPIs](#15-success-metrics--kpis)
-16. [Implementation Roadmap](#16-implementation-roadmap)
-17. [Appendices](#17-appendices)
+11. [Technical Stack](#11-technical-stack)
+12. [Implementation Phases](#12-implementation-phases)
+13. [Appendices](#appendices)
 
 ---
 
 ## 1. Executive Summary
 
-### 1.1 Product Overview
+The Cisco Security AI Powered Management Center is an AI-powered platform for managing Cisco FTD/FMC firewall infrastructure. It combines real-time monitoring, predictive analytics, automated configuration management, and intelligent decision-making.
 
-The NextGen Firewall Management System is an AI-powered, centralized platform for managing Cisco FTD/FMC firewall infrastructure at enterprise scale. The solution combines real-time monitoring, predictive analytics, automated configuration management, and intelligent decision-making capabilities to deliver a comprehensive security operations platform.
+**Live Demo**: Access the working prototype at <https://ai-firewall-mgmt.ciscoaidemo.com/>
 
-### 1.2 Business Value
+**Key Benefits:**
+- Reduce manual firewall management tasks by 70%
+- Identify and resolve issues proactively
+- Maintain compliance automatically
+- Reduce TAC escalations by 60% through automated RCA
+- Validate configuration changes with AI-powered impact analysis
 
-- **Operational Efficiency**: Reduce manual firewall management tasks by 70%
-- **Proactive Issue Detection**: Identify and resolve issues before they impact operations
-- **Security Posture**: Maintain compliance with industry best practices automatically
-- **Cost Reduction**: Reduce TAC escalations by 60% through automated RCA
-- **Risk Mitigation**: Validate configuration changes with AI-powered impact analysis
-
-### 1.3 Target Users
-
-- **Network Operations Center (NOC)** - 24x7 monitoring and incident response
-- **Security Operations Center (SOC)** - Threat detection and security policy management
-- **Network Engineers** - Configuration management and troubleshooting
-- **Security Architects** - Policy design and compliance validation
-- **IT Management** - Reporting and compliance oversight
+**Target Users:** NOC, SOC, Network Engineers, Security Architects, IT Management
 
 ---
 
 ## 2. Product Vision & Objectives
 
-### 2.1 Vision Statement
+**Vision:** Create an autonomous, AI-driven firewall management platform that transforms reactive network security operations into proactive, intelligent, and self-optimizing infrastructure management.
 
-"To create an autonomous, AI-driven firewall management platform that transforms reactive network security operations into proactive, intelligent, and self-optimizing infrastructure management."
-
-### 2.2 Core Objectives
-
-1. **Real-Time Monitoring**: 360-degree visibility across all FTD/FMC devices
-2. **Predictive Analytics**: Forecast issues 5-15 minutes before they occur
-3. **Automated Operations**: Reduce manual interventions through intelligent automation
-4. **Configuration Intelligence**: AI-powered config analysis and optimization
-5. **Centralized Logging**: Single pane of glass for all firewall logs and syslogs
-6. **Compliance Assurance**: Continuous validation against security best practices
+**Core Objectives:**
+1. Real-time monitoring with 360-degree visibility
+2. Predictive analytics (forecast issues 5-15 minutes in advance)
+3. Automated operations with intelligent automation
+4. AI-powered configuration analysis and optimization
+5. Centralized logging and syslog management
+6. Continuous compliance validation
 
 ---
 
-## 3. Current System Overview
+## 3. Scope & Boundaries
 
-### 3.1 Existing Features (Mockups)
-
-The current prototype includes the following dashboard components:
-
-#### 3.1.1 Protocol CPU Monitoring
-- Real-time CPU tracking for RTSP, SNMP, HTTPS/DPI, SSH protocols
-- Predictive analytics for CPU spike detection (5-15 min lead time)
-- Top CPU-contributing source identification
-- Threshold-based alerting
-
-#### 3.1.2 Zone Flow Analytics
-- Zone-to-zone traffic visualization
-- Top talker identification with bandwidth attribution
-- Anomaly detection for unusual traffic patterns
-- Session tracking per security zone
-
-#### 3.1.3 Proactive Log Collection
-- Autonomous showtech collection triggered by anomalies
-- Pre-RCA data aggregation
-- AI-powered log analysis
-- TAC-ready report generation
-
-#### 3.1.4 Interface Utilization Validation
-- Multi-source validation (FTD + Switch SNMP)
-- AI reconciliation engine for accuracy
-- Discrepancy detection with root cause analysis
-- 24-hour trend visualization
-
-#### 3.1.5 Session Analytics
-- Top session tracking with source/destination details
-- Real-time bandwidth and byte accounting
-- Application-layer visibility
-- User and department attribution
-
-#### 3.1.6 CPU Source/Destination Monitor
-- Multi-dimensional CPU analytics
-- Source AND destination tracking
-- Multi-source validation (FMC API, SNMP, NetFlow)
-- 96% confidence scoring
-
-#### 3.1.7 FMC Showtech Automation
-- Automated collection via FMC REST API
-- Scheduled and event-triggered capture
-- AI-powered issue detection and categorization
-- Critical findings with actionable recommendations
-
-#### 3.1.8 AI Agent Console
-- Multi-agent investigation workflows
-- Real-time agent collaboration display
-- Autonomous problem-solving demonstrations
-- Integration with Claude AI for conversational support
-
-### 3.2 Technology Stack (Current)
-
-- **Frontend**: Next.js 14, React 18, TypeScript, Tailwind CSS
-- **UI Components**: Lucide React icons, Recharts for visualizations
-- **AI Integration**: AWS Bedrock (Claude Sonnet 4.5)
-- **Deployment**: AWS Amplify, Lambda functions
-- **API**: RESTful endpoints via AWS API Gateway
-
----
-
-## 4. Scope & Boundaries
-
-### 4.1 In Scope
+### 3.1 In Scope
 
 #### Phase 1: Core Infrastructure (Q1 2026)
-- Central syslog collection system
-- Log parsing and enrichment engine
-- Time-series database for logs
-- Knowledge base and RAG database implementation
-- MCP servers for SSH, SNMP, Syslog, FMS/FMC integration
+- Central syslog collection system (10,000 logs/second per device)
+- Log parsing and enrichment engine with geo-location data
+- TimescaleDB for time-series log storage
+- Knowledge base and RAG database implementation (Pinecone)
+- MCP servers for SSH, SNMP, Syslog, and FMC API integration
+- Basic UI dashboards for monitoring and log search
+- Master Reasoning Agent and Data Collection Agent
 
 #### Phase 2: Configuration Intelligence (Q2 2026)
-- Configuration analysis agent (10-section scoring)
+- Configuration Analysis Agent with 10-section scoring system
 - Best practices validation engine
-- Recommendation agent for config optimization
-- Configuration change history and versioning
+- Recommendation Agent for configuration optimization
+- Configuration backup and versioning system
+- Compliance reporting dashboard
+- Configuration change history tracking
 
 #### Phase 3: Autonomous Configuration Management (Q3 2026)
-- Intent-based configuration generation
-- Human-in-the-loop approval workflows
-- Dual authentication system
-- Impact analysis engine
-- Risk profiling system
-- Scheduled deployment manager
+- Intent-based configuration generation from natural language
+- Human-in-the-loop (HITL) approval workflows
+- Multi-level authorization and MFA for critical operations
+- Impact Analysis Agent for change assessment
+- Risk Assessment Agent with 0-100 scoring
+- Scheduled deployment manager with rollback capability
+- Deployment orchestration and phased rollouts
 
 #### Phase 4: Advanced Analytics & Optimization (Q4 2026)
-- Predictive maintenance
+- Anomaly Detection Agent with ML models
+- Predictive maintenance (5-15 minute advance warnings)
 - Capacity planning automation
-- Compliance reporting and auditing
-- Advanced threat correlation
+- Compliance reporting and continuous auditing
+- Advanced threat correlation across multiple data sources
+- Performance optimization recommendations
 
-### 4.2 Out of Scope
+### 3.2 Out of Scope
 
-- Firewall hardware provisioning
-- Physical network topology management
-- Non-Cisco firewall platforms (initial release)
-- SD-WAN management
+**Hardware & Physical Infrastructure:**
+- Firewall hardware provisioning and procurement
+- Physical network cabling and topology management
+- Data center facilities management
+
+**Non-Cisco Platforms:**
+
+- Palo Alto Networks firewalls
+- Fortinet FortiGate devices
+- Check Point firewalls
+- Any other third-party firewall vendors
+
+**Other Network Components:**
+
+- SD-WAN configuration and management
 - Load balancer management
+- Router and switch configuration (non-security related)
+- Wireless access point management
+
+**Future Considerations:**
+
+- Mobile application (planned for 2027)
+- Advanced ML model training interface
+- Integration with additional Cisco security products (Umbrella, Secure Endpoint)
 
 ---
 
-## 5. System Architecture
+## 4. System Architecture
 
-### 5.1 High-Level Architecture
+**Current Implementation**: View the live system at <https://ai-firewall-mgmt.ciscoaidemo.com/>
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                     Presentation Layer                       │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
-│  │ Next.js UI   │  │  Mobile App  │  │   CLI Tool   │     │
-│  └──────────────┘  └──────────────┘  └──────────────┘     │
+│                  ┌──────────────┐                           │
+│                  │ Next.js UI   │                           │
+│                  │ (Web Portal) │                           │
+│                  └──────────────┘                           │
 └─────────────────────────────────────────────────────────────┘
                             │
 ┌─────────────────────────────────────────────────────────────┐
@@ -220,7 +169,7 @@ The current prototype includes the following dashboard components:
 │  │ (Relational) │  │ (Time-Series)│  │  (Vector DB) │     │
 │  └──────────────┘  └──────────────┘  └──────────────┘     │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
-│  │   MongoDB    │  │    Redis     │  │      S3      │     │
+│  │   MongoDB    │  │    Redis     │  │    MinIO     │     │
 │  │ (Knowledge   │  │   (Cache)    │  │   (Blob      │     │
 │  │     Base)    │  │              │  │   Storage)   │     │
 │  └──────────────┘  └──────────────┘  └──────────────┘     │
@@ -235,2087 +184,1605 @@ The current prototype includes the following dashboard components:
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### 5.2 Component Descriptions
+**Key Components:**
 
-#### 5.2.1 Presentation Layer
-- **Next.js UI**: Primary web-based interface
-- **Mobile App**: iOS/Android app for on-the-go monitoring (future)
-- **CLI Tool**: Command-line interface for automation scripts
+1. **Presentation Layer**:
+   - **Next.js Web UI**: Primary user interface for dashboards, configuration, and management
+   - **Reference**: See live demo at <https://ai-firewall-mgmt.ciscoaidemo.com/>
+   - **Future**: Mobile app (planned for 2027, out of scope for initial release)
 
-#### 5.2.2 API Gateway Layer
-- **REST API**: Traditional request/response endpoints
-- **GraphQL API**: Flexible data querying for complex dashboards
-- **WebSocket**: Real-time updates for live monitoring
+2. **API Gateway Layer**:
+   - **REST API**: Standard HTTP API for CRUD operations
+   - **GraphQL API**: Flexible query API for complex data retrieval
+   - **WebSocket**: Real-time bidirectional communication for live updates
 
-#### 5.2.3 AI Agent Orchestration
-- **Master Reasoning Agent**: Coordinates all sub-agents
-- **Specialized Agents**: Domain-specific intelligence (detailed in Section 7)
+3. **AI Agent Orchestration**:
+   - **Master Reasoning Agent**: Central coordinator for all AI agents
+   - **Specialized Agents**: Domain-specific agents (12 agents total)
+   - **LangChain**: Agent orchestration framework
+   - **LLM Provider**: Claude Sonnet 4.5 for reasoning (deployment method TBD by development agency)
 
-#### 5.2.4 MCP Server Layer
-- **SSH MCP Server**: Execute CLI commands on FTD devices
-- **SNMP Collector**: Poll SNMP metrics from devices and switches
-- **Syslog Server**: Centralized log collection
-- **FMC API Gateway**: Interface with Firepower Management Center
+4. **MCP Server Layer**:
+   - **SSH MCP Server**: Direct device CLI access and command execution
+   - **SNMP MCP Server**: Metrics collection (CPU, memory, bandwidth, interface stats)
+   - **Syslog Server**: Centralized log collection and parsing
+   - **FMC API Gateway**: Firepower Management Center REST API integration
 
-#### 5.2.5 Data Layer
-- **PostgreSQL**: Structured data (users, devices, configurations)
-- **TimescaleDB**: Time-series data (metrics, logs, events)
-- **Pinecone**: Vector embeddings for RAG
-- **MongoDB**: Unstructured data (knowledge base, documents)
-- **Redis**: Caching and real-time data
-- **S3**: Blob storage (showtechs, backups, reports)
+5. **Data Layer**:
+   - **PostgreSQL**: Relational data (users, devices, configurations, approvals)
+   - **TimescaleDB**: Time-series data (logs, metrics, performance data)
+   - **Vector Database**: Embeddings for semantic search (vendor TBD by development agency)
+   - **MongoDB**: Knowledge base documents and unstructured data
+   - **Redis**: Caching, real-time data, session management
+   - **MinIO**: S3-compatible blob storage (showtechs, config backups, reports)
+   - **Splunk Enterprise**: Centralized log management
 
----
-
-## 6. Detailed Feature Requirements
-
-### 6.1 Central Logging & Syslog Management System
-
-#### 6.1.1 Functional Requirements
-
-**FR-LOG-001**: Centralized Syslog Collection
-- **Description**: System SHALL collect syslogs from all managed FTD devices
-- **Acceptance Criteria**:
-  - Support syslog over TCP/UDP/TLS
-  - Handle minimum 10,000 logs/second per device
-  - Support syslog formats: BSD (RFC 3164), IETF (RFC 5424)
-  - Auto-discovery of syslog sources
-  - Configurable log retention (default: 90 days)
-
-**FR-LOG-002**: Log Parsing & Enrichment
-- **Description**: System SHALL parse and enrich all incoming logs
-- **Acceptance Criteria**:
-  - Parse Cisco FTD-specific log formats
-  - Extract key fields: timestamp, severity, facility, message, device_id, source_ip, dest_ip, protocol, action
-  - Enrich with geo-location data (source/dest IPs)
-  - Enrich with device metadata (hostname, zone, model, version)
-  - Normalize timestamps to UTC
-  - Calculate derived fields (duration, bytes transferred, session count)
-
-**FR-LOG-003**: Log Indexing & Search
-- **Description**: System SHALL provide fast log search capabilities
-- **Acceptance Criteria**:
-  - Full-text search across all log fields
-  - Support complex queries (AND, OR, NOT, wildcards)
-  - Search response time < 3 seconds for queries spanning 24 hours
-  - Support saved searches and search templates
-  - Export search results (CSV, JSON, PDF)
-
-**FR-LOG-004**: Real-Time Log Streaming
-- **Description**: System SHALL support real-time log tailing
-- **Acceptance Criteria**:
-  - WebSocket-based streaming to UI
-  - Configurable filters for streaming
-  - Support multiple concurrent streaming sessions
-  - Maximum lag < 1 second from log generation to UI display
-
-**FR-LOG-005**: AI-Powered Log Monitoring
-- **Description**: System SHALL continuously analyze logs using AI
-- **Acceptance Criteria**:
-  - Anomaly detection (statistical + ML-based)
-  - Pattern recognition (attack signatures, misconfigurations)
-  - Correlation engine (multi-device event correlation)
-  - Automated alert generation
-  - Alert suppression and de-duplication
-
-#### 6.1.2 Non-Functional Requirements
-
-**NFR-LOG-001**: Performance
-- Process 100,000 logs/second aggregate across all devices
-- Log ingestion latency < 500ms
-- Search latency < 3 seconds for 24-hour queries
-
-**NFR-LOG-002**: Scalability
-- Support 1,000+ managed devices
-- Horizontal scaling of log collectors
-- Auto-scaling based on log volume
-
-**NFR-LOG-003**: Reliability
-- 99.9% uptime for log collection
-- Zero log loss (buffering during outages)
-- Automatic failover for log collectors
+6. **Infrastructure Layer**:
+   - **FTD Devices**: Cisco Firepower Threat Defense firewalls
+   - **FMC Manager**: Firepower Management Center
+   - **Network Devices**: Switches (SNMP sources for validation)
+   - **Syslog Sources**: External syslog servers and appliances
 
 ---
 
-### 6.2 Knowledge Base & RAG Database System
+## 5. Core Features (Summary)
+
+### 5.1 Central Logging & Syslog Management
+
+- Collect syslogs from all managed FTD devices (10,000 logs/second per device)
+- Parse and enrich logs with geo-location and device metadata
+- Fast search capabilities (< 3 seconds for 24-hour queries)
+- Real-time log streaming to UI (< 1 second lag)
+- AI-powered anomaly detection and correlation
+- **Proactive Log Collection**: Automated log collection without manual intervention
+
+### 5.2 Automated Showtech Collection
+
+**FMC Showtech Collection**:
+
+- Automated collection from Firepower Management Center (FMC)
+- Centralized diagnostic gathering via FMC REST API
+- Scheduled collection (daily, weekly, on-demand)
+- Event-triggered collection (on errors, failures, anomalies)
+- Automatic upload to MinIO storage with versioning
+- Retention policy: 1 year (configurable)
+
+**Predictive Showtech Collection**:
+
+- **AI-driven proactive collection**: System auto-collects showtech data in anticipation of predicted issues
+- **Trigger conditions**:
+  - Predicted CPU spikes (5-15 minutes advance warning)
+  - Predicted memory leaks
+  - Predicted interface failures
+  - Predicted connection exhaustion
+  - Anomalous traffic patterns detected
+- **Pre-RCA data aggregation**: Showtech collected before issue occurs for faster root cause analysis
+- **Storage**: Showtechs stored with incident context (timestamp, predicted issue, device ID, prediction confidence)
+- **Notification**: Alert sent to operators when showtech is auto-collected with prediction details
+
+**Showtech Features**:
+
+- **Collection Methods**:
+  - Via SSH (execute `show tech-support` command)
+  - Via FMC REST API (centralized collection)
+  - Selective showtech (specific modules: routing, firewall, VPN, interfaces)
+- **Storage in MinIO**:
+  - **All showtech outputs stored in MinIO object storage**
+  - Bucket: `firewall-mgmt-data/showtechs/{device_id}/{timestamp}/`
+  - File format: Plain text (`.txt`) and compressed (`.tar.gz`)
+  - Retention: 1 year (configurable)
+  - Automatic lifecycle management (archive to cold storage)
+  - Searchable via metadata (device ID, timestamp, collection reason, prediction context)
+- **Parsing & Analysis**:
+  - Extract key diagnostic information
+  - Highlight errors and warnings
+  - Cross-reference with known issues in knowledge base
+  - AI-powered issue detection and categorization
+- **TAC-Ready Reports**:
+  - Generate formatted reports ready for Cisco TAC submission
+  - Include device info, logs, configurations, and diagnostic output
+  - Automatic sanitization (remove sensitive data)
+  - Direct download from MinIO via pre-signed URLs
+- **Integration with RCA Agent**:
+  - Showtech data automatically fed to Root Cause Analysis agent
+  - AI analyzes showtech for issue patterns
+  - Recommendations generated with remediation steps
+  - Historical showtech comparison for trend analysis
+
+### 5.3 Knowledge Base & RAG System
+
+- Store Cisco documentation, troubleshooting guides, best practices
+- Vector-based semantic search (vector database vendor TBD by development agency)
+- Hybrid search (keyword + semantic)
+- Automatic document updates from Cisco support portal
+- Context retrieval for AI agents
+
+### 5.4 Configuration Analysis
+
+- Automatic configuration retrieval from devices (daily backups)
+- Parse and analyze firewall configurations
+- Evaluate against security best practices
+- Score configurations across key areas:
+  - Access control policies
+  - Network segmentation
+  - NAT policies
+  - VPN configuration
+  - Logging & monitoring
+  - High availability
+  - Authentication
+  - Intrusion prevention
+  - Performance & resource management
+  - Compliance & governance
+- Generate reports with remediation guidance
+
+### 5.5 Recommendation Engine
 
-#### 6.2.1 Functional Requirements
-
-**FR-KB-001**: Knowledge Base Repository
-- **Description**: System SHALL maintain a comprehensive knowledge base
-- **Acceptance Criteria**:
-  - Store Cisco FTD/FMC documentation (admin guides, release notes, CLI references)
-  - Store troubleshooting guides and KB articles
-  - Store configuration templates and best practices
-  - Store historical incident reports and RCA documents
-  - Support versioning of documents
-  - Full-text search across all documents
-
-**FR-KB-002**: RAG (Retrieval-Augmented Generation) Database
-- **Description**: System SHALL implement vector-based semantic search
-- **Acceptance Criteria**:
-  - Convert all KB documents to vector embeddings (1536 dimensions)
-  - Store embeddings in Pinecone vector database
-  - Support semantic similarity search
-  - Return top-k relevant documents (k=5 default)
-  - Cache frequently accessed embeddings in Redis
-  - Update embeddings when documents are modified
-
-**FR-KB-003**: Intelligent Document Retrieval
-- **Description**: System SHALL retrieve relevant context for AI agents
-- **Acceptance Criteria**:
-  - Hybrid search (keyword + semantic)
-  - Query expansion using synonyms and related terms
-  - Re-ranking based on relevance scores
-  - Filter by document type, date, and source
-  - Support multi-language queries (English primary, others future)
-
-**FR-KB-004**: Knowledge Base Curation
-- **Description**: System SHALL support KB management
-- **Acceptance Criteria**:
-  - Upload documents (PDF, DOCX, TXT, MD, HTML)
-  - Automatic text extraction and chunking
-  - Manual tagging and categorization
-  - Approval workflow for new documents
-  - Deduplication of content
-  - Scheduled updates from Cisco support portal
-
-#### 6.2.2 Data Requirements
-
-**DR-KB-001**: Knowledge Base Content
-```
-Documents to Include:
-1. Cisco FTD Configuration Guides (all versions)
-2. Cisco FMC Administration Guides
-3. CLI Command References
-4. MIB References (SNMP)
-5. Syslog Message Catalogs
-6. Best Practices Documents
-7. Troubleshooting Flowcharts
-8. Release Notes and Bug Lists
-9. Security Advisories
-10. Internal Runbooks and SOPs
-```
-
-**DR-KB-002**: RAG Database Schema
-```
-Collection: kb_documents
-Fields:
-  - doc_id: UUID
-  - title: String
-  - content: Text
-  - chunks: Array<String>  (chunked content for RAG)
-  - doc_type: Enum (guide, reference, troubleshooting, bestpractice)
-  - version: String (Cisco software version if applicable)
-  - source: String (URL or file path)
-  - tags: Array<String>
-  - created_at: Timestamp
-  - updated_at: Timestamp
-  - embedding_id: String (reference to Pinecone)
-
-Collection: kb_embeddings (Pinecone)
-Fields:
-  - id: String (chunk_id)
-  - values: Array<Float> (1536 dimensions)
-  - metadata:
-      - doc_id: UUID
-      - chunk_index: Integer
-      - chunk_text: String (first 500 chars)
-      - doc_type: String
-      - version: String
-```
-
----
-
-### 6.3 Configuration Analysis System
-
-#### 6.3.1 Configuration Analysis Agent (10-Section Scoring)
-
-**FR-CONFIG-001**: Automated Configuration Retrieval
-- **Description**: System SHALL automatically retrieve configs from all managed devices
-- **Acceptance Criteria**:
-  - Retrieve running config via SSH (show running-config)
-  - Retrieve startup config via SSH (show startup-config)
-  - Retrieve FMC policy configurations via API
-  - Store configs in version control (Git)
-  - Detect configuration drift (running vs startup)
-  - Schedule daily config backups
-
-**FR-CONFIG-002**: Configuration Parsing & Analysis
-- **Description**: System SHALL parse and analyze firewall configurations
-- **Acceptance Criteria**:
-  - Parse Cisco FTD CLI configuration syntax
-  - Extract key configuration elements:
-    - Interfaces and zones
-    - Access control policies
-    - NAT rules
-    - VPN configurations
-    - Routing tables
-    - SNMP settings
-    - Logging configurations
-    - User accounts and authentication
-    - High availability settings
-    - Performance tuning parameters
-  - Build configuration dependency graph
-  - Detect conflicting rules
-  - Identify unused objects and rules
-
-**FR-CONFIG-003**: Best Practices Scoring (10 Sections)
-
-System SHALL evaluate configurations across 10 security sections:
-
-**Section 1: Access Control Policies (Score: 0-100)**
-- Rules:
-  - Deny-by-default policy configured (10 points)
-  - No "permit any any" rules (15 points)
-  - Rules are ordered from most specific to least specific (10 points)
-  - All rules have descriptions (10 points)
-  - Unused rules identified and flagged (10 points)
-  - Shadowed rules detected (10 points)
-  - Rules use object groups (not inline addresses) (10 points)
-  - Logging enabled on all deny rules (10 points)
-  - No overly permissive rules (source/dest > /24) (10 points)
-  - Access policies reviewed within last 90 days (5 points)
-
-**Section 2: Network Segmentation & Zones (Score: 0-100)**
-- Rules:
-  - Minimum 3 security zones configured (10 points)
-  - DMZ zone exists and is properly configured (15 points)
-  - Management zone isolated from production (15 points)
-  - Inter-zone policies explicitly defined (15 points)
-  - Zone-based firewall policies enabled (15 points)
-  - No direct internet access from internal zones without inspection (15 points)
-  - Guest network isolation (if applicable) (10 points)
-  - VLAN segmentation aligns with security zones (5 points)
-
-**Section 3: NAT & Translation Policies (Score: 0-100)**
-- Rules:
-  - NAT policies documented and reviewed (10 points)
-  - No overlapping NAT rules (15 points)
-  - Static NAT used only where necessary (10 points)
-  - Dynamic PAT pools configured for outbound traffic (10 points)
-  - NAT hairpinning disabled (if not required) (10 points)
-  - NAT table utilization < 80% (15 points)
-  - Identity NAT documented with justification (10 points)
-  - Twice NAT used sparingly (10 points)
-  - NAT logging enabled for troubleshooting (10 points)
-
-**Section 4: VPN Configuration (Score: 0-100)**
-- Rules:
-  - Strong encryption algorithms (AES-256, SHA-256) (20 points)
-  - Perfect Forward Secrecy (PFS) enabled (15 points)
-  - IKEv2 used instead of IKEv1 (15 points)
-  - Certificate-based authentication preferred over PSK (15 points)
-  - VPN split tunneling policy defined (10 points)
-  - Dead Peer Detection (DPD) configured (10 points)
-  - VPN redundancy configured (if HA required) (10 points)
-  - Remote access VPN MFA enabled (5 points)
-
-**Section 5: Logging & Monitoring (Score: 0-100)**
-- Rules:
-  - Centralized syslog server configured (20 points)
-  - Logging level appropriate (informational or higher) (10 points)
-  - Connection logging enabled for allowed traffic (15 points)
-  - Deny rules log to syslog (15 points)
-  - SNMP v3 configured (v1/v2c disabled) (15 points)
-  - NetFlow/NSEL enabled for traffic analysis (10 points)
-  - Log buffering configured (5 points)
-  - Debug logging disabled in production (10 points)
-
-**Section 6: High Availability & Redundancy (Score: 0-100)**
-- Rules:
-  - HA pair configured (if required) (25 points)
-  - Stateful failover enabled (20 points)
-  - HA health monitoring configured (15 points)
-  - Failover interface dedicated (10 points)
-  - HA failover tested within last 90 days (15 points)
-  - Redundant uplinks configured (10 points)
-  - HA preemption disabled (5 points)
-
-**Section 7: Authentication & Authorization (Score: 0-100)**
-- Rules:
-  - Local admin account count ≤ 2 (10 points)
-  - AAA server (RADIUS/TACACS+) configured (20 points)
-  - Role-based access control (RBAC) implemented (15 points)
-  - Privilege levels defined (15 points)
-  - Password policy enforced (complexity, age, history) (15 points)
-  - Idle timeout configured (< 15 minutes) (10 points)
-  - Console and VTY authentication required (10 points)
-  - SSH key-based authentication enabled (5 points)
-
-**Section 8: Intrusion Prevention & Threat Detection (Score: 0-100)**
-- Rules:
-  - IPS/IDS enabled on all interfaces (20 points)
-  - Intrusion policy set to Security Over Connectivity or Balanced (15 points)
-  - Snort rules updated within last 7 days (15 points)
-  - File policy configured for malware detection (15 points)
-  - SSL/TLS inspection enabled (10 points)
-  - URL filtering enabled (10 points)
-  - DNS security enabled (10 points)
-  - Advanced Malware Protection (AMP) enabled (5 points)
-
-**Section 9: Performance & Resource Management (Score: 0-100)**
-- Rules:
-  - CPU utilization < 70% (average) (20 points)
-  - Memory utilization < 85% (15 points)
-  - Connection table utilization < 80% (15 points)
-  - NAT table utilization < 80% (10 points)
-  - QoS policies configured (if required) (10 points)
-  - Traffic shaping policies defined (10 points)
-  - Hardware offload enabled (if supported) (10 points)
-  - Unused features/services disabled (10 points)
-
-**Section 10: Compliance & Governance (Score: 0-100)**
-- Rules:
-  - Configuration change management process documented (15 points)
-  - Configuration backups automated (daily minimum) (15 points)
-  - Config change audit trail maintained (15 points)
-  - Security policy review schedule defined (10 points)
-  - Compliance with industry standards (PCI-DSS, HIPAA, etc.) (20 points)
-  - Firewall firmware version is current (within 2 major releases) (10 points)
-  - Security advisories reviewed and patched (10 points)
-  - Documentation up-to-date (network diagrams, policy docs) (5 points)
-
-**FR-CONFIG-004**: Scoring Report Generation
-- **Acceptance Criteria**:
-  - Generate overall score (average of 10 sections)
-  - Generate per-section scores with color coding:
-    - 90-100: Green (Excellent)
-    - 75-89: Yellow (Good)
-    - 60-74: Orange (Needs Improvement)
-    - < 60: Red (Critical)
-  - Generate detailed findings for each failed check
-  - Provide remediation guidance for each issue
-  - Track score trends over time
-  - Support comparative analysis (device-to-device, site-to-site)
-  - Export reports (PDF, HTML, JSON)
-
----
-
-### 6.4 Recommendation Agent System
-
-#### 6.4.1 Functional Requirements
-
-**FR-RECOM-001**: Configuration Optimization Engine
-- **Description**: System SHALL generate config optimization recommendations
-- **Acceptance Criteria**:
-  - Analyze current configuration
-  - Compare against best practices (from Section 6.3)
-  - Identify optimization opportunities:
-    - Rule consolidation (merge similar rules)
-    - Object group creation (replace repeated addresses)
-    - Rule reordering (optimize hit counts)
-    - Unused object cleanup
-    - Performance tuning suggestions
-  - Rank recommendations by impact (high, medium, low)
-  - Estimate benefits (security improvement, performance gain, compliance)
-
-**FR-RECOM-002**: Intelligent Recommendation Prioritization
-- **Description**: System SHALL prioritize recommendations
-- **Acceptance Criteria**:
-  - Severity-based prioritization:
-    - P0: Critical security vulnerabilities
-    - P1: High-impact performance issues
-    - P2: Compliance violations
-    - P3: Best practice deviations
-    - P4: Optimization opportunities
-  - Consider dependencies between recommendations
-  - Group related recommendations
-  - Estimate implementation effort (time, risk)
-
-**FR-RECOM-003**: Configuration Change Generation
-- **Description**: System SHALL generate executable configuration changes
-- **Acceptance Criteria**:
-  - Generate Cisco CLI commands for remediation
-  - Generate FMC API calls for policy changes
-  - Include rollback commands
-  - Validate syntax before presenting to user
-  - Support dry-run mode (preview without applying)
-  - Generate change summary and impact report
-
-**FR-RECOM-004**: Recommendation Feedback Loop
-- **Description**: System SHALL learn from user feedback
-- **Acceptance Criteria**:
-  - Track recommendation acceptance/rejection rates
-  - Collect user feedback (helpful/not helpful)
-  - Adjust recommendation engine based on feedback
-  - Identify false positives
-  - Improve accuracy over time using ML
-
----
-
-### 6.5 Intent-Based Configuration Generation
-
-#### 6.5.1 Functional Requirements
-
-**FR-INTENT-001**: Natural Language Intent Parsing
-- **Description**: System SHALL accept configuration intents in natural language
-- **Acceptance Criteria**:
-  - Support plain English configuration requests
-  - Examples:
-    - "Allow HTTPS traffic from DMZ web servers to the internet"
-    - "Block all traffic from 10.50.0.0/16 to database zone"
-    - "Create a VPN tunnel to AWS VPC 172.31.0.0/16"
-    - "Enable IPS on all external-facing interfaces"
-  - Extract key elements:
-    - Action (allow, deny, enable, disable, create, modify, delete)
-    - Source (IP, network, zone, object group)
-    - Destination (IP, network, zone, object group)
-    - Service (protocol, port, application)
-    - Direction (inbound, outbound, bidirectional)
-    - Additional context (logging, schedule, priority)
-
-**FR-INTENT-002**: Intent Validation & Clarification
-- **Description**: System SHALL validate and clarify ambiguous intents
-- **Acceptance Criteria**:
-  - Validate intent against existing policies
-  - Detect conflicts with existing rules
-  - Identify missing information
-  - Request clarifications via conversational AI:
-    - "Which web servers in the DMZ? (web-srv-01, web-srv-02, or all?)"
-    - "Should this rule allow HTTP as well, or only HTTPS?"
-    - "Should this rule apply to all devices or specific sites?"
-  - Suggest related configurations:
-    - "Would you also like to enable logging for this rule?"
-    - "Should we create a corresponding NAT rule?"
-
-**FR-INTENT-003**: Configuration Generation from Intent
-- **Description**: System SHALL generate configuration from validated intent
-- **Acceptance Criteria**:
-  - Generate Cisco CLI commands
-  - Generate FMC policy API calls
-  - Include all necessary supporting configurations:
-    - Object creation (network objects, service objects)
-    - Policy rules
-    - NAT rules (if required)
-    - Logging configuration
-    - Comments and descriptions
-  - Follow naming conventions
-  - Maintain idempotency (safe to run multiple times)
-
-**FR-INTENT-004**: Multi-Device Configuration Orchestration
-- **Description**: System SHALL apply configurations across multiple devices
-- **Acceptance Criteria**:
-  - Identify target devices based on intent
-  - Generate device-specific configurations
-  - Handle device capability differences
-  - Order configuration steps correctly (dependencies)
-  - Support phased rollout (device-by-device)
-  - Track deployment status per device
-
----
-
-### 6.6 Human-in-the-Loop (HITL) Approval System
-
-#### 6.6.1 Functional Requirements
-
-**FR-HITL-001**: Approval Workflow Engine
-- **Description**: System SHALL implement approval workflows for configuration changes
-- **Acceptance Criteria**:
-  - Support multiple approval levels:
-    - Level 1: Network Engineer (for low-risk changes)
-    - Level 2: Senior Engineer + Security Team (for medium-risk changes)
-    - Level 3: Architect + CISO + Change Board (for high-risk changes)
-  - Risk-based approval routing
-  - Approval delegation during off-hours
-  - Approval expiration (changes require re-approval after 24 hours)
-  - Emergency bypass (with full audit trail)
-
-**FR-HITL-002**: Change Review Interface
-- **Description**: System SHALL provide comprehensive change review UI
-- **Acceptance Criteria**:
-  - Display change summary:
-    - Intent description
-    - Affected devices
-    - Configuration changes (diff format)
-    - Impact analysis results
-    - Risk assessment
-    - Estimated downtime (if any)
-  - Show AI-generated recommendations
-  - Display similar past changes (and their outcomes)
-  - Provide rollback plan
-  - Allow inline comments and discussions
-  - Support approval with conditions
-
-**FR-HITL-003**: Approval Decision Tracking
-- **Description**: System SHALL track all approval decisions
-- **Acceptance Criteria**:
-  - Record approver identity
-  - Record approval timestamp
-  - Record decision (approved, rejected, conditional, deferred)
-  - Record justification comments
-  - Support rejection with feedback (for AI learning)
-  - Maintain immutable audit log
-
-**FR-HITL-004**: Notification System
-- **Description**: System SHALL notify stakeholders at each workflow stage
-- **Acceptance Criteria**:
-  - Email notifications
-  - Slack/Teams integrations
-  - In-app notifications
-  - SMS for critical approvals
-  - Escalation notifications (if approval delayed)
-  - Deployment completion notifications
-
----
-
-### 6.7 Dual Authentication System
-
-#### 6.7.1 Functional Requirements
-
-**FR-AUTH-001**: Primary Authentication
-- **Description**: System SHALL support multiple authentication methods
-- **Acceptance Criteria**:
-  - Username/password (with password complexity requirements)
-  - SSO via SAML 2.0 (Okta, Azure AD, etc.)
-  - LDAP/Active Directory integration
-  - OAuth 2.0 / OIDC
-  - Session management (timeout after 15 min inactivity)
-
-**FR-AUTH-002**: Multi-Factor Authentication (MFA)
-- **Description**: System SHALL require MFA for critical operations
-- **Acceptance Criteria**:
-  - Support MFA methods:
-    - TOTP (Google Authenticator, Authy)
-    - Push notifications (Duo, Okta Verify)
-    - SMS (fallback only)
-    - Hardware tokens (YubiKey, RSA SecurID)
-  - Require MFA for:
-    - Configuration deployments
-    - User management
-    - System settings changes
-    - Access to production environments
-  - Remember device for 30 days (configurable)
-  - Backup codes for MFA recovery
-
-**FR-AUTH-003**: Dual Authorization (Two-Person Integrity)
-- **Description**: System SHALL require dual authorization for high-risk changes
-- **Acceptance Criteria**:
-  - High-risk changes require two approvers:
-    - Production firewall rule changes
-    - VPN configuration changes
-    - HA failover triggers
-    - Bulk policy changes
-  - Approvers must be from different teams (separation of duties)
-  - Approvers cannot approve their own changes
-  - Both approvers must authenticate within 1-hour window
-  - Audit log of both approvals
-
-**FR-AUTH-004**: Role-Based Access Control (RBAC)
-- **Description**: System SHALL implement granular RBAC
-- **Acceptance Criteria**:
-  - Predefined roles:
-    - **Viewer**: Read-only access to dashboards and logs
-    - **Operator**: View + trigger investigations, collect showtechs
-    - **Engineer**: Operator + create config changes (requires approval)
-    - **Approver**: Engineer + approve changes (cannot approve own)
-    - **Admin**: Full access including user management
-    - **Auditor**: Read-only access + audit log viewing
-  - Custom roles with granular permissions
-  - Device-level access control (restrict by site/region)
-  - Approval bypass for emergency accounts (with audit)
-
----
-
-### 6.8 Impact Analysis Engine
-
-#### 6.8.1 Functional Requirements
-
-**FR-IMPACT-001**: Configuration Change Impact Analysis
-- **Description**: System SHALL analyze impact of proposed configuration changes
-- **Acceptance Criteria**:
-  - Analyze affected components:
-    - Impacted firewall rules (shadowing, conflicts)
-    - Affected traffic flows (sessions that will be dropped/allowed)
-    - Dependent configurations (NAT, routing, VPN)
-    - Redundancy impact (HA implications)
-  - Estimate impact scope:
-    - Number of affected sessions
-    - Number of affected users
-    - Bandwidth impact
-    - Applications affected
-  - Identify potential issues:
-    - Configuration conflicts
-    - Policy violations
-    - Performance degradation risks
-    - Security gaps
-
-**FR-IMPACT-002**: Traffic Simulation
-- **Description**: System SHALL simulate traffic flow with proposed changes
-- **Acceptance Criteria**:
-  - Replay historical traffic against new config
-  - Identify sessions that will change behavior:
-    - Currently allowed → will be denied
-    - Currently denied → will be allowed
-    - Currently routed path A → will be routed path B
-  - Estimate performance impact:
-    - CPU utilization change
-    - Connection table usage change
-    - Latency impact
-  - Generate traffic flow diagrams (before/after)
-
-**FR-IMPACT-003**: Dependency Analysis
-- **Description**: System SHALL map configuration dependencies
-- **Acceptance Criteria**:
-  - Build dependency graph:
-    - Rules → Object groups → Network objects
-    - NAT rules → ACLs
-    - Interfaces → Zones → Policies
-    - VPN → Crypto maps → ACLs
-  - Identify cascading impacts
-  - Detect orphaned objects
-  - Warn about breaking changes
-
-**FR-IMPACT-004**: Compliance Impact Assessment
-- **Description**: System SHALL assess compliance impact
-- **Acceptance Criteria**:
-  - Check against compliance policies:
-    - PCI-DSS requirements
-    - HIPAA requirements
-    - SOC 2 controls
-    - Custom compliance policies
-  - Identify compliance violations
-  - Generate compliance deviation report
-  - Require additional approvals for compliance-impacting changes
-
----
-
-### 6.9 Risk Profiling System
-
-#### 6.9.1 Functional Requirements
-
-**FR-RISK-001**: Change Risk Scoring
-- **Description**: System SHALL calculate risk score for each configuration change
-- **Acceptance Criteria**:
-  - Risk factors (weighted scoring):
-    - **Change Scope** (30%):
-      - Single device, single rule: 1 point
-      - Multiple devices: 3 points
-      - Multiple sites: 5 points
-      - Global policy change: 10 points
-    - **Impact Severity** (25%):
-      - Non-production: 1 point
-      - Staging/DR: 3 points
-      - Production (off-peak): 5 points
-      - Production (peak hours): 10 points
-    - **Historical Failure Rate** (20%):
-      - No similar changes failed: 0 points
-      - 1-2 similar changes failed: 5 points
-      - 3+ similar changes failed: 10 points
-    - **Complexity** (15%):
-      - Simple rule add/delete: 1 point
-      - Rule modification: 3 points
-      - Multi-step change: 5 points
-      - Cascading dependencies: 10 points
-    - **Reversibility** (10%):
-      - Easy rollback: 0 points
-      - Manual rollback required: 5 points
-      - Cannot rollback: 10 points
-  - Total Risk Score (0-100):
-    - **Low Risk** (0-30): Auto-approve (single engineer)
-    - **Medium Risk** (31-60): Require senior engineer approval
-    - **High Risk** (61-85): Require dual approval + change window
-    - **Critical Risk** (86-100): Require CAB approval + maintenance window
-
-**FR-RISK-002**: Risk Mitigation Recommendations
-- **Description**: System SHALL recommend risk mitigation strategies
-- **Acceptance Criteria**:
-  - Suggest safer alternatives:
-    - Phased rollout instead of all-at-once
-    - Test in DR environment first
-    - Schedule during maintenance window
-    - Enable extra logging for first 24 hours
-  - Recommend rollback plans
-  - Suggest pre-deployment testing
-  - Identify required communication (to stakeholders)
-
-**FR-RISK-003**: Historical Risk Analysis
-- **Description**: System SHALL learn from past changes
-- **Acceptance Criteria**:
-  - Track change success/failure rates
-  - Identify patterns in failed changes
-  - Correlate risk scores with actual outcomes
-  - Adjust risk model based on historical data
-  - Highlight devices with high failure rates
-  - Identify risky time windows (peak hours, holidays)
-
-**FR-RISK-004**: Real-Time Risk Monitoring
-- **Description**: System SHALL monitor risk during deployment
-- **Acceptance Criteria**:
-  - Monitor key metrics during change:
-    - CPU/memory utilization
-    - Connection drop rate
-    - Latency increases
-    - Error counters
-    - HA status
-  - Automatic rollback triggers:
-    - CPU > 90% for 3 minutes
-    - Connection drop rate > 5%
-    - Device becomes unreachable
-    - HA failover occurs
-  - Alert deployment engineer immediately
-  - Provide real-time dashboards during change
-
----
-
-### 6.10 Scheduled Deployment Manager
-
-#### 6.10.1 Functional Requirements
-
-**FR-DEPLOY-001**: Deployment Scheduling
-- **Description**: System SHALL support scheduled configuration deployments
-- **Acceptance Criteria**:
-  - Schedule deployment for future date/time
-  - Support maintenance windows:
-    - Predefined windows (every Sunday 2-6 AM)
-    - Ad-hoc windows (next Saturday 10 PM - 2 AM)
-    - Emergency windows (immediate with approvals)
-  - Integrate with organization's change calendar
-  - Prevent overlapping deployments (same device)
-  - Send reminders before deployment (24h, 1h, 15min)
-
-**FR-DEPLOY-002**: Pre-Deployment Validation
-- **Description**: System SHALL validate readiness before deployment
-- **Acceptance Criteria**:
-  - Pre-deployment checks (1 hour before):
-    - Device reachability
-    - Current CPU/memory baseline
-    - Config backup successful
-    - Approvals still valid
-    - No ongoing incidents
-    - Required stakeholders available
-  - Abort deployment if checks fail
-  - Notify stakeholders of abort reason
-  - Suggest next available window
-
-**FR-DEPLOY-003**: Phased Deployment Support
-- **Description**: System SHALL support phased rollouts
-- **Acceptance Criteria**:
-  - Deploy to devices in phases:
-    - Phase 1: Non-production devices
-    - Phase 2: 10% of production (canary)
-    - Phase 3: 50% of production
-    - Phase 4: 100% of production
-  - Configurable phase duration (e.g., 2 hours between phases)
-  - Automatic progression if no issues detected
-  - Manual approval required for next phase (if configured)
-  - Automatic rollback if issues detected in phase
-
-**FR-DEPLOY-004**: Deployment Execution
-- **Description**: System SHALL execute deployments reliably
-- **Acceptance Criteria**:
-  - Execution workflow:
-    1. Pre-change backup
-    2. Apply configuration (via SSH or FMC API)
-    3. Verify configuration applied correctly
-    4. Monitor for 15 minutes (configurable)
-    5. Mark deployment as successful or failed
-  - Handle connection failures (retry 3 times)
-  - Detect partial deployments
-  - Automatic rollback on failure
-  - Generate deployment report
-
-**FR-DEPLOY-005**: Post-Deployment Validation
-- **Description**: System SHALL validate deployment success
-- **Acceptance Criteria**:
-  - Validation checks:
-    - Configuration matches expected state
-    - Device reachable and stable
-    - CPU/memory within normal range
-    - No error messages in logs
-    - Traffic flowing as expected
-    - HA status normal (if applicable)
-  - Soak period monitoring (24 hours)
-  - Alert on any anomalies during soak
-  - Generate health report after soak
-
-**FR-DEPLOY-006**: Rollback Management
-- **Description**: System SHALL support configuration rollback
-- **Acceptance Criteria**:
-  - Automatic rollback triggers:
-    - Deployment failure (device unreachable after config)
-    - Validation failure (config mismatch)
-    - Risk threshold exceeded (CPU/memory spike)
-    - Manual abort by operator
-  - Rollback methods:
-    - Restore from backup (if available)
-    - Revert configuration (opposite CLI commands)
-    - FMC policy revert
-  - Rollback verification
-  - Alert stakeholders of rollback
-  - Root cause analysis after rollback
-
----
-
-## 7. AI Agents Catalog
-
-### 7.1 Agent Hierarchy
-
-```
-Master Reasoning Agent (Coordinator)
-│
-├── I/O Agent (Input/Output Handler)
-├── Data Collection Agent
-├── Topology Agent
-├── Root Cause Analysis (RCA) Agent
-├── Remediation Agent
-├── Anomaly Detection Agent
-├── Configuration Analysis Agent
-├── Recommendation Agent
-├── Intent Parser Agent
-├── Impact Analysis Agent
-├── Risk Assessment Agent
-└── Deployment Orchestration Agent
-```
-
-### 7.2 Agent Specifications
-
-#### 7.2.1 Master Reasoning Agent
-
-**Purpose**: Orchestrate all sub-agents, coordinate investigations, make high-level decisions
-
-**Responsibilities**:
-- Receive alerts and investigation requests
-- Determine which agents to invoke
-- Coordinate agent execution (sequential or parallel)
-- Aggregate results from multiple agents
-- Make go/no-go decisions
-- Escalate to humans when necessary
-- Learn from outcomes to improve orchestration
-
-**Inputs**:
-- Alerts from monitoring systems
-- User investigation requests
-- Scheduled tasks
-- Agent results
-
-**Outputs**:
-- Agent invocation commands
-- Consolidated reports
-- Escalation notifications
-- Workflow status updates
-
-**Technologies**:
-- AWS Bedrock (Claude Sonnet 4.5)
-- LangChain for agent orchestration
-- ReAct (Reasoning + Acting) framework
-
----
-
-#### 7.2.2 I/O Agent (Input/Output Handler)
-
-**Purpose**: Handle all external inputs and format outputs
-
-**Responsibilities**:
-- Receive incoming alerts from monitoring systems
-- Parse alert payloads
-- Normalize data formats
-- Queue tasks for Master Agent
-- Format outputs for different channels (UI, email, Slack, etc.)
-- Manage real-time streaming to UI
-
-**Inputs**:
-- Alerts from Prometheus, Grafana, CloudWatch
-- Syslogs
-- SNMP traps
-- User requests from UI
-
-**Outputs**:
-- Normalized alert objects
-- Formatted reports
-- Real-time status updates
-
-**Technologies**:
-- Python FastAPI for API handling
-- Apache Kafka for message queuing
-- WebSocket for real-time streaming
-
----
-
-#### 7.2.3 Data Collection Agent
-
-**Purpose**: Gather diagnostic data from multiple sources
-
-**Responsibilities**:
-- Collect showtechs via FMC API
-- Execute CLI commands via SSH MCP server
-- Poll SNMP metrics
-- Retrieve logs from central syslog
-- Query NetFlow data
-- Retrieve configuration backups
-- Aggregate data from multiple devices
-- Store collected data in S3
-
-**Inputs**:
-- Device list
-- Data collection requests
-- Time ranges
-
-**Outputs**:
-- Collected data (raw and structured)
-- Data collection status
-- S3 object references
-
-**Technologies**:
-- Python scripts
-- Paramiko (SSH)
-- pysnmp (SNMP)
-- AWS S3 SDK
-
----
-
-#### 7.2.4 Topology Agent
-
-**Purpose**: Map network topology and traffic flows
-
-**Responsibilities**:
-- Discover network topology (Layer 2 and Layer 3)
-- Map device interconnections
-- Identify traffic paths
-- Map security zones
-- Track interface mappings (FTD ↔ Switch ports)
-- Visualize network diagrams
-- Correlate topology with traffic data
-
-**Inputs**:
-- CDP/LLDP neighbor data
-- Routing tables
-- ARP tables
-- NetFlow data
-- Configuration files
-
-**Outputs**:
-- Topology graphs
-- Traffic flow maps
-- Zone-to-zone matrices
-- Device relationship data
-
-**Technologies**:
-- NetworkX (graph library)
-- Graphviz for visualization
-- Neo4j (graph database)
-
----
-
-#### 7.2.5 Root Cause Analysis (RCA) Agent
-
-**Purpose**: Identify root causes of issues
-
-**Responsibilities**:
-- Analyze symptoms and correlate with known issues
-- Search knowledge base for similar incidents
-- Use RAG to retrieve relevant troubleshooting steps
-- Apply diagnostic flowcharts
-- Calculate confidence scores
-- Generate RCA reports
-- Learn from historical incidents
-
-**Inputs**:
-- Collected diagnostic data
-- Alert context
-- Historical incident data
-- Knowledge base documents
-
-**Outputs**:
-- Root cause hypothesis
-- Confidence score (0-100%)
-- Evidence supporting conclusion
-- Similar past incidents
-
-**Technologies**:
-- AWS Bedrock (Claude)
-- Pinecone (RAG)
-- XGBoost (ML models for pattern matching)
-
----
-
-#### 7.2.6 Remediation Agent
-
-**Purpose**: Propose and execute remediation actions
-
-**Responsibilities**:
-- Generate remediation plans
-- Estimate fix time and impact
-- Prioritize remediation steps
-- Generate CLI commands or API calls
-- Execute low-risk remediations automatically (if configured)
-- Generate TAC escalation reports
-- Track remediation outcomes
-
-**Inputs**:
-- RCA results
-- Device configurations
-- Best practices database
-- Historical remediation data
-
-**Outputs**:
-- Remediation plans (step-by-step)
-- CLI commands
-- FMC API calls
-- TAC-ready reports
-
-**Technologies**:
-- AWS Bedrock (Claude)
-- Ansible for automation
-- Python scripts
-
----
-
-#### 7.2.7 Anomaly Detection Agent
-
-**Purpose**: Detect unusual patterns in metrics and logs
-
-**Responsibilities**:
-- Monitor real-time metrics (CPU, memory, bandwidth, sessions)
-- Analyze log patterns
-- Detect statistical anomalies (Z-score, IQR)
-- Detect behavioral anomalies (ML-based)
-- Correlate anomalies across devices
-- Generate anomaly alerts
-- Suppress false positives
-
-**Inputs**:
-- Time-series metrics
-- Log streams
-- Historical baselines
-- Alert rules
-
-**Outputs**:
-- Anomaly alerts
-- Anomaly scores
-- Affected devices
-- Anomaly visualizations
-
-**Technologies**:
-- Prometheus for metrics
-- TimescaleDB for storage
-- Python (scikit-learn, TensorFlow) for ML
-- Isolation Forest, LSTM models
-
----
-
-#### 7.2.8 Configuration Analysis Agent
-
-**Purpose**: Analyze firewall configurations for compliance and best practices
-
-**Responsibilities**:
-- Parse Cisco FTD configurations
-- Evaluate against 10-section scoring framework (Section 6.3)
-- Detect misconfigurations
-- Identify security gaps
-- Calculate best practices scores
-- Track score trends
-- Generate detailed findings reports
-
-**Inputs**:
-- Device configurations (running-config, startup-config)
-- FMC policy exports
-- Best practices rules database
-- Compliance policy definitions
-
-**Outputs**:
-- Overall score (0-100)
-- Section scores (10 sections)
-- Detailed findings
-- Remediation recommendations
-- Compliance status
-
-**Technologies**:
-- Python (custom parsing logic)
-- Cisco pyATS/Genie
-- Rule engine (Drools or custom)
-
----
-
-#### 7.2.9 Recommendation Agent
-
-**Purpose**: Generate intelligent configuration optimization recommendations
-
-**Responsibilities**:
 - Analyze current configurations
-- Identify optimization opportunities
-- Rank recommendations by impact
-- Generate configuration changes
-- Estimate benefits (security, performance, compliance)
+- Generate optimization recommendations (rule consolidation, object cleanup, etc.)
+- Prioritize by severity (P0-P4)
+- Generate executable CLI commands and FMC API calls
+- Include rollback commands
 - Learn from user feedback
 
-**Inputs**:
-- Configuration analysis results
-- Performance metrics
-- Compliance requirements
-- Historical change data
+### 5.6 Intent-Based Configuration
 
-**Outputs**:
-- Prioritized recommendations
-- Estimated impact
-- CLI commands for implementation
-- Rollback commands
+- Accept natural language configuration requests
+- Parse intents and extract key elements (action, source, destination, service)
+- Validate and clarify ambiguous intents
+- Generate device configurations from validated intents
+- Support multi-device orchestration
 
-**Technologies**:
-- AWS Bedrock (Claude)
-- Reinforcement Learning (for feedback loop)
+### 5.7 Approval Workflow & Authorization
 
----
+- Multi-level approval workflows based on risk
+- Comprehensive change review UI with impact analysis
+- Track all approval decisions with audit trail
+- MFA for critical operations (Cisco Duo)
+- Dual authorization for high-risk changes
+- Role-based access control (Viewer, Operator, Engineer, Approver, Admin, Auditor)
 
-#### 7.2.10 Intent Parser Agent
+### 5.8 Impact Analysis
 
-**Purpose**: Parse natural language configuration intents
-
-**Responsibilities**:
-- Parse natural language requests
-- Extract configuration intent (action, source, dest, service)
-- Validate intent against policies
-- Detect ambiguities
-- Request clarifications
-- Translate intent to configuration
-
-**Inputs**:
-- Natural language text
-- Current configurations
-- Policy database
-
-**Outputs**:
-- Structured intent object
-- Clarifying questions
-- Configuration draft
-
-**Technologies**:
-- AWS Bedrock (Claude)
-- NLP libraries (spaCy, NLTK)
-- Few-shot learning with examples
-
----
-
-#### 7.2.11 Impact Analysis Agent
-
-**Purpose**: Analyze impact of proposed configuration changes
-
-**Responsibilities**:
-- Simulate traffic flow with new config
-- Identify affected sessions/users
-- Detect conflicts and dependencies
-- Estimate performance impact
+- Analyze affected components and traffic flows
+- Simulate traffic with proposed changes
+- Map configuration dependencies
 - Assess compliance impact
-- Generate impact reports
+- Generate before/after comparisons
 
-**Inputs**:
-- Proposed configuration changes
-- Current configurations
-- Historical traffic data
-- Compliance policies
+### 5.9 Risk Profiling
 
-**Outputs**:
-- Impact score (low, medium, high, critical)
-- Affected components list
-- Traffic simulation results
-- Conflict warnings
+- Calculate risk scores for configuration changes (0-100)
+- Risk factors: change scope, impact severity, historical failure rate, complexity, reversibility
+- Recommend risk mitigation strategies
+- Learn from past changes
+- Monitor risk during deployment with automatic rollback triggers
 
-**Technologies**:
-- Traffic replay engine
-- Network simulator (GNS3 integration or custom)
-- Dependency graph analysis
+### 5.10 Deployment Management
 
----
-
-#### 7.2.12 Risk Assessment Agent
-
-**Purpose**: Calculate risk scores for configuration changes
-
-**Responsibilities**:
-- Calculate risk scores (0-100)
-- Apply risk factors (scope, severity, history, complexity, reversibility)
-- Recommend risk mitigation
-- Learn from past change outcomes
-- Adjust risk model dynamically
-
-**Inputs**:
-- Impact analysis results
-- Change details
-- Historical failure data
-- Device health metrics
-
-**Outputs**:
-- Risk score (0-100)
-- Risk level (low, medium, high, critical)
-- Risk factors breakdown
-- Mitigation recommendations
-
-**Technologies**:
-- Rule-based scoring
-- ML models (Random Forest, Gradient Boosting)
-- Time-series analysis
+- Schedule deployments for maintenance windows
+- Pre-deployment validation (device reachability, backups, approvals)
+- Support phased rollouts (canary → production)
+- Automatic rollback on failure
+- Deployment audit trail
 
 ---
 
-#### 7.2.13 Deployment Orchestration Agent
+## 6. AI Agents
 
-**Purpose**: Orchestrate configuration deployments across devices
+**Key Agents:**
 
-**Responsibilities**:
-- Schedule deployments
-- Execute pre-deployment checks
-- Apply configurations to devices
-- Monitor deployment progress
-- Validate post-deployment
-- Trigger rollbacks if needed
-- Coordinate phased rollouts
+1. **Master Reasoning Agent**: Orchestrates all sub-agents and coordinates investigations
+2. **Data Collection Agent**: Gathers diagnostic data (showtechs, CLI commands, SNMP, logs)
+3. **Topology Agent**: Maps network topology and traffic flows
+4. **RCA Agent**: Identifies root causes using RAG and historical data
+5. **Remediation Agent**: Proposes and executes remediation actions
+6. **Anomaly Detection Agent**: Detects unusual patterns using ML
+7. **Configuration Analysis Agent**: Evaluates configs against best practices
+8. **Recommendation Agent**: Generates optimization recommendations
+9. **Intent Parser Agent**: Parses natural language configuration requests
+10. **Impact Analysis Agent**: Simulates and assesses change impact
+11. **Risk Assessment Agent**: Calculates risk scores for changes
+12. **Deployment Orchestration Agent**: Manages configuration deployments
 
-**Inputs**:
-- Approved change requests
-- Deployment schedules
-- Device health status
+**Agent Technologies:**
 
-**Outputs**:
-- Deployment status updates
-- Success/failure notifications
-- Rollback triggers
-- Deployment reports
-
-**Technologies**:
-- Apache Airflow (workflow orchestration)
-- Ansible (configuration management)
-- Terraform (infrastructure as code)
+- **LLM Strategy**: Multi-LLM approach with task-specific model selection
+  - **General Reasoning**: Claude Sonnet 4.5 or equivalent (deployment method TBD by development agency)
+  - **Security-Specific**: **Cisco Foundation-sec-8b** (Cisco Foundation AI security model)
+  - **Additional LLMs**: Development agency may propose additional specialized models for specific tasks
+- **Orchestration**: LangChain for multi-LLM agent workflows
+- **Vector Search**: Vector database for RAG (vendor TBD by development agency)
+- **ML Libraries**: Python (scikit-learn, TensorFlow, PyTorch)
 
 ---
 
-## 8. MCP Server Specifications
+## 7. MCP Server Specifications
 
-### 8.1 MCP (Model Context Protocol) Overview
+### 7.1 MCP (Model Context Protocol) Overview
 
-MCP servers provide standardized interfaces for AI agents to interact with external systems. Each MCP server exposes tools that agents can invoke.
+MCP servers provide standardized interfaces for AI agents to interact with external systems. Each MCP server exposes tools that agents can invoke to gather data, execute commands, and interact with the firewall infrastructure.
 
-### 8.2 MCP Server Catalog
+**Benefits of MCP Architecture**:
+- Standardized tool interface for AI agents
+- Separation of concerns (agents vs. infrastructure access)
+- Reusable across different agent workflows
+- Secure credential management
+- Audit trail for all operations
 
-#### 8.2.1 SSH MCP Server
+### 7.2 SSH MCP Server
 
 **Purpose**: Execute CLI commands on FTD devices via SSH
 
 **Tools Exposed**:
 
 1. **execute_command**
-   - **Description**: Execute a single CLI command
-   - **Parameters**:
-     - `device_id` (string): Device identifier
-     - `command` (string): CLI command to execute
-     - `timeout` (int, optional): Command timeout in seconds (default: 30)
-   - **Returns**:
-     - `stdout` (string): Command output
-     - `stderr` (string): Error output (if any)
-     - `exit_code` (int): Exit code (0 = success)
+   - Execute single CLI command on FTD device
+   - Parameters: `device_id`, `command`, `timeout`
+   - Returns: `stdout`, `stderr`, `exit_code`
+   - Example: `show version`, `show running-config`
 
 2. **execute_commands**
-   - **Description**: Execute multiple CLI commands in sequence
-   - **Parameters**:
-     - `device_id` (string): Device identifier
-     - `commands` (array of strings): List of CLI commands
-     - `stop_on_error` (bool, optional): Stop if any command fails (default: true)
-   - **Returns**:
-     - Array of results (one per command)
+   - Execute multiple CLI commands in sequence
+   - Parameters: `device_id`, `commands[]`, `stop_on_error`
+   - Returns: Array of results (one per command)
+   - Use case: Collect multiple diagnostics (showtech-like data)
 
 3. **get_running_config**
-   - **Description**: Retrieve running configuration
-   - **Parameters**:
-     - `device_id` (string): Device identifier
-     - `section` (string, optional): Config section (e.g., "interface", "access-list")
-   - **Returns**:
-     - `config` (string): Configuration text
+   - Retrieve running configuration
+   - Parameters: `device_id`, `section` (optional)
+   - Returns: Configuration text
+   - Supports section filtering (e.g., "interface", "access-list")
 
 4. **get_device_info**
-   - **Description**: Get device system information
-   - **Parameters**:
-     - `device_id` (string): Device identifier
-   - **Returns**:
-     - `hostname` (string)
-     - `model` (string)
-     - `version` (string)
-     - `serial` (string)
-     - `uptime` (string)
+   - Get device system information
+   - Parameters: `device_id`
+   - Returns: `hostname`, `model`, `version`, `serial`, `uptime`
 
-**Implementation**:
-- Language: Python
-- Libraries: Paramiko (SSH), asyncio
-- Authentication: SSH keys (preferred) or username/password
-- Connection pooling: Maintain persistent connections
-- Error handling: Retry logic, connection timeouts
+**Implementation Details**:
+- **Language**: Python
+- **Libraries**: Paramiko (SSH), asyncio
+- **Authentication**: SSH keys (preferred) or username/password
+- **Connection Pooling**: Maintain persistent connections to reduce latency
+- **Error Handling**: Retry logic, connection timeouts, graceful failure
 
 **Security**:
-- Store SSH keys in AWS Secrets Manager
+
+- Store SSH keys in secure vault (HashiCorp Vault or similar - TBD by development agency)
 - Rotate credentials every 90 days
 - Audit all commands executed
-- Rate limiting (max 100 commands/min per device)
+- Rate limiting: max 100 commands/min per device
+- Restrict command execution to read-only by default (config changes require approval workflow)
 
----
+### 7.3 SNMP Collector MCP Server
 
-#### 8.2.2 SNMP Collector MCP Server
-
-**Purpose**: Poll SNMP metrics from FTD devices and switches
+**Purpose**: Poll SNMP metrics from FTD devices and network switches
 
 **Tools Exposed**:
 
 1. **get_metric**
-   - **Description**: Get a single SNMP metric
-   - **Parameters**:
-     - `device_id` (string): Device identifier
-     - `oid` (string): SNMP OID
-     - `community` (string, optional): SNMP community (if SNMPv2c)
-   - **Returns**:
-     - `value` (variant): Metric value
-     - `type` (string): Data type (integer, string, counter, gauge)
+   - Get single SNMP metric by OID
+   - Parameters: `device_id`, `oid`, `community` (optional)
+   - Returns: `value`, `type` (integer, string, counter, gauge)
 
 2. **get_interface_stats**
-   - **Description**: Get interface statistics
-   - **Parameters**:
-     - `device_id` (string): Device identifier
-     - `interface_name` (string): Interface name (e.g., "GigabitEthernet0/0")
-   - **Returns**:
-     - `in_octets` (integer)
-     - `out_octets` (integer)
-     - `in_errors` (integer)
-     - `out_errors` (integer)
-     - `in_discards` (integer)
-     - `out_discards` (integer)
-     - `speed` (integer): Interface speed in bps
-     - `status` (string): "up" or "down"
+   - Get interface statistics
+   - Parameters: `device_id`, `interface_name`
+   - Returns: `in_octets`, `out_octets`, `in_errors`, `out_errors`, `in_discards`, `out_discards`, `speed`, `status`
 
 3. **get_cpu_memory**
-   - **Description**: Get CPU and memory utilization
-   - **Parameters**:
-     - `device_id` (string): Device identifier
-   - **Returns**:
-     - `cpu_usage` (float): CPU percentage (0-100)
-     - `memory_used` (integer): Memory used in bytes
-     - `memory_total` (integer): Total memory in bytes
-     - `memory_usage` (float): Memory percentage (0-100)
+   - Get CPU and memory utilization
+   - Parameters: `device_id`
+   - Returns: `cpu_usage` (%), `memory_used`, `memory_total`, `memory_usage` (%)
 
 4. **bulk_poll**
-   - **Description**: Poll multiple metrics in bulk
-   - **Parameters**:
-     - `device_id` (string): Device identifier
-     - `oids` (array of strings): List of OIDs to poll
-   - **Returns**:
-     - Array of {oid, value, type}
+   - Poll multiple metrics in bulk (efficient)
+   - Parameters: `device_id`, `oids[]`
+   - Returns: Array of {oid, value, type}
+   - Uses SNMP GetBulk for efficiency
 
-**Implementation**:
-- Language: Python
-- Libraries: pysnmp, aiosnmp
-- Protocols: SNMPv2c, SNMPv3 (preferred)
-- Polling frequency: Configurable (default: every 60 seconds)
-- Bulk operations: Use SNMP GetBulk for efficiency
+**Implementation Details**:
+- **Language**: Python
+- **Libraries**: pysnmp, aiosnmp
+- **Protocols**: SNMPv2c, SNMPv3 (preferred)
+- **Polling Frequency**: Configurable (default: every 60 seconds)
+- **Bulk Operations**: Use SNMP GetBulk for efficiency
 
 **Security**:
+
 - Use SNMPv3 with authentication and encryption
-- Store credentials in AWS Secrets Manager
-- Restrict SNMP access by source IP
-- Monitor for SNMP abuse
+- Store credentials in secure vault (TBD by development agency)
+- Restrict SNMP access by source IP (firewall rules)
+- Monitor for SNMP abuse (excessive polling)
 
----
+### 7.4 Syslog Collector MCP Server
 
-#### 8.2.3 Syslog Collector MCP Server
-
-**Purpose**: Collect and parse syslogs from FTD devices
+**Purpose**: Collect, parse, and search syslogs from FTD devices
 
 **Tools Exposed**:
 
 1. **search_logs**
-   - **Description**: Search logs by criteria
-   - **Parameters**:
-     - `device_id` (string, optional): Filter by device
-     - `severity` (string, optional): Filter by severity (emergency, alert, critical, error, warning, notice, info, debug)
-     - `message_pattern` (string, optional): Regex pattern for message
-     - `start_time` (timestamp): Start of time range
-     - `end_time` (timestamp): End of time range
-     - `limit` (int, optional): Max results (default: 100)
-   - **Returns**:
-     - Array of log entries
+   - Search logs by criteria
+   - Parameters: `device_id`, `severity`, `message_pattern`, `start_time`, `end_time`, `limit`
+   - Returns: Array of log entries
+   - Supports regex pattern matching
 
 2. **get_recent_logs**
-   - **Description**: Get most recent logs
-   - **Parameters**:
-     - `device_id` (string, optional): Filter by device
-     - `count` (int, optional): Number of logs (default: 100)
-   - **Returns**:
-     - Array of log entries
+   - Get most recent logs
+   - Parameters: `device_id`, `count` (default: 100)
+   - Returns: Array of log entries (sorted by timestamp DESC)
 
 3. **stream_logs**
-   - **Description**: Stream logs in real-time
-   - **Parameters**:
-     - `device_id` (string, optional): Filter by device
-     - `severity` (string, optional): Filter by severity
-   - **Returns**:
-     - WebSocket stream of log entries
+   - Stream logs in real-time
+   - Parameters: `device_id`, `severity` (optional filter)
+   - Returns: WebSocket stream of log entries
+   - Use case: Real-time monitoring dashboards
 
 4. **parse_log**
-   - **Description**: Parse a raw syslog message
-   - **Parameters**:
-     - `raw_message` (string): Raw syslog message
-   - **Returns**:
-     - `timestamp` (timestamp)
-     - `severity` (string)
-     - `facility` (string)
-     - `device_id` (string)
-     - `message` (string)
-     - `parsed_fields` (object): Extracted fields (IPs, ports, actions, etc.)
+   - Parse a raw syslog message
+   - Parameters: `raw_message`
+   - Returns: Parsed fields (`timestamp`, `severity`, `facility`, `device_id`, `message`, `parsed_fields`)
+   - Extracted fields: Source/Dest IP, ports, protocol, action, interface, NAT info, user, application
 
-**Implementation**:
-- Language: Python
-- Libraries: syslog-ng, Logstash (for parsing)
-- Protocols: Syslog over TCP/UDP/TLS
-- Storage: TimescaleDB for time-series log data
-- Retention: 90 days default (configurable)
+**Implementation Details**:
+- **Language**: Python
+- **Libraries**: Splunk SDK for Python, syslog-ng, regex
+- **Protocols**: Syslog over TCP/UDP/TLS (RFC 3164, RFC 5424)
+- **Storage**: Splunk Enterprise for centralized log management
+- **Retention**: 90 days (hot), 1 year (warm), 7 years (cold)
+- **Integration**: Splunk HTTP Event Collector (HEC) for log ingestion
 
 **Parsing Rules**:
 - Use Grok patterns for Cisco FTD logs
-- Extract fields:
-  - Source/Dest IP and Port
-  - Protocol
-  - Action (permit/deny)
-  - Interface
-  - NAT translations
-  - User information
-  - Application
+- Extract structured fields from unstructured log messages
+- Enrich with geo-location data (IP → City, Country)
+- Enrich with device metadata (device_id → hostname, site, region)
 
 **Security**:
-- Use syslog over TLS
-- Validate syslog source IPs
+- Use syslog over TLS for encryption
+- Validate syslog source IPs (whitelist)
 - Rate limiting (prevent log flooding attacks)
+- Sanitize log content before storage
+
+### 7.5 FMC API MCP Server
+
+**Purpose**: Interact with Firepower Management Center (FMC) REST API
+
+### 7.6 Data Collection Tools Required on MCP Servers
+
+**CRITICAL**: These tools/components must be installed and configured on the MCP servers to collect data from Cisco FTD/FMC devices.
+
+#### 7.6.1 SSH Data Collection Tools
+
+**Tools Required**:
+
+1. **Paramiko (Python Library)**
+   - SSH client for executing CLI commands on FTD devices
+   - Installation: `pip install paramiko`
+   - Purpose: Execute commands like `show version`, `show tech-support`, `show running-config`
+
+2. **AsyncSSH (Python Library)**
+   - Async SSH client for concurrent connections to multiple devices
+   - Installation: `pip install asyncssh`
+   - Purpose: Parallel command execution across device fleet
+
+3. **SSH Key Management**
+   - Tool: `ssh-keygen` (Linux built-in)
+   - Purpose: Generate and manage SSH keys for passwordless authentication
+   - Key type: RSA 4096-bit or ED25519
+
+4. **Command Output Parser**
+   - Tool: TextFSM or Cisco pyATS
+   - Installation: `pip install textfsm` or `pip install pyats`
+   - Purpose: Parse structured data from CLI command outputs
+   - Use case: Convert `show interface` output to structured JSON
+
+**Data Collected via SSH**:
+
+- Device information (hostname, model, version, serial, uptime)
+- Running configuration (complete firewall config)
+- Showtech diagnostics (full diagnostic bundle)
+- Interface statistics
+- Routing tables
+- Connection counts
+- CPU/memory usage (as backup to SNMP)
+- Logging status
+- HA failover status
+
+**Collection Frequency**:
+
+- Device info: Every 24 hours
+- Running config: Every 24 hours (or on-demand before changes)
+- Showtech: On-demand or when anomaly detected
+- Interface stats: Every 5 minutes (as backup to SNMP)
+- Real-time diagnostics: On-demand for troubleshooting
 
 ---
 
-#### 8.2.4 FMC API Gateway MCP Server
+#### 7.6.2 SNMP Data Collection Tools
 
-**Purpose**: Interface with Cisco Firepower Management Center (FMC) REST API
+**Tools Required**:
+
+1. **Net-SNMP Suite**
+   - Tools: `snmpget`, `snmpwalk`, `snmpbulkwalk`
+   - Installation: `apt-get install snmp snmpd libsnmp-dev` (Ubuntu/Debian)
+   - Purpose: Test SNMP connectivity and query devices manually
+
+2. **PySNMP (Python Library)**
+   - SNMP library for programmatic queries
+   - Installation: `pip install pysnmp`
+   - Purpose: Poll SNMP OIDs from FTD devices in Python
+
+3. **Async SNMP (Python Library)**
+   - Installation: `pip install aiosnmp`
+   - Purpose: Concurrent SNMP polling for multiple devices
+
+4. **SNMP MIB Compiler**
+   - Tool: `smidump`, `libsmi`
+   - Installation: `apt-get install libsmi2-dev`
+   - Purpose: Compile Cisco MIBs to use with SNMP tools
+
+5. **Cisco MIB Files**
+   - Download from: Cisco.com (requires CCO account)
+   - Location: `/usr/share/snmp/mibs/`
+   - Required MIBs:
+     - CISCO-FIREWALL-MIB
+     - CISCO-MEMORY-POOL-MIB
+     - CISCO-PROCESS-MIB
+     - CISCO-ENHANCED-MEMPOOL-MIB
+     - CISCO-ENTITY-SENSOR-MIB
+
+**Data Collected via SNMP**:
+
+- **Device Metrics** (every 30-60 seconds):
+  - CPU utilization (per core and aggregate)
+  - Memory usage (used, free, total)
+  - Disk usage
+  - Temperature sensors
+  - Fan speeds
+
+- **Interface Metrics** (every 60 seconds):
+  - In/Out octets (bytes transferred)
+  - In/Out packets
+  - In/Out errors
+  - In/Out discards
+  - Interface status (up/down)
+  - Interface speed
+  - Duplex mode
+
+- **Connection Metrics** (every 60 seconds):
+  - Active connection count
+  - Connection rate (new connections per second)
+  - Connection table utilization
+
+- **Protocol Metrics** (every 60 seconds):
+  - TCP connections
+  - UDP sessions
+  - ICMP statistics
+  - IP forwarding stats
+
+**Collection Frequency**:
+
+- High-frequency metrics (CPU, memory): Every 30 seconds
+- Interface metrics: Every 60 seconds
+- Connection metrics: Every 60 seconds
+- Low-frequency metrics (temperature, disk): Every 5 minutes
+
+**Storage**:
+
+- All SNMP metrics stored in **TimescaleDB** (time-series database)
+- Retention: 2 years
+- Compression after 7 days
+
+---
+
+#### 7.6.3 Syslog Collection Tools
+
+**Tools Required**:
+
+1. **Splunk Universal Forwarder** (Optional - if using Splunk forwarder model)
+   - Installation: Download from Splunk
+   - Purpose: Forward syslogs from MCP server to Splunk indexer
+   - Use case: If MCP server receives syslogs first, then forwards to Splunk
+
+2. **Syslog-ng** (Alternative to Splunk forwarder)
+   - Installation: `apt-get install syslog-ng`
+   - Purpose: Receive syslogs from FTD devices, parse, and forward to Splunk
+   - Config: `/etc/syslog-ng/syslog-ng.conf`
+
+3. **Rsyslog** (Alternative)
+   - Installation: `apt-get install rsyslog`
+   - Purpose: Lightweight syslog receiver
+   - Config: `/etc/rsyslog.conf`
+
+4. **Logstash** (Alternative)
+   - Installation: Part of Elastic Stack
+   - Purpose: Receive, parse, and forward logs
+   - Use case: If more complex parsing/enrichment needed before Splunk
+
+5. **Python Syslog Parser**
+   - Library: `python-grok` or custom regex parser
+   - Installation: `pip install python-grok`
+   - Purpose: Parse Cisco FTD syslog format and extract fields
+
+6. **Splunk HTTP Event Collector (HEC) Client**
+   - Library: `splunk-sdk` for Python
+   - Installation: `pip install splunk-sdk`
+   - Purpose: Send parsed logs to Splunk via HEC API
+
+**Data Collected via Syslog**:
+
+- **Connection Logs**:
+  - Built/Teardown connections
+  - Source/Destination IP and ports
+  - Protocol, action (permit/deny)
+  - Bytes transferred, duration
+  - User information (if available)
+  - Application identification
+
+- **Security Logs**:
+  - IPS/IDS alerts
+  - Malware detection events
+  - URL filtering events
+  - File reputation events
+  - SSL/TLS inspection logs
+
+- **System Logs**:
+  - Device startup/shutdown
+  - Configuration changes
+  - HA failover events
+  - Interface up/down events
+  - Authentication events (login/logout)
+  - VPN tunnel status
+
+- **Error Logs**:
+  - Critical errors
+  - Warnings
+  - Debug messages (if enabled)
+
+**Syslog Processing Pipeline**:
+
+```
+FTD Device → (Syslog TCP/UDP/TLS) → MCP Syslog Collector → Parse & Enrich → Splunk HEC → Splunk Enterprise
+```
+
+**Collection Volume**:
+
+- 10,000 - 50,000 logs per second per device
+- Parse and forward in near real-time (< 1 second lag)
+
+**Storage**:
+
+- All syslogs stored in **Splunk Enterprise**
+- Retention: 90 days (hot), 1 year (warm), 7 years (cold)
+
+---
+
+#### 7.6.4 FMC API Data Collection Tools
+
+**Tools Required**:
+
+1. **HTTP Client Library (Python)**
+   - Library: `requests` or `aiohttp`
+   - Installation: `pip install requests aiohttp`
+   - Purpose: Make REST API calls to FMC
+
+2. **FMC REST API SDK** (if available from Cisco)
+   - Check Cisco DevNet for official SDK
+   - Purpose: Simplified FMC API interactions
+
+3. **JSON Parser**
+   - Library: `json` (Python built-in)
+   - Purpose: Parse FMC API responses
+
+4. **OAuth2 Token Manager**
+   - Library: Custom implementation or `requests-oauthlib`
+   - Purpose: Manage FMC API token lifecycle (30-minute expiration)
+
+**Data Collected via FMC API**:
+
+- **Device Inventory**:
+  - All managed FTD devices
+  - Device name, IP, model, version
+  - Registration status
+  - Health status
+
+- **Access Control Policies**:
+  - Policy names and IDs
+  - Policy rules (source, dest, service, action)
+  - Rule hit counts
+  - Policy deployment status
+
+- **Network Objects**:
+  - Network object definitions
+  - Network groups
+  - Port objects
+  - Service objects
+
+- **NAT Policies**:
+  - NAT rules
+  - NAT object mappings
+
+- **VPN Configurations**:
+  - Site-to-site VPN tunnels
+  - Remote access VPN policies
+
+- **Deployment Status**:
+  - Pending deployments
+  - Deployment history
+  - Deployment errors
+
+**Collection Frequency**:
+
+- Device inventory: Every 5 minutes
+- Policy configurations: Every 15 minutes (or on-demand)
+- Deployment status: Every 1 minute (when deployment in progress)
+- Objects: Every 1 hour (or on-demand)
+
+**Storage**:
+
+- Device inventory: **PostgreSQL** (updated on each poll)
+- Policy configs: **PostgreSQL** + **MinIO** (versioned backups)
+- Historical data: **PostgreSQL** (change tracking)
+
+---
+
+#### 7.6.5 Configuration Backup Tools
+
+**Tools Required**:
+
+1. **Git (Version Control)**
+   - Installation: `apt-get install git`
+   - Purpose: Track configuration changes over time
+   - Location: `/opt/firewall-configs/`
+
+2. **Diff Tool**
+   - Tool: `diff`, `diff3`, or Python `difflib`
+   - Purpose: Compare configuration versions
+
+3. **MinIO Client (mc)**
+   - Installation: Download from MinIO
+   - Purpose: Upload config backups to MinIO object storage
+   - Commands: `mc cp`, `mc ls`
+
+4. **Compression Tool**
+   - Tool: `gzip`, `bzip2`, or Python `gzip`
+   - Purpose: Compress large config files before storage
+
+**Data Collected**:
+
+- Running configurations (daily snapshots)
+- Startup configurations
+- Configuration diffs (changes between versions)
+- FMC policy exports (JSON format)
+
+**Collection Frequency**:
+
+- Daily automated backups (2 AM)
+- Pre-change backups (before any deployment)
+- Post-change backups (after deployment)
+- On-demand backups (manual trigger)
+
+**Storage**:
+
+- **Git repository**: Local version control
+- **MinIO**: Long-term backup storage
+- **PostgreSQL**: Metadata (backup timestamp, file hash, device ID)
+
+**Retention**:
+
+- 7 years (compliance requirement)
+
+---
+
+#### 7.6.6 Predictive Showtech Collection Tools
+
+**Tools Required**:
+
+1. **Anomaly Detection Agent**
+   - ML model that predicts CPU spikes, memory leaks, failures
+   - Framework: scikit-learn, TensorFlow, or PyTorch
+   - Purpose: Trigger showtech collection before issues occur
+
+2. **SSH Automation (Paramiko)**
+   - Execute `show tech-support` command automatically
+   - Store output to MinIO
+
+3. **Showtech Parser**
+   - Tool: Custom Python parser or Cisco pyATS
+   - Purpose: Extract key diagnostics from showtech output
+
+**Triggered Collection**:
+
+When anomaly detection agent predicts an issue (5-15 minutes advance):
+
+1. AI predicts CPU spike → Trigger showtech collection
+2. SSH to FTD device: `show tech-support`
+3. Collect full diagnostic output
+4. Upload to MinIO with context (device ID, prediction, timestamp)
+5. Alert NOC team: "Showtech auto-collected for predicted CPU spike"
+6. Feed showtech to RCA agent for analysis
+
+**Storage**:
+
+- **MinIO**: `/showtechs/{device_id}/{timestamp}/showtech-output.txt`
+- **All showtech files permanently stored** (no automatic deletion without manual intervention)
+- Compressed versions: `/showtechs/{device_id}/{timestamp}/showtech-output.tar.gz`
+- Metadata in **PostgreSQL** (device ID, timestamp, collection reason, file size, MinIO path)
+- Lifecycle policy: Move to cold storage after 90 days (still accessible)
+
+**Retention**:
+
+- 1 year in hot storage (fast access)
+- Archive to cold storage after 1 year (slower access but preserved)
+- Total retention: 7 years (compliance alignment)
+
+---
+
+### 7.7 MCP Server Infrastructure Summary
+
+**Hardware Requirements per MCP Server**:
+
+- **CPU**: 4-8 cores
+- **RAM**: 16-32 GB
+- **Storage**: 500 GB SSD (for local cache and logs)
+- **Network**: 10 Gbps NIC
+
+**Software Stack on Each MCP Server**:
+
+```
+Operating System: Ubuntu 22.04 LTS
+Python: 3.10+
+Docker: 24.0+
+Kubernetes: 1.28+ (if using K8s deployment)
+
+Python Libraries:
+- paramiko (SSH)
+- asyncssh (Async SSH)
+- pysnmp (SNMP)
+- aiosnmp (Async SNMP)
+- requests (HTTP/API)
+- aiohttp (Async HTTP)
+- splunk-sdk (Splunk integration)
+- textfsm / pyats (CLI parsing)
+- langchain (Agent framework)
+
+System Tools:
+- net-snmp (SNMP client)
+- syslog-ng or rsyslog (Syslog receiver)
+- git (Version control)
+- minio-client (Object storage client)
+- vault (Secrets management - TBD by dev agency)
+```
+
+**Data Flow Summary**:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    MCP Servers (4 servers)                   │
+│                                                              │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
+│  │ SSH Collector│  │SNMP Collector│  │Syslog Collect│     │
+│  │              │  │              │  │              │     │
+│  │ paramiko     │  │ pysnmp       │  │ syslog-ng    │     │
+│  │ asyncssh     │  │ aiosnmp      │  │ splunk-sdk   │     │
+│  └──────────────┘  └──────────────┘  └──────────────┘     │
+│         ▲                  ▲                  ▲             │
+│         │                  │                  │             │
+└─────────┼──────────────────┼──────────────────┼─────────────┘
+          │                  │                  │
+          │ SSH              │ SNMP             │ Syslog
+          │ TCP 22           │ UDP 161          │ TCP/UDP 514
+          │                  │                  │
+┌─────────┴──────────────────┴──────────────────┴─────────────┐
+│                    Cisco FTD Devices (Fleet)                 │
+│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐          │
+│  │  FTD 1  │ │  FTD 2  │ │  FTD 3  │ │  FTD N  │          │
+│  └─────────┘ └─────────┘ └─────────┘ └─────────┘          │
+│                                                              │
+│              Managed by: FMC (Firepower Management Center)  │
+└─────────────────────────────────────────────────────────────┘
+                           ▲
+                           │ HTTPS API (TCP 443)
+                           │
+                    ┌──────┴─────┐
+                    │ FMC API    │
+                    │ Collector  │
+                    │ (MCP)      │
+                    └────────────┘
+```
+
+**Collected Data Destinations**:
+
+- **SSH Command Outputs** → PostgreSQL (metadata) + MinIO (full outputs)
+- **SNMP Metrics** → TimescaleDB (time-series)
+- **Syslogs** → Splunk Enterprise (indexed logs)
+- **FMC API Data** → PostgreSQL (configs) + MinIO (backups)
+- **Config Backups** → Git (version control) + MinIO (long-term storage)
+- **Showtechs** → **MinIO (ALL show tech-support outputs stored permanently)**
+  - Scheduled showtechs
+  - Predictive showtechs (AI-triggered)
+  - Manual showtechs (on-demand)
+  - Event-triggered showtechs (on errors/failures)
+  - Retention: 7 years (hot storage → cold storage after 1 year)
+
+---
+
+### 7.8 Development Agency Deliverables
+
+The development agency must provide:
+
+1. **MCP Server Installation Scripts**
+   - Automated installation of all required tools
+   - Docker/Kubernetes deployment manifests
+   - Configuration templates
+
+2. **Data Collection Scripts**
+   - Python scripts for SSH, SNMP, Syslog, API collection
+   - Scheduling configuration (cron or Kubernetes CronJobs)
+   - Error handling and retry logic
+
+3. **Monitoring & Alerting**
+   - Prometheus metrics for collection health
+   - Grafana dashboards for collection status
+   - Alerts for collection failures
+
+4. **Documentation**
+   - Installation guide
+   - Configuration guide
+   - Troubleshooting guide
+   - Data flow diagrams
+
+---
 
 **Tools Exposed**:
 
 1. **get_devices**
-   - **Description**: List all managed devices
-   - **Parameters**: None
-   - **Returns**:
-     - Array of device objects (id, name, model, version, status)
+   - List all managed devices
+   - Parameters: None
+   - Returns: Array of devices with status
 
-2. **get_device_details**
-   - **Description**: Get detailed info for a device
-   - **Parameters**:
-     - `device_id` (string): Device UUID
-   - **Returns**:
-     - Device details object
+2. **get_policies**
+   - Get access control policies
+   - Parameters: `policy_id` (optional)
+   - Returns: Policy configuration
 
-3. **get_access_policies**
-   - **Description**: List all access control policies
-   - **Parameters**: None
-   - **Returns**:
-     - Array of policy objects
+3. **get_objects**
+   - Get network/service objects
+   - Parameters: `object_type` (network, service, port)
+   - Returns: Array of objects
 
-4. **get_policy_rules**
-   - **Description**: Get rules for a specific policy
-   - **Parameters**:
-     - `policy_id` (string): Policy UUID
-   - **Returns**:
-     - Array of rule objects
+4. **deploy_config**
+   - Deploy configuration to devices
+   - Parameters: `device_ids[]`, `force_deploy`
+   - Returns: Deployment task ID
 
-5. **create_network_object**
-   - **Description**: Create a network object
-   - **Parameters**:
-     - `name` (string): Object name
-     - `value` (string): IP address or network (CIDR)
-     - `type` (string): "Host" or "Network"
-   - **Returns**:
-     - Created object with UUID
+5. **get_deployment_status**
+   - Check deployment status
+   - Parameters: `task_id`
+   - Returns: Status (pending, in_progress, success, failed)
 
-6. **create_access_rule**
-   - **Description**: Create an access control rule
-   - **Parameters**:
-     - `policy_id` (string): Policy UUID
-     - `name` (string): Rule name
-     - `action` (string): "ALLOW", "BLOCK", "TRUST"
-     - `source` (object): Source objects
-     - `destination` (object): Destination objects
-     - `service` (object): Service/port objects
-     - `position` (int, optional): Rule position
-   - **Returns**:
-     - Created rule with UUID
-
-7. **deploy_config**
-   - **Description**: Deploy configuration to devices
-   - **Parameters**:
-     - `device_ids` (array of strings): Device UUIDs
-   - **Returns**:
-     - Deployment job ID
-
-8. **get_deployment_status**
-   - **Description**: Check deployment status
-   - **Parameters**:
-     - `job_id` (string): Deployment job ID
-   - **Returns**:
-     - Status: "QUEUED", "DEPLOYING", "DEPLOYED", "FAILED"
-     - Progress percentage
-     - Error messages (if any)
-
-9. **collect_showtech**
-   - **Description**: Trigger showtech collection
-   - **Parameters**:
-     - `device_id` (string): Device UUID
-   - **Returns**:
-     - Job ID
-
-10. **download_showtech**
-    - **Description**: Download collected showtech
-    - **Parameters**:
-      - `job_id` (string): Showtech job ID
-    - **Returns**:
-      - S3 URL for download
-
-**Implementation**:
-- Language: Python
-- Libraries: requests, aiohttp (async)
-- Authentication: FMC API tokens (auto-refresh)
-- API Version: FMC 7.x (6.x compatible)
-- Rate limiting: Respect FMC API limits (120 req/min)
+**Implementation Details**:
+- **Language**: Python
+- **Libraries**: requests, aiohttp
+- **Authentication**: FMC API token (OAuth-like)
+- **API Version**: FMC 7.0+ REST API
+- **Rate Limiting**: Respect FMC API rate limits (120 requests/min)
 
 **Security**:
-- Store FMC credentials in AWS Secrets Manager
-- Use HTTPS only
-- Validate SSL certificates
+
+- Store FMC credentials in secure vault (TBD by development agency)
+- Use HTTPS only (TLS 1.2+)
+- Token refresh logic (tokens expire after 30 minutes)
 - Audit all API calls
 
 ---
 
-#### 8.2.5 Firewall Device MCP Server (SSH + SNMP Combined)
+## 8. Database Architecture
 
-**Purpose**: Unified interface for interacting with FTD devices
+### 8.1 Database Inventory
 
-**Tools Exposed**:
-- Combines tools from SSH MCP Server and SNMP Collector MCP Server
-- Adds high-level convenience methods:
+| Database | Purpose | Technology | Deployment | Retention |
+|----------|---------|------------|------------|-----------|
+| **Relational DB** | Structured data (users, devices, configs, approvals) | PostgreSQL 15 | On-premises | Indefinite |
+| **Time-Series DB** | Device metrics, performance data | TimescaleDB (PostgreSQL extension) | On-premises | 2 years (metrics) |
+| **Log Management** | Centralized logging, syslog collection, search & analysis | Splunk Enterprise | On-premises | 90 days (hot), 1 year (warm), 7 years (cold) |
+| **Vector DB** | RAG embeddings for semantic search | **Vector Database** (vendor TBD by development agency) | On-premises | Indefinite |
+| **Document DB** | Knowledge base, unstructured data | MongoDB | On-premises | Indefinite |
+| **Cache** | Real-time data, session management | Redis | On-premises | Transient (TTL-based) |
+| **Blob Storage** | Showtechs, backups, reports, configs | MinIO | On-premises | 7 years (compliance) |
 
-1. **health_check**
-   - **Description**: Perform comprehensive health check
-   - **Parameters**:
-     - `device_id` (string): Device identifier
-   - **Returns**:
-     - `overall_status` (string): "healthy", "warning", "critical"
-     - `cpu_usage` (float)
-     - `memory_usage` (float)
-     - `interface_status` (object): Status of all interfaces
-     - `ha_status` (string, optional): HA pair status
-     - `issues` (array): List of detected issues
+**Note on Vector Database**: The specific vector database technology (e.g., Qdrant, Milvus, Weaviate, pgvector) should be proposed by the development agency with justification for their choice based on:
 
-2. **backup_config**
-   - **Description**: Backup device configuration to S3
-   - **Parameters**:
-     - `device_id` (string): Device identifier
-   - **Returns**:
-     - `s3_url` (string): S3 location of backup
-     - `timestamp` (timestamp): Backup timestamp
+- Performance requirements (search latency < 500ms)
+- Scalability (100,000+ documents)
+- On-premises deployment support
+- Integration with existing infrastructure
+- Licensing and support model
 
-3. **restore_config**
-   - **Description**: Restore configuration from backup
-   - **Parameters**:
-     - `device_id` (string): Device identifier
-     - `backup_s3_url` (string): S3 location of backup
-   - **Returns**:
-     - Success/failure status
+### 8.2 PostgreSQL Schema (Relational Database)
 
----
+**Core Tables**:
 
-## 9. Database Architecture
-
-### 9.1 Database Inventory
-
-| Database | Purpose | Technology | Cloud Service |
-|----------|---------|------------|---------------|
-| **Relational DB** | Structured data (users, devices, configs) | PostgreSQL 15 | AWS RDS |
-| **Time-Series DB** | Metrics, logs, events | TimescaleDB (PostgreSQL extension) | AWS RDS or self-hosted on EC2 |
-| **Vector DB** | RAG embeddings | Pinecone | Pinecone Cloud |
-| **Document DB** | Knowledge base, unstructured data | MongoDB | AWS DocumentDB or MongoDB Atlas |
-| **Cache** | Real-time data, session management | Redis | AWS ElastiCache |
-| **Blob Storage** | Showtechs, backups, reports | S3 | AWS S3 |
-
-### 9.2 Database Schemas
-
-#### 9.2.1 PostgreSQL (Relational Database)
-
-**Tables**:
-
+#### 8.2.1 Users & Authentication
 ```sql
--- Users and Authentication
-CREATE TABLE users (
-    user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    username VARCHAR(100) UNIQUE NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255),  -- NULL if SSO user
-    role VARCHAR(50) NOT NULL,  -- Viewer, Operator, Engineer, Approver, Admin, Auditor
-    mfa_enabled BOOLEAN DEFAULT false,
-    mfa_secret VARCHAR(255),
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW(),
-    last_login TIMESTAMP,
-    is_active BOOLEAN DEFAULT true
-);
+users (user_id, username, email, password_hash, role, mfa_enabled, mfa_secret, created_at, last_login, is_active)
+```
+- Roles: Viewer, Operator, Engineer, Approver, Admin, Auditor
+- MFA support: TOTP-based (Google Authenticator, Authy)
 
--- Devices
-CREATE TABLE devices (
-    device_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    hostname VARCHAR(255) NOT NULL,
-    ip_address INET NOT NULL,
-    device_type VARCHAR(50),  -- FTD, FMC
-    model VARCHAR(100),
-    software_version VARCHAR(50),
-    serial_number VARCHAR(100) UNIQUE,
-    site VARCHAR(100),
-    region VARCHAR(100),
-    ha_role VARCHAR(20),  -- active, standby, standalone
-    ha_peer_id UUID REFERENCES devices(device_id),
-    fmc_id UUID,  -- Reference to managing FMC
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW(),
-    last_seen TIMESTAMP
-);
+#### 8.2.2 Devices
+```sql
+devices (device_id, hostname, ip_address, device_type, model, software_version, serial_number, site, region, ha_role, ha_peer_id, fmc_id, created_at, last_seen)
+```
+- Device types: FTD, FMC
+- HA roles: active, standby, standalone
 
--- Configuration Backups
-CREATE TABLE config_backups (
-    backup_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    device_id UUID REFERENCES devices(device_id),
-    backup_type VARCHAR(50),  -- running-config, startup-config, fmc-policy
-    config_text TEXT,
-    config_hash VARCHAR(64),  -- SHA256 hash for change detection
-    s3_url VARCHAR(500),
-    size_bytes INTEGER,
-    created_at TIMESTAMP DEFAULT NOW(),
-    created_by UUID REFERENCES users(user_id)
-);
+#### 8.2.3 Configuration Backups
+```sql
+config_backups (backup_id, device_id, backup_type, config_text, config_hash, minio_url, size_bytes, created_at, created_by)
+```
+- Backup types: running-config, startup-config, fmc-policy
+- SHA256 hash for change detection
+- MinIO object storage for backup files
 
--- Configuration Change Requests
-CREATE TABLE change_requests (
-    request_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    title VARCHAR(500) NOT NULL,
-    description TEXT,
-    intent TEXT,  -- Natural language intent (if applicable)
-    requested_by UUID REFERENCES users(user_id),
-    requested_at TIMESTAMP DEFAULT NOW(),
-    status VARCHAR(50),  -- draft, pending_approval, approved, rejected, scheduled, deploying, deployed, failed, rolled_back
-    risk_score INTEGER,  -- 0-100
-    risk_level VARCHAR(20),  -- low, medium, high, critical
-    approval_level INTEGER,  -- 1, 2, 3
-    scheduled_at TIMESTAMP,
-    deployed_at TIMESTAMP,
-    notes TEXT
-);
-
--- Change Request Devices (many-to-many)
-CREATE TABLE change_request_devices (
-    request_id UUID REFERENCES change_requests(request_id),
-    device_id UUID REFERENCES devices(device_id),
-    config_changes TEXT,  -- CLI commands or JSON
-    PRIMARY KEY (request_id, device_id)
-);
-
--- Change Approvals
-CREATE TABLE change_approvals (
-    approval_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    request_id UUID REFERENCES change_requests(request_id),
-    approver_id UUID REFERENCES users(user_id),
-    approval_level INTEGER,  -- 1, 2, 3
-    decision VARCHAR(20),  -- approved, rejected, conditional, deferred
-    comments TEXT,
-    approved_at TIMESTAMP DEFAULT NOW(),
-    mfa_verified BOOLEAN DEFAULT false
-);
-
--- Deployment History
-CREATE TABLE deployments (
-    deployment_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    request_id UUID REFERENCES change_requests(request_id),
-    device_id UUID REFERENCES devices(device_id),
-    status VARCHAR(50),  -- pending, in_progress, success, failed, rolled_back
-    started_at TIMESTAMP,
-    completed_at TIMESTAMP,
-    error_message TEXT,
-    rollback_performed BOOLEAN DEFAULT false,
-    deployed_by UUID REFERENCES users(user_id)
-);
-
--- Best Practices Scoring
-CREATE TABLE config_scores (
-    score_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    device_id UUID REFERENCES devices(device_id),
-    scored_at TIMESTAMP DEFAULT NOW(),
-    overall_score INTEGER,  -- 0-100
-    section_1_score INTEGER,  -- Access Control
-    section_2_score INTEGER,  -- Network Segmentation
-    section_3_score INTEGER,  -- NAT
-    section_4_score INTEGER,  -- VPN
-    section_5_score INTEGER,  -- Logging
-    section_6_score INTEGER,  -- High Availability
-    section_7_score INTEGER,  -- Authentication
-    section_8_score INTEGER,  -- Intrusion Prevention
-    section_9_score INTEGER,  -- Performance
-    section_10_score INTEGER, -- Compliance
-    findings JSONB  -- Detailed findings per section
-);
-
--- Recommendations
-CREATE TABLE recommendations (
-    recommendation_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    device_id UUID REFERENCES devices(device_id),
-    generated_at TIMESTAMP DEFAULT NOW(),
-    priority VARCHAR(10),  -- P0, P1, P2, P3, P4
-    category VARCHAR(100),  -- Security, Performance, Compliance, Optimization
-    title VARCHAR(500),
-    description TEXT,
-    remediation TEXT,  -- CLI commands or steps
-    estimated_effort VARCHAR(50),  -- Low, Medium, High
-    estimated_impact VARCHAR(50),  -- Low, Medium, High
-    status VARCHAR(50),  -- new, accepted, rejected, implemented, dismissed
-    user_feedback TEXT,
-    feedback_at TIMESTAMP
-);
-
--- Audit Logs
-CREATE TABLE audit_logs (
-    log_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID REFERENCES users(user_id),
-    action VARCHAR(100),  -- login, logout, config_change, approval, deployment, etc.
-    resource_type VARCHAR(100),  -- device, user, config, etc.
-    resource_id UUID,
-    details JSONB,
-    ip_address INET,
-    user_agent VARCHAR(500),
-    created_at TIMESTAMP DEFAULT NOW()
-);
+#### 8.2.4 Change Management
+```sql
+change_requests (request_id, title, description, intent, requested_by, requested_at, status, risk_score, risk_level, approval_level, scheduled_at, deployed_at)
+change_request_devices (request_id, device_id, config_changes)
+change_approvals (approval_id, request_id, approver_id, approval_level, decision, comments, approved_at, mfa_verified)
+deployments (deployment_id, request_id, device_id, status, started_at, completed_at, error_message, rollback_performed)
 ```
 
----
-
-#### 9.2.2 TimescaleDB (Time-Series Database)
-
-**Hypertables**:
-
+#### 8.2.5 Configuration Scoring & Recommendations
 ```sql
--- Device Metrics
-CREATE TABLE device_metrics (
-    time TIMESTAMP NOT NULL,
-    device_id UUID NOT NULL,
-    metric_name VARCHAR(100) NOT NULL,  -- cpu_usage, memory_usage, connection_count, etc.
-    value DOUBLE PRECISION,
-    unit VARCHAR(50),  -- percent, bytes, count
-    FOREIGN KEY (device_id) REFERENCES devices(device_id)
-);
-
--- Convert to hypertable
-SELECT create_hypertable('device_metrics', 'time');
-
--- Interface Metrics
-CREATE TABLE interface_metrics (
-    time TIMESTAMP NOT NULL,
-    device_id UUID NOT NULL,
-    interface_name VARCHAR(100) NOT NULL,
-    metric_name VARCHAR(100) NOT NULL,  -- in_octets, out_octets, errors, etc.
-    value BIGINT,
-    FOREIGN KEY (device_id) REFERENCES devices(device_id)
-);
-
-SELECT create_hypertable('interface_metrics', 'time');
-
--- Syslog Events
-CREATE TABLE syslog_events (
-    time TIMESTAMP NOT NULL,
-    device_id UUID NOT NULL,
-    severity VARCHAR(20),  -- emergency, alert, critical, error, warning, notice, info, debug
-    facility VARCHAR(50),
-    message TEXT,
-    source_ip INET,
-    dest_ip INET,
-    source_port INTEGER,
-    dest_port INTEGER,
-    protocol VARCHAR(20),
-    action VARCHAR(20),  -- permit, deny
-    interface VARCHAR(100),
-    user_name VARCHAR(100),
-    application VARCHAR(100),
-    FOREIGN KEY (device_id) REFERENCES devices(device_id)
-);
-
-SELECT create_hypertable('syslog_events', 'time');
-
--- Create indexes for fast queries
-CREATE INDEX idx_syslog_device_time ON syslog_events (device_id, time DESC);
-CREATE INDEX idx_syslog_severity ON syslog_events (severity, time DESC);
-CREATE INDEX idx_syslog_source_ip ON syslog_events (source_ip, time DESC);
-CREATE INDEX idx_syslog_dest_ip ON syslog_events (dest_ip, time DESC);
-
--- Retention policy (delete data older than 90 days)
-SELECT add_retention_policy('syslog_events', INTERVAL '90 days');
-SELECT add_retention_policy('device_metrics', INTERVAL '180 days');
-SELECT add_retention_policy('interface_metrics', INTERVAL '180 days');
+config_scores (score_id, device_id, scored_at, overall_score, section_1_score...section_10_score, findings)
+recommendations (recommendation_id, device_id, generated_at, priority, category, title, description, remediation, estimated_effort, status, user_feedback)
 ```
 
----
+#### 8.2.6 Audit Logs
+```sql
+audit_logs (log_id, user_id, action, resource_type, resource_id, details, ip_address, user_agent, created_at)
+```
+- Immutable audit trail (WORM storage)
+- Retention: 7 years (compliance requirement)
 
-#### 9.2.3 MongoDB (Knowledge Base)
+### 8.3 TimescaleDB Schema (Time-Series Database)
+
+**Hypertables** (optimized for time-series queries):
+
+#### 8.3.1 Device Metrics
+```sql
+device_metrics (time, device_id, metric_name, value, unit)
+```
+- Metrics: cpu_usage, memory_usage, connection_count, disk_usage, etc.
+- Retention: 2 years
+- Compression: Enable after 7 days
+
+#### 8.3.2 Interface Metrics
+```sql
+interface_metrics (time, device_id, interface_name, metric_name, value)
+```
+- Metrics: in_octets, out_octets, in_errors, out_errors, in_discards, out_discards
+
+#### 8.3.3 Syslog Events (Splunk)
+
+**Note**: Syslog events are now stored and indexed in Splunk Enterprise instead of TimescaleDB for advanced log analysis capabilities.
+
+**Splunk Index Configuration**:
+
+- **Index Name**: `cisco_ftd_logs`
+- **Source Type**: `cisco:ftd:syslog`
+- **Retention**: Hot (90 days) → Warm (1 year) → Cold (7 years)
+- **Parsed Fields**: timestamp, severity, facility, device_id, message, source_ip, dest_ip, protocol, action, interface, user, application
+
+**Benefits of Splunk**:
+
+- Advanced search and correlation capabilities
+- Real-time alerting and dashboards
+- Machine learning for anomaly detection
+- Native integration with Cisco security products
+- Enterprise-grade scalability
+
+### 8.4 Vector Database Schema
+
+**Note**: Development agency to propose specific vector database solution (e.g., Qdrant, Milvus, Weaviate, pgvector, Chroma).
+
+**Required Index Configuration**:
+
+- **Dimension**: 1536 (for standard embeddings from LLM provider)
+- **Metric**: Cosine similarity
+- **Collections/Namespaces**:
+  - `cisco_docs` - Official Cisco documentation
+  - `kb_articles` - Knowledge base articles
+  - `troubleshooting` - Troubleshooting guides
+  - `incidents` - Historical incident reports
+
+**Required Metadata Fields**:
+
+- `doc_id`: Unique document identifier
+- `doc_type`: documentation, kb_article, troubleshooting_guide, incident_report
+- `title`: Document title
+- `category`: Category/tag
+- `product`: FTD, FMC, etc.
+- `version`: Software version (e.g., "7.0", "7.2")
+- `url`: Source URL (if applicable)
+- `last_updated`: Timestamp
+
+**Performance Requirements**:
+
+- Search latency: < 500ms for top-5 results
+- Support for 100,000+ documents
+- Hybrid search capability (vector + keyword)
+- On-premises deployment
+- High availability and backup support
+
+### 8.5 MongoDB Schema (Document Database)
 
 **Collections**:
 
-```javascript
-// kb_documents
+#### 8.5.1 Knowledge Base Documents
+```json
 {
-  _id: ObjectId,
-  doc_id: UUID,
-  title: String,
-  content: String,  // Full document text
-  chunks: [String],  // Chunked text for RAG (500-1000 tokens per chunk)
-  doc_type: String,  // guide, reference, troubleshooting, bestpractice, runbook
-  source: String,  // URL or file path
-  version: String,  // Cisco software version (if applicable)
-  tags: [String],
-  metadata: {
-    author: String,
-    published_date: Date,
-    updated_date: Date,
-    word_count: Number,
-    page_count: Number
-  },
-  created_at: Date,
-  updated_at: Date,
-  embedding_ids: [String]  // References to Pinecone vectors
+  "_id": ObjectId,
+  "doc_id": "string",
+  "title": "string",
+  "content": "string (full text)",
+  "doc_type": "documentation | kb_article | troubleshooting_guide",
+  "category": "string",
+  "product": "FTD | FMC",
+  "version": "string",
+  "url": "string",
+  "tags": ["array"],
+  "created_at": ISODate,
+  "updated_at": ISODate
 }
-
-// Indexes
-db.kb_documents.createIndex({ doc_type: 1, version: 1 });
-db.kb_documents.createIndex({ tags: 1 });
-db.kb_documents.createIndex({ "$**": "text" });  // Full-text search
 ```
 
-```javascript
-// incident_history
+#### 8.5.2 Agent Workflow History
+```json
 {
-  _id: ObjectId,
-  incident_id: UUID,
-  title: String,
-  description: String,
-  devices_affected: [UUID],
-  symptoms: [String],
-  root_cause: String,
-  resolution_steps: [String],
-  resolution_time_minutes: Number,
-  severity: String,  // low, medium, high, critical
-  category: String,  // performance, connectivity, security, configuration
-  occurred_at: Date,
-  resolved_at: Date,
-  rca_report_url: String,  // S3 URL
-  lessons_learned: String,
-  related_incidents: [UUID]  // Similar incidents
+  "_id": ObjectId,
+  "workflow_id": "string",
+  "scenario_type": "cpu_spike | memory_leak | connectivity_issue",
+  "device_id": "string",
+  "started_at": ISODate,
+  "completed_at": ISODate,
+  "status": "in_progress | completed | failed",
+  "steps": [
+    {
+      "agent": "string",
+      "action": "string",
+      "inputs": {},
+      "outputs": {},
+      "started_at": ISODate,
+      "completed_at": ISODate
+    }
+  ],
+  "findings": {},
+  "recommendations": []
 }
-
-// Indexes
-db.incident_history.createIndex({ devices_affected: 1 });
-db.incident_history.createIndex({ occurred_at: -1 });
-db.incident_history.createIndex({ category: 1 });
 ```
+
+### 8.6 Redis Schema (Cache)
+
+**Key Patterns**:
+- `session:{session_id}` - User session data (TTL: 30 minutes)
+- `device:health:{device_id}` - Latest device health (TTL: 60 seconds)
+- `metrics:latest:{device_id}:{metric_name}` - Latest metric value (TTL: 60 seconds)
+- `rate_limit:{user_id}:{endpoint}` - API rate limiting (TTL: 60 seconds)
+- `embedding_cache:{doc_id}` - Cached embeddings (TTL: 24 hours)
+
+### 8.7 MinIO Bucket Structure
+
+**Bucket Organization**:
+```
+minio://firewall-mgmt-data/
+├── config-backups/
+│   └── {device_id}/
+│       └── {timestamp}/
+│           └── running-config.txt
+├── showtechs/
+│   └── {device_id}/
+│       └── {timestamp}/
+│           ├── showtech-output.txt          (full showtech log)
+│           ├── showtech-output.tar.gz       (compressed version)
+│           └── metadata.json                (collection context)
+├── reports/
+│   └── config-scores/
+│       └── {device_id}/
+│           └── {date}/
+│               └── score-report.pdf
+└── deployments/
+    └── {request_id}/
+        └── deployment-log.json
+```
+
+**Lifecycle Policies**:
+
+- Config backups: Retain for 7 years, archive to cold storage after 1 year
+- **Showtechs: Retain for 7 years** (hot storage 1 year → cold storage 6 years)
+  - **ALL showtech outputs permanently stored in MinIO**
+  - Automatic compression after 7 days (convert `.txt` to `.tar.gz`)
+  - Move to cold storage tier after 1 year (slower access, lower cost)
+  - Indexed in PostgreSQL for fast search by device ID, timestamp, collection reason
+  - No automatic deletion - manual intervention required for cleanup
+- Reports: Retain for 2 years
+- Deployment logs: Retain for 7 years (compliance)
+
+**MinIO Features**:
+
+- S3-compatible API for easy migration
+- Versioning enabled for all buckets
+- Encryption at rest (AES-256)
+- Access control via IAM policies
+- Self-hosted or cloud deployment options
 
 ---
 
-#### 9.2.4 Pinecone (Vector Database)
+## 9. Identity & Access Management (IAM)
 
-**Index Configuration**:
+### 9.1 User Management
 
-```python
-# Index name: firewall-kb
-# Dimensions: 1536 (OpenAI text-embedding-ada-002 or AWS Bedrock Titan Embeddings)
-# Metric: cosine similarity
-# Pod type: p1.x1 (starter), p1.x2 (production)
+**Overview**: Comprehensive user lifecycle management with role-based access control, multi-factor authentication, and audit trails.
 
-# Vector format
-{
-  "id": "chunk_<doc_id>_<chunk_index>",
-  "values": [0.123, -0.456, ...],  # 1536 dimensions
-  "metadata": {
-    "doc_id": "UUID",
-    "doc_title": "Cisco FTD CLI Configuration Guide",
-    "doc_type": "guide",
-    "chunk_index": 5,
-    "chunk_text": "First 500 chars of chunk...",
-    "version": "7.2",
-    "tags": ["configuration", "cli", "ftd"]
-  }
-}
-```
+**User Lifecycle**:
 
-**Query Example**:
+1. **User Provisioning**
+   - Admin-initiated user creation
+   - Automated provisioning via LDAP/Active Directory sync
+   - Self-service registration (with admin approval)
+   - Bulk user import (CSV/API)
 
-```python
-# Query: "How to troubleshoot high CPU on FTD?"
-query_vector = embed_text("How to troubleshoot high CPU on FTD?")
-results = index.query(
-    vector=query_vector,
-    top_k=5,
-    include_metadata=True,
-    filter={"doc_type": {"$in": ["troubleshooting", "guide"]}}
-)
-```
+2. **User Profile Management**
+   - Personal information (name, email, phone)
+   - Department and reporting structure
+   - **Timezone Preferences**: User-defined timezone selection
+     - Default: IST (Indian Standard Time - UTC+5:30)
+     - Support for all global timezones
+     - Auto-detect browser timezone on login
+     - All timestamps displayed in user's selected timezone
+   - Locale preferences (language, date format, number format)
+   - Profile picture and display name
 
----
+3. **User Deprovisioning**
+   - Immediate account disable/lock
+   - Scheduled account expiration
+   - Grace period for data retention
+   - Automatic cleanup of orphaned sessions and tokens
 
-#### 9.2.5 Redis (Cache)
+**User Roles & Permissions**:
 
-**Data Structures**:
+| Role | Permissions | Use Case |
+|------|-------------|----------|
+| **Viewer** | Read-only access to dashboards, logs, configurations | NOC monitoring, read-only auditors |
+| **Operator** | Viewer + initiate low-risk changes, acknowledge alerts | NOC operators, junior engineers |
+| **Engineer** | Operator + create/modify configurations, run diagnostics | Network/security engineers |
+| **Approver** | Engineer + approve medium/high-risk changes | Senior engineers, team leads |
+| **Admin** | Full access + user management, system configuration | IT admins, platform administrators |
+| **Auditor** | Read-only + full audit log access, compliance reports | Security auditors, compliance team |
 
-```
-# Session management
-Key: session:<session_id>
-Type: Hash
-Fields: user_id, username, role, login_time, last_activity
-TTL: 15 minutes (refresh on activity)
+**Permission Matrix**:
 
-# Device health cache
-Key: device:<device_id>:health
-Type: Hash
-Fields: cpu_usage, memory_usage, status, last_update
-TTL: 60 seconds
+| Resource | Viewer | Operator | Engineer | Approver | Admin | Auditor |
+|----------|--------|----------|----------|----------|-------|---------|
+| View Dashboards | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| View Configurations | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Search Logs | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Create Low-Risk Changes | ✗ | ✓ | ✓ | ✓ | ✓ | ✗ |
+| Create Medium-Risk Changes | ✗ | ✗ | ✓ | ✓ | ✓ | ✗ |
+| Create High-Risk Changes | ✗ | ✗ | ✓ | ✓ | ✓ | ✗ |
+| Approve Changes | ✗ | ✗ | ✗ | ✓ | ✓ | ✗ |
+| Deploy Changes | ✗ | ✗ | ✗ | ✓ | ✓ | ✗ |
+| Manage Users | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ |
+| View Audit Logs | Limited | Limited | Limited | Limited | ✓ | ✓ |
+| System Configuration | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ |
 
-# Real-time metrics
-Key: metrics:<device_id>:<metric_name>
-Type: Time Series (Redis TimeSeries module)
-Values: Timestamp + Value pairs
+### 9.2 Multi-Factor Authentication (MFA) with Cisco Duo
 
-# Query result cache
-Key: query:<hash>
-Type: String (JSON)
-TTL: 5 minutes
+**Overview**: Mandatory MFA for all users with Cisco Duo Security integration for enhanced authentication.
 
-# Agent workflow state
-Key: workflow:<workflow_id>
-Type: Hash
-Fields: status, current_agent, results, start_time
-TTL: 1 hour
-```
+**Cisco Duo Integration**:
+
+- **Primary MFA Provider**: Cisco Duo Security (Cisco-owned product)
+- **Supported Methods**:
+  - Duo Push (push notification to Duo Mobile app)
+  - Duo Passcode (6-digit OTP from Duo Mobile)
+  - Phone Call (automated voice call with PIN)
+  - SMS Passcode (backup method)
+  - Hardware Tokens (TOTP-compatible: YubiKey, RSA SecurID)
+
+**MFA Enrollment**:
+
+1. **Mandatory Enrollment**: All users must enroll in Duo within 24 hours of account creation
+2. **Enrollment Flow**:
+   - User logs in with username/password
+   - System redirects to Duo enrollment page
+   - User downloads Duo Mobile app (iOS/Android)
+   - User scans QR code to link device
+   - User completes test authentication
+   - Admin approves enrollment (optional, configurable)
+
+3. **Backup Methods**: Users must configure at least 2 authentication methods (e.g., Duo Push + SMS)
+
+**MFA Policy Configuration**:
+
+- **Login MFA**: Required for all logins (web UI, API, CLI)
+- **Critical Operations MFA**:
+  - Approve high-risk configuration changes
+  - Deploy configuration changes
+  - User management actions (create, delete, role changes)
+  - System configuration changes
+  - Audit log access
+
+- **MFA Grace Period**: 8-hour session (configurable), re-authentication required after
+- **Trusted Devices**: Remember device for 30 days (optional, configurable per role)
+- **Offline Access Token**: Backup codes for emergency access (10 single-use codes)
+
+**Duo Security Features**:
+
+- **Adaptive Authentication**: Risk-based MFA prompts based on:
+  - Login location (geo-location)
+  - Device trust level
+  - Network (corporate vs. external)
+  - User behavior patterns
+  - Time of day
+
+- **Device Health Checks**:
+  - OS version and patch level
+  - Disk encryption status
+  - Screen lock enabled
+  - Biometric authentication support
+
+- **Fraud Prevention**:
+  - Anomalous login detection
+  - Impossible travel detection
+  - Device fingerprinting
+  - Brute force protection
+
+**Duo Admin Portal Integration**:
+
+- Centralized Duo admin portal for:
+  - User enrollment status monitoring
+  - Authentication logs and reports
+  - Policy configuration
+  - Bypass codes generation (emergency access)
+  - Device management
+
+### 9.3 Single Sign-On (SSO) Integration
+
+**Supported Protocols**:
+
+- **SAML 2.0**: Primary SSO protocol
+- **OAuth 2.0 / OpenID Connect**: For API integrations
+- **LDAP/Active Directory**: For on-premises directory integration
+
+**Supported Identity Providers (IdPs)**:
+
+- **Cisco Duo Access Gateway**: Primary (Cisco-owned)
+- Active Directory Federation Services (ADFS)
+- Okta
+- Azure Active Directory (Azure AD)
+- PingFederate
+- Generic SAML 2.0 providers
+
+**SSO Configuration**:
+
+1. **SAML Configuration**:
+   - IdP metadata XML import
+   - Service Provider (SP) metadata export
+   - Assertion Consumer Service (ACS) URL
+   - Single Logout (SLO) URL
+   - Attribute mapping (username, email, role, department)
+
+2. **Just-In-Time (JIT) Provisioning**:
+   - Auto-create user accounts on first SSO login
+   - Map SAML attributes to user roles
+   - Update user profile on each login
+   - Sync group memberships from IdP
+
+3. **Session Management**:
+   - SSO session timeout: 8 hours (configurable)
+   - Idle timeout: 30 minutes (configurable)
+   - Concurrent session limit: 3 per user (configurable)
+   - Force logout on role change
+
+### 9.4 Session Management
+
+**Session Security**:
+
+- **Session Token**: JWT with 30-minute expiration
+- **Refresh Token**: 7-day expiration (sliding window)
+- **Token Storage**: HttpOnly, Secure, SameSite cookies
+- **Token Rotation**: New token on each refresh
+- **Session Binding**: IP address + User-Agent fingerprinting (optional)
+
+**Session Controls**:
+
+- **Concurrent Sessions**: Limit 3 active sessions per user
+- **Session Termination**:
+  - Manual logout (single session)
+  - Logout all sessions (user-initiated or admin-forced)
+  - Automatic logout on password change
+  - Automatic logout on role change
+  - Automatic logout on MFA device removal
+
+- **Session Monitoring**:
+  - Active sessions dashboard
+  - Session history (last 90 days)
+  - Suspicious session alerts
+  - Geographic anomaly detection
+
+### 9.5 Password Policy
+
+**Password Requirements**:
+
+- **Minimum Length**: 12 characters
+- **Complexity**:
+  - At least 1 uppercase letter
+  - At least 1 lowercase letter
+  - At least 1 number
+  - At least 1 special character (!@#$%^&*)
+- **Password History**: Cannot reuse last 10 passwords
+- **Password Expiration**: 90 days (configurable, can be disabled with MFA)
+- **Password Strength**: zxcvbn library for real-time strength feedback
+
+**Password Reset**:
+
+- **Self-Service Reset**:
+  - Email-based reset link (valid for 1 hour)
+  - Security questions (optional)
+  - MFA verification required (if enrolled)
+
+- **Admin-Initiated Reset**:
+  - Temporary password generation
+  - Force password change on next login
+  - Email notification to user
+
+- **Lockout Policy**:
+  - 5 failed attempts → 15-minute lockout
+  - 10 failed attempts → Account disabled (admin unlock required)
+  - Lockout counter resets after successful login
+
+### 9.6 Audit & Compliance
+
+**Audit Logging**:
+
+- **IAM Events Logged**:
+  - User login/logout (success/failure)
+  - MFA enrollment/authentication
+  - Password changes/resets
+  - Role changes
+  - Permission grants/revocations
+  - Session creation/termination
+  - SSO authentication events
+  - Admin actions (user management)
+
+- **Audit Log Fields**:
+  - Timestamp (UTC)
+  - User ID and username
+  - Action type
+  - Resource affected
+  - IP address and geo-location
+  - User-Agent (browser/device)
+  - MFA method used
+  - Success/failure status
+  - Error message (if failed)
+
+- **Audit Log Retention**: 7 years (compliance requirement)
+- **Audit Log Storage**: Immutable (WORM storage in PostgreSQL)
+- **Audit Log Export**: CSV, JSON, SIEM integration (Splunk)
+
+**Compliance Features**:
+
+- **SOC 2 Type II**: Audit trail for user access controls
+- **HIPAA**: User access logging and MFA enforcement
+- **PCI-DSS**: Strong authentication and access controls
+- **GDPR**: User consent tracking and data access logs
+
+### 9.7 API Key Management
+
+**API Key Types**:
+
+- **User API Keys**: Tied to individual user accounts
+- **Service Account Keys**: For system-to-system integration
+- **Temporary Keys**: Short-lived tokens for specific tasks
+
+**API Key Features**:
+
+- **Generation**: Admin or user-initiated
+- **Rotation**: Automatic 90-day rotation (configurable)
+- **Scoping**: Fine-grained permissions (read-only, specific endpoints)
+- **Rate Limiting**: Per-key rate limits
+- **Expiration**: Configurable TTL (default: 90 days)
+- **Revocation**: Immediate invalidation
+- **Audit Trail**: All API key usage logged
+
+**API Key Storage**:
+
+- **Hashing**: SHA-256 hash stored in database
+- **Secure Display**: Show key only once during generation
+- **Secure Transmission**: HTTPS only
+- **Key Prefix**: Identify key type (e.g., `usr_`, `svc_`, `tmp_`)
+
+### 9.8 Development Agency Requirements
+
+The development agency must provide in their proposal:
+
+1. **IAM Architecture Proposal**:
+   - Detailed authentication flow diagrams
+   - Session management implementation
+   - JWT token structure and signing method
+   - Database schema for user management
+
+2. **Duo Integration Plan**:
+   - Duo API integration approach
+   - Duo enrollment workflow
+   - Duo policy configuration strategy
+   - Duo failover/backup plan
+
+3. **SSO Integration Plan**:
+   - Supported IdP list
+   - SAML implementation approach
+   - JIT provisioning logic
+   - Attribute mapping strategy
+
+4. **Security Measures**:
+   - Password hashing algorithm (e.g., bcrypt, Argon2)
+   - Token encryption method
+   - Session hijacking prevention
+   - CSRF protection strategy
+   - XSS prevention measures
+
+5. **Compliance Documentation**:
+   - SOC 2 compliance mapping
+   - HIPAA compliance checklist
+   - PCI-DSS requirements coverage
+   - GDPR data handling
 
 ---
 
 ## 10. API & Integration Requirements
 
-### 10.1 REST API Specification
+### 9.1 REST API Specification
 
 **Base URL**: `https://api.firewall-mgmt.company.com/v1`
 
 **Authentication**: Bearer token (JWT)
+- Token expiration: 30 minutes
+- Refresh token: 7 days
+- MFA required for critical operations
 
-**Endpoints**:
+### 9.2 Core API Endpoints
 
-#### 10.1.1 Authentication
-
+#### 9.2.1 Authentication
 ```
 POST /auth/login
-Request: { username, password }
-Response: { access_token, refresh_token, expires_in }
+  Request: { username, password }
+  Response: { access_token, refresh_token, expires_in }
 
 POST /auth/mfa/verify
-Request: { token, mfa_code }
-Response: { access_token }
+  Request: { token, mfa_code }
+  Response: { access_token }
+
+POST /auth/refresh
+  Request: { refresh_token }
+  Response: { access_token }
 
 POST /auth/logout
-Request: { refresh_token }
-Response: { success }
+  Request: { refresh_token }
+  Response: { success }
 ```
 
-#### 10.1.2 Devices
-
+#### 9.2.2 Devices
 ```
 GET /devices
-Query params: site, region, status
-Response: [{ device_id, hostname, ip_address, status, ... }]
+  Query: ?site=X&region=Y&status=active
+  Response: [{ device_id, hostname, ip_address, status, ... }]
 
 GET /devices/{device_id}
-Response: { device_id, hostname, interfaces, ha_status, ... }
+  Response: { device_id, hostname, interfaces, ha_status, metrics, ... }
 
 GET /devices/{device_id}/health
-Response: { cpu, memory, connections, interfaces, status }
+  Response: { cpu, memory, connections, interfaces, status }
 
 GET /devices/{device_id}/config
-Response: { running_config, startup_config, last_backup }
+  Response: { running_config, startup_config, last_backup }
 
 POST /devices/{device_id}/backup
-Response: { backup_id, s3_url }
+  Response: { backup_id, minio_url }
 ```
 
-#### 10.1.3 Monitoring
-
+#### 9.2.3 Monitoring & Logs
 ```
 GET /metrics/{device_id}
-Query params: metric_name, start_time, end_time, interval
-Response: [{ timestamp, value }, ...]
+  Query: ?metric_name=cpu_usage&start_time=X&end_time=Y&interval=60
+  Response: [{ timestamp, value }, ...]
 
 GET /logs/search
-Query params: device_id, severity, message_pattern, start_time, end_time, limit
-Response: [{ timestamp, device_id, severity, message, ... }, ...]
+  Query: ?device_id=X&severity=error&start_time=X&end_time=Y&limit=100
+  Response: [{ timestamp, device_id, severity, message, ... }, ...]
 
-GET /logs/stream
-WebSocket endpoint for real-time log streaming
+WebSocket /logs/stream
+  Subscribe to real-time log stream
+  Filter: { device_id, severity }
 ```
 
-#### 10.1.4 Configuration Management
-
+#### 9.2.4 Configuration Analysis
 ```
 GET /config/scores/{device_id}
-Response: { overall_score, section_scores, findings }
+  Response: { overall_score, section_scores: { access_control: 85, ... }, findings: [] }
+
+GET /config/scores/{device_id}/history
+  Query: ?start_date=X&end_date=Y
+  Response: [{ scored_at, overall_score, section_scores }, ...]
 
 GET /recommendations/{device_id}
-Response: [{ recommendation_id, priority, title, description, remediation }, ...]
+  Response: [{ recommendation_id, priority, title, description, remediation }, ...]
 
 POST /recommendations/{recommendation_id}/feedback
-Request: { feedback: "accepted" | "rejected", comments }
-Response: { success }
+  Request: { feedback: "accepted" | "rejected", comments }
+  Response: { success }
 ```
 
-#### 10.1.5 Change Management
-
+#### 9.2.5 Change Management
 ```
 POST /changes
-Request: { title, description, intent, device_ids }
-Response: { request_id, status }
+  Request: { title, description, intent, device_ids: [] }
+  Response: { request_id, status, risk_score }
 
 GET /changes/{request_id}
-Response: { request_id, title, status, approvals, risk_score, ... }
+  Response: { request_id, title, status, approvals: [], risk_score, impact_analysis, ... }
 
 POST /changes/{request_id}/approve
-Request: { mfa_code }
-Response: { success, approval_id }
+  Request: { mfa_code, comments }
+  Response: { success, approval_id }
+
+POST /changes/{request_id}/reject
+  Request: { reason, comments }
+  Response: { success }
 
 POST /changes/{request_id}/deploy
-Request: { scheduled_at }
-Response: { deployment_id }
+  Request: { scheduled_at }
+  Response: { deployment_id }
 
 GET /changes/{request_id}/impact
-Response: { impact_score, affected_components, simulation_results }
+  Response: { impact_score, affected_components: [], simulation_results: {} }
 ```
 
-#### 10.1.6 AI Agents
-
+#### 9.2.6 AI Agents
 ```
 POST /agents/investigate
-Request: { scenario_type, device_id, context }
-Response: { workflow_id }
+  Request: { scenario_type, device_id, context }
+  Response: { workflow_id }
 
 GET /agents/workflow/{workflow_id}
-Response: { status, current_agent, steps, results }
+  Response: { status, current_agent, steps: [], results: {} }
+
+WebSocket /agents/workflow/{workflow_id}/stream
+  Subscribe to real-time workflow updates
 
 POST /agents/chat
-Request: { message, conversation_history }
-Response: { response, sources }
+  Request: { message, conversation_history: [] }
+  Response: { response, sources: [], confidence }
 ```
 
-### 10.2 GraphQL API
+### 9.3 GraphQL API
 
 **Endpoint**: `https://api.firewall-mgmt.company.com/graphql`
 
-**Schema Sample**:
+**Key Features**:
+- Flexible querying (request only needed fields)
+- Real-time subscriptions (WebSocket-based)
+- Batched queries (reduce network overhead)
 
+**Schema Highlights**:
 ```graphql
 type Query {
   devices(site: String, region: String): [Device!]!
   device(id: ID!): Device
   configScore(deviceId: ID!): ConfigScore
   changeRequests(status: String): [ChangeRequest!]!
+  logs(deviceId: ID, severity: String, limit: Int): [LogEntry!]!
 }
 
 type Mutation {
@@ -2329,628 +1796,270 @@ type Subscription {
   logStream(deviceId: ID, severity: String): LogEntry!
   workflowUpdates(workflowId: ID!): WorkflowStep!
 }
+```
 
-type Device {
-  id: ID!
-  hostname: String!
-  ipAddress: String!
-  model: String
-  version: String
-  health: HealthStatus!
-  config: Config
-  scores: ConfigScore
-  recommendations: [Recommendation!]!
-}
+### 9.4 WebSocket API
 
-type HealthStatus {
-  status: String!
-  cpuUsage: Float!
-  memoryUsage: Float!
-  uptime: Int!
+**Real-Time Endpoints**:
+- `/ws/logs/stream` - Real-time log streaming
+- `/ws/metrics/stream` - Real-time metric updates
+- `/ws/agents/workflow/{workflow_id}` - Agent workflow progress
+- `/ws/deployments/{deployment_id}` - Deployment status updates
+
+**Message Format**:
+```json
+{
+  "type": "log_entry | metric_update | workflow_step | deployment_status",
+  "timestamp": "ISO8601",
+  "data": { ... }
 }
 ```
 
-### 10.3 WebSocket API
+### 9.5 External Integrations
 
-**Real-Time Channels**:
+**Supported Integrations**:
 
-1. **Device Metrics Stream**
-   - Channel: `/ws/metrics/{device_id}`
-   - Data: { timestamp, metric_name, value }
+1. **Cisco FMC API**
+   - Retrieve policies, objects, devices
+   - Deploy configurations
+   - Monitor deployment status
 
-2. **Log Stream**
-   - Channel: `/ws/logs`
-   - Filters: device_id, severity
-   - Data: { timestamp, device_id, severity, message, ... }
+2. **SNMP Traps**
+   - Receive SNMP traps from devices
+   - Convert traps to alerts
 
-3. **Workflow Updates**
-   - Channel: `/ws/workflow/{workflow_id}`
-   - Data: { agent_name, status, message, findings }
+3. **Syslog**
+   - Receive syslogs from FTD devices
+   - Parse and forward to Splunk Enterprise
 
-4. **Deployment Progress**
-   - Channel: `/ws/deployment/{deployment_id}`
-   - Data: { device_id, status, progress_percent, message }
+4. **Splunk Integration**
+   - Centralized log management and analysis
+   - HTTP Event Collector (HEC) for log ingestion
+   - Splunk Search Processing Language (SPL) queries
+   - Real-time alerting and correlation
+   - Native Cisco security product integration
 
-### 10.4 Third-Party Integrations
+5. **Webhooks (Outbound)**
+   - Send alerts to external systems (Slack, PagerDuty, ServiceNow)
+   - Trigger on critical events from Splunk alerts
 
-#### 10.4.1 Slack Integration
+### 9.6 API Security
 
-- **Notifications**: Send alerts, approval requests, deployment status
-- **Bot Commands**: Trigger investigations, approve changes
-- **OAuth**: User authentication
+**Authentication & Authorization**:
+- JWT-based authentication
+- Role-based access control (RBAC)
+- MFA for critical operations
+- API key support (for service accounts)
 
-#### 10.4.2 Microsoft Teams Integration
+**Rate Limiting**:
+- 1,000 requests/hour per user (general endpoints)
+- 100 requests/hour per user (expensive queries)
+- 10,000 requests/hour per organization
 
-- **Adaptive Cards**: Rich notifications with action buttons
-- **Bot**: Interactive chat for queries and approvals
-- **OAuth**: User authentication
-
-#### 10.4.3 ServiceNow Integration
-
-- **Incident Management**: Auto-create incidents for critical alerts
-- **Change Management**: Sync change requests with ServiceNow
-- **CMDB**: Sync device inventory
-
-#### 10.4.4 Jira Integration
-
-- **Issue Tracking**: Create Jira tickets for recommendations
-- **Change Tracking**: Link change requests to Jira epics/stories
-- **API**: Jira REST API v3
-
-#### 10.4.5 PagerDuty Integration
-
-- **Alerting**: Trigger PagerDuty incidents for critical events
-- **On-Call**: Integrate with on-call schedules
-- **API**: PagerDuty Events API v2
+**API Versioning**:
+- Version in URL path: `/v1/`, `/v2/`
+- Deprecation notices (6 months before removal)
+- Backward compatibility for minor versions
 
 ---
 
-## 11. Security & Compliance
+## 10. Technical Stack
 
-### 11.1 Security Requirements
+### 10.1 Frontend
 
-#### 11.1.1 Authentication & Authorization
+- **Framework**: Next.js 14, React 18, TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Lucide React icons, Recharts
+- **State Management**: React Context / Zustand
 
-**REQ-SEC-001**: Multi-Factor Authentication (MFA)
-- MUST enforce MFA for all users
-- MUST support TOTP, push notifications, hardware tokens
-- MUST require MFA for critical operations
+### 10.2 Backend
 
-**REQ-SEC-002**: Role-Based Access Control (RBAC)
-- MUST implement granular RBAC
-- MUST support least privilege principle
-- MUST audit all access attempts
+- **API**: Node.js / Python FastAPI
+- **Agent Runtime**: Python with LangChain
+- **MCP Servers**: Python (SSH, SNMP, Syslog, FMC API integrations)
 
-**REQ-SEC-003**: Session Management
-- MUST expire sessions after 15 minutes of inactivity
-- MUST invalidate sessions on logout
-- MUST limit concurrent sessions per user
+### 10.3 Databases & Data Stores
 
-#### 11.1.2 Data Protection
+- **PostgreSQL**: Structured data (users, devices, configurations)
+- **TimescaleDB**: Time-series metrics and performance data
+- **Splunk Enterprise**: Centralized log management, syslog collection, search & analysis (Cisco-owned)
+- **Vector Database**: Embeddings for RAG (vendor TBD by development agency)
+- **MongoDB**: Knowledge base and unstructured data
+- **Redis**: Caching and real-time data
+- **MinIO**: S3-compatible blob storage (showtechs, backups, reports)
 
-**REQ-SEC-004**: Encryption at Rest
-- MUST encrypt all databases (AES-256)
-- MUST encrypt S3 objects (SSE-S3 or SSE-KMS)
-- MUST encrypt sensitive fields (passwords, secrets)
+### 10.4 AI/ML
 
-**REQ-SEC-005**: Encryption in Transit
-- MUST use TLS 1.3 for all API calls
-- MUST use SSH for device connections
-- MUST use secure WebSocket (WSS)
+**Large Language Models (LLMs) - Multi-LLM Architecture**:
 
-**REQ-SEC-006**: Secrets Management
-- MUST store secrets in AWS Secrets Manager
-- MUST rotate secrets every 90 days
-- MUST audit secret access
+The platform supports multiple LLMs for different tasks, allowing optimal model selection based on use case requirements.
 
-#### 11.1.3 Network Security
+**LLM 1: General Reasoning & Orchestration**
 
-**REQ-SEC-007**: Network Segmentation
-- MUST isolate production from non-production
-- MUST use private subnets for databases
-- MUST use security groups and NACLs
+- **Model**: Claude Sonnet 4.5 (or equivalent)
+- **Deployment**: Method TBD by development agency (self-hosted or API)
+- **Use Cases**:
+  - Intent parsing from natural language
+  - Multi-agent orchestration and workflow coordination
+  - Conversational AI chatbot
+  - General network/security queries
+  - Configuration change request analysis
 
-**REQ-SEC-008**: API Security
-- MUST implement rate limiting (100 req/min per user)
-- MUST validate all inputs
-- MUST sanitize outputs (prevent XSS)
-- MUST protect against SQL injection
+**LLM 2: Security-Specific - Cisco Foundation-sec-8b**
 
-#### 11.1.4 Audit & Logging
+- **Model Details**: 8-billion parameter model from Cisco Foundation AI group
+- **Deployment**: On-premises deployment
+- **Availability**: Hugging Face repository
+- **Performance**: Outperforms Llama 3.1 8B and matches 70B variant on security benchmarks
+- **Pre-trained on**: CVEs, CWEs, MITRE ATT&CK, threat intelligence, security documentation, compliance standards (NIST, OWASP)
 
-**REQ-SEC-009**: Audit Logging
-- MUST log all user actions
-- MUST log all configuration changes
-- MUST log all deployments
-- MUST log all approvals
-- MUST retain audit logs for 1 year
+**Security-Specific Use Cases**:
 
-**REQ-SEC-010**: Log Integrity
-- MUST use write-once storage (S3 with object lock)
-- MUST prevent log tampering
-- MUST alert on log deletion attempts
+  1. **Vulnerability Analysis**: Analyze FTD configurations for CVEs and security weaknesses
+  2. **Threat Intelligence Correlation**: Parse threat feeds and correlate with firewall logs
+  3. **SOC Alert Triage**: Prioritize and summarize Splunk alerts with security context
+  4. **Configuration Security Validation**: Review firewall policies against security best practices
+  5. **Incident Summarization**: Generate detailed security incident reports for SOC teams
+  6. **Compliance Assessment**: Map configurations to NIST, OWASP, PCI-DSS, HIPAA standards
+  7. **Security Code Review**: Analyze custom scripts and automation code for vulnerabilities
+  8. **MITRE ATT&CK Mapping**: Map firewall events to MITRE ATT&CK tactics, techniques, and procedures
 
-### 11.2 Compliance Requirements
+**Fine-Tuning Capabilities**:
 
-#### 11.2.1 Standards
+  - Customize on organization-specific security telemetry and logs
+  - Train on custom detection rules and security playbooks
+  - Learn from historical incident data and remediation workflows
+  - Specialize on Cisco FTD/FMC-specific configurations and behaviors
 
-**SOC 2 Type II**
-- Implement security controls
-- Annual third-party audit
-- Continuous monitoring
+**LLM 3+: Additional Specialized Models (Optional)**
 
-**ISO 27001**
-- Information Security Management System (ISMS)
-- Risk assessment framework
-- Incident response procedures
+Development agency may propose additional LLMs for specific tasks:
 
-**PCI-DSS** (if applicable)
-- Network segmentation
-- Access control
-- Encryption
-- Logging and monitoring
+- **Document Analysis**: Specialized model for parsing Cisco documentation and knowledge base
+- **Code Generation**: Model optimized for generating firewall configurations and scripts
+- **Anomaly Detection**: Model trained specifically on network traffic pattern analysis
+- **Compliance**: Model specialized in regulatory compliance and audit requirements
 
-#### 11.2.2 Compliance Features
+**Multi-LLM Orchestration**:
 
-**REQ-COMP-001**: Configuration Compliance
-- MUST validate configs against compliance policies
-- MUST generate compliance reports
-- MUST alert on compliance violations
+- **Router Agent**: Intelligently routes queries to the most appropriate LLM
+- **Fallback Strategy**: Cascade to alternative LLMs if primary model unavailable
+- **Cost Optimization**: Use smaller/faster models for simple tasks, larger models for complex reasoning
+- **Response Aggregation**: Combine outputs from multiple LLMs for consensus-based decisions
 
-**REQ-COMP-002**: Change Management Compliance
-- MUST require approvals for production changes
-- MUST document all changes
-- MUST maintain change history
+**Vector Database & Search**:
 
-**REQ-COMP-003**: Access Control Compliance
-- MUST review access permissions quarterly
-- MUST revoke access for terminated users within 24 hours
-- MUST enforce separation of duties
+- Semantic search and RAG (vendor TBD by development agency)
+- Support for hybrid search (vector + keyword)
 
----
+**Machine Learning Libraries**:
 
-## 12. User Interface Requirements
+- scikit-learn, TensorFlow, PyTorch for anomaly detection models
+- Hugging Face Transformers for LLM integration
 
-### 12.1 Dashboard Requirements
+### 10.5 Infrastructure
 
-#### 12.1.1 Overview Dashboard
-
-**Components**:
-- System health summary (all devices)
-- Active alerts count
-- Recent deployments
-- AI agent activity
-- Quick actions
-
-#### 12.1.2 Device Dashboards
-
-**Existing** (from mockups):
-1. Protocol Monitor
-2. Zone Flow Analytics
-3. Log Collection
-4. Interface Validation
-5. Session Analytics
-6. CPU Analytics
-7. FMC Showtech
-8. AI Agent Console
-
-**New Dashboards** (to be built):
-
-9. **Configuration Compliance Dashboard**
-   - Overall compliance score (average across devices)
-   - Per-device compliance scores (10-section breakdown)
-   - Trending compliance over time
-   - Top non-compliant devices
-   - Recommendations summary
-
-10. **Change Management Dashboard**
-    - Pending approvals
-    - Scheduled deployments
-    - Deployment history
-    - Risk distribution (low, medium, high, critical)
-    - Approval workflows
-
-11. **Impact Analysis Dashboard**
-    - Traffic simulation results
-    - Affected components
-    - Risk assessment
-    - Dependency graphs
-
-12. **Recommendation Dashboard**
-    - Prioritized recommendations (by device)
-    - Recommendation acceptance rates
-    - Implementation tracking
-    - Estimated benefits
-
-### 12.2 User Workflows
-
-#### 12.2.1 Configuration Change Workflow
-
-1. User enters intent (natural language or form)
-2. System parses intent and requests clarifications
-3. System generates configuration
-4. User reviews proposed changes
-5. System performs impact analysis
-6. System calculates risk score
-7. System routes for approval (based on risk)
-8. Approvers review and approve/reject
-9. System schedules deployment
-10. System executes deployment
-11. System validates post-deployment
-12. System sends completion notification
-
-#### 12.2.2 Incident Investigation Workflow
-
-1. Alert triggered (anomaly detected)
-2. User clicks "Investigate with AI"
-3. AI Agent Console opens with investigation type
-4. Master Agent orchestrates investigation
-5. UI displays real-time agent activity
-6. Agents collect data, analyze, and identify root cause
-7. System presents findings and recommendations
-8. User accepts recommendation or escalates to TAC
-9. System tracks remediation outcome
-
-### 12.3 Mobile Responsiveness
-
-**REQ-UI-001**: Responsive Design
-- MUST support mobile devices (iOS, Android)
-- MUST support tablets
-- MUST adapt layout for screen sizes
-
-**REQ-UI-002**: Mobile-Friendly Features
-- Touch-friendly buttons (min 44x44 px)
-- Swipe gestures for navigation
-- Simplified dashboards for mobile
-
-### 12.4 Accessibility
-
-**REQ-UI-003**: WCAG 2.1 Level AA Compliance
-- Keyboard navigation support
-- Screen reader compatibility
-- Sufficient color contrast (4.5:1 minimum)
-- Alt text for images
-- Accessible forms
+- **Deployment**: On-premises infrastructure
+- **Compute**: Kubernetes cluster or VM-based deployment (TBD by development agency)
+- **Container Orchestration**: Kubernetes (recommended) or Docker Swarm
+- **Monitoring**: Prometheus + Grafana stack
+- **Message Queue**: Apache Kafka or RabbitMQ (TBD by development agency)
+- **Workflow Orchestration**: Apache Airflow or similar (TBD by development agency)
+- **Load Balancing**: HAProxy or NGINX
+- **Service Mesh** (optional): Istio or Linkerd (TBD by development agency)
 
 ---
 
-## 13. Deployment Architecture
+## 11. Implementation Phases
 
-### 13.1 AWS Infrastructure
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                          CloudFront CDN                              │
-│                    (Global Edge Locations)                           │
-└─────────────────────────────────────────────────────────────────────┘
-                                │
-┌─────────────────────────────────────────────────────────────────────┐
-│                         Route 53 (DNS)                               │
-└─────────────────────────────────────────────────────────────────────┘
-                                │
-┌─────────────────────────────────────────────────────────────────────┐
-│                  Application Load Balancer (ALB)                     │
-└─────────────────────────────────────────────────────────────────────┘
-                                │
-        ┌───────────────────────┼───────────────────────┐
-        │                       │                       │
-┌───────────────┐       ┌───────────────┐     ┌───────────────┐
-│   Frontend    │       │   API Gateway │     │  WebSocket    │
-│  (Amplify)    │       │   (Lambda)    │     │   Server      │
-│  Static Site  │       │               │     │   (ECS)       │
-└───────────────┘       └───────────────┘     └───────────────┘
-                                │
-                ┌───────────────┼───────────────┐
-                │               │               │
-        ┌───────────────┐ ┌───────────────┐ ┌───────────────┐
-        │  AI Agents    │ │  MCP Servers  │ │  Background   │
-        │  (ECS Fargate)│ │  (ECS Fargate)│ │  Workers      │
-        │               │ │               │ │  (Lambda)     │
-        └───────────────┘ └───────────────┘ └───────────────┘
-                                │
-        ┌───────────────────────┼───────────────────────┐
-        │                       │                       │
-┌───────────────┐       ┌───────────────┐     ┌───────────────┐
-│  PostgreSQL   │       │  TimescaleDB  │     │  ElastiCache  │
-│  (RDS)        │       │  (RDS/EC2)    │     │  (Redis)      │
-└───────────────┘       └───────────────┘     └───────────────┘
-        │                       │                       │
-        │               ┌───────────────┐       ┌───────────────┐
-        │               │  DocumentDB   │       │      S3       │
-        │               │  (MongoDB)    │       │  (Backups,    │
-        │               └───────────────┘       │   Reports)    │
-        │                                       └───────────────┘
-        │
-┌───────────────────────────────────────────────────────────────────┐
-│                    External Services                               │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐         │
-│  │  Bedrock │  │ Pinecone │  │  Secrets │  │ CloudWatch│         │
-│  │  (AI)    │  │ (Vector) │  │  Manager │  │ (Logging) │         │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘         │
-└───────────────────────────────────────────────────────────────────┘
-```
-
-### 13.2 Compute Resources
-
-| Component | Service | Instance Type | Scaling |
-|-----------|---------|---------------|---------|
-| Frontend | AWS Amplify | N/A (CDN) | Auto |
-| API Gateway | AWS API Gateway + Lambda | N/A (serverless) | Auto |
-| AI Agents | ECS Fargate | 4 vCPU, 8 GB RAM | Horizontal (2-10 tasks) |
-| MCP Servers | ECS Fargate | 2 vCPU, 4 GB RAM | Horizontal (2-20 tasks) |
-| WebSocket | ECS Fargate | 2 vCPU, 4 GB RAM | Horizontal (2-10 tasks) |
-| Background Workers | Lambda | 1024 MB memory | Auto (concurrency: 100) |
-
-### 13.3 Database Sizing
-
-| Database | Service | Instance Type | Storage | IOPS |
-|----------|---------|---------------|---------|------|
-| PostgreSQL | RDS | db.r6g.xlarge (4 vCPU, 32 GB RAM) | 500 GB GP3 | 3,000 |
-| TimescaleDB | RDS or EC2 | db.r6g.2xlarge (8 vCPU, 64 GB RAM) | 2 TB GP3 | 12,000 |
-| Redis | ElastiCache | cache.r6g.large (2 vCPU, 13.07 GB RAM) | N/A (in-memory) | N/A |
-| DocumentDB | DocumentDB | db.r6g.large (2 vCPU, 16 GB RAM) | 200 GB | 3,000 |
-| S3 | S3 | N/A (object storage) | Unlimited | N/A |
-
-### 13.4 High Availability
-
-**REQ-HA-001**: Multi-AZ Deployment
-- Deploy across 3 Availability Zones
-- Use ALB for load balancing
-- Use RDS Multi-AZ for databases
-
-**REQ-HA-002**: Auto-Scaling
-- Scale ECS tasks based on CPU/memory
-- Scale Lambda based on concurrency
-- Scale read replicas for databases
-
-**REQ-HA-003**: Disaster Recovery
-- Daily automated backups (RDS, S3)
-- Cross-region replication (S3)
-- RPO: 1 hour
-- RTO: 4 hours
-
-### 13.5 Monitoring & Observability
-
-**Tools**:
-- **CloudWatch**: Metrics, logs, alarms
-- **X-Ray**: Distributed tracing
-- **Prometheus + Grafana**: Custom metrics and dashboards
-- **ELK Stack**: Centralized logging (optional, alternative to CloudWatch)
-
-**Key Metrics**:
-- API latency (p50, p95, p99)
-- Error rates
-- Agent execution time
-- Database query performance
-- Cache hit rates
-- Deployment success rates
-
----
-
-## 14. Technical Stack
-
-### 14.1 Frontend
-
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Next.js | 14.x | React framework, SSR/SSG |
-| React | 18.x | UI library |
-| TypeScript | 5.x | Type safety |
-| Tailwind CSS | 3.x | Styling |
-| Recharts | 2.x | Data visualization |
-| Lucide React | Latest | Icons |
-| TanStack Query | 5.x | Data fetching |
-| Zustand | 4.x | State management |
-| React Hook Form | 7.x | Form handling |
-| Zod | 3.x | Schema validation |
-
-### 14.2 Backend
-
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Python | 3.11+ | Primary backend language |
-| FastAPI | 0.104+ | REST API framework |
-| Pydantic | 2.x | Data validation |
-| SQLAlchemy | 2.x | ORM |
-| Alembic | 1.x | Database migrations |
-| Celery | 5.x | Background task queue |
-| LangChain | 0.1+ | AI agent orchestration |
-| Paramiko | 3.x | SSH client |
-| pysnmp | 5.x | SNMP client |
-| boto3 | Latest | AWS SDK |
-
-### 14.3 AI/ML
-
-| Technology | Purpose |
-|------------|---------|
-| AWS Bedrock (Claude Sonnet 4.5) | Primary LLM for agents |
-| Pinecone | Vector database for RAG |
-| OpenAI Embeddings (or AWS Titan Embeddings) | Text embeddings |
-| scikit-learn | ML models (anomaly detection) |
-| XGBoost | Gradient boosting models |
-| TensorFlow/PyTorch | Deep learning (optional) |
-
-### 14.4 Infrastructure
-
-| Technology | Purpose |
-|------------|---------|
-| Terraform | Infrastructure as Code |
-| Docker | Containerization |
-| AWS ECS Fargate | Container orchestration |
-| AWS Lambda | Serverless functions |
-| AWS RDS | Managed databases |
-| AWS S3 | Object storage |
-| AWS Secrets Manager | Secrets management |
-| AWS CloudWatch | Monitoring |
-| GitHub Actions | CI/CD |
-
----
-
-## 15. Success Metrics & KPIs
-
-### 15.1 Operational Metrics
-
-| Metric | Target | Measurement |
-|--------|--------|-------------|
-| **System Uptime** | 99.9% | Monthly |
-| **API Latency (p95)** | < 500ms | Real-time |
-| **Log Ingestion Lag** | < 1 second | Real-time |
-| **Alert Resolution Time** | < 5 minutes (automated) | Per incident |
-| **Configuration Deployment Success Rate** | > 98% | Per deployment |
-| **Rollback Rate** | < 5% | Per deployment |
-
-### 15.2 User Productivity Metrics
-
-| Metric | Target | Measurement |
-|--------|--------|-------------|
-| **Time to Investigate Incident** | < 10 minutes | Per incident |
-| **Time to Create Configuration Change** | < 5 minutes | Per change |
-| **Manual Config Steps Eliminated** | > 70% | Quarterly |
-| **TAC Escalations Reduced** | > 60% | Quarterly |
-| **Configuration Compliance Score** | > 85% | Monthly |
-
-### 15.3 AI/ML Metrics
-
-| Metric | Target | Measurement |
-|--------|--------|-------------|
-| **Anomaly Detection Accuracy** | > 95% | Monthly (with user feedback) |
-| **RCA Confidence Score** | > 90% | Per investigation |
-| **Recommendation Acceptance Rate** | > 60% | Monthly |
-| **Intent Parsing Accuracy** | > 90% | Per intent |
-| **Impact Analysis Accuracy** | > 85% | Per change (validated post-deployment) |
-
-### 15.4 Business Metrics
-
-| Metric | Target | Measurement |
-|--------|--------|-------------|
-| **Cost per Managed Device** | < $50/month | Monthly |
-| **Incident Response Cost Savings** | > $200K/year | Annually |
-| **Configuration Error Rate** | < 2% | Quarterly |
-| **Compliance Audit Pass Rate** | 100% | Per audit |
-
----
-
-## 16. Implementation Roadmap
-
-### 16.1 Phase 1: Core Infrastructure (Q1 2026)
+### Phase 1: Core Infrastructure (Q1 2026)
 
 **Duration**: 3 months
 
-**Deliverables**:
-- Central syslog collection system
-- Log parsing and enrichment engine
-- TimescaleDB deployment and schema
-- PostgreSQL database setup
-- MCP servers (SSH, SNMP, Syslog, FMC)
-- Basic monitoring dashboards (existing mockups)
+**Deliverables:**
+- Central syslog collection and parsing system
+- TimescaleDB for log storage
+- Knowledge base and RAG database
+- MCP servers (SSH, SNMP, Syslog, FMC API)
+- Basic UI dashboards
+- Master Reasoning Agent + Data Collection Agent
 
-**Team**:
-- 2 Backend Engineers
-- 1 DevOps Engineer
-- 1 Database Engineer
-
-**Success Criteria**:
-- Collect 100,000 logs/second
-- Parse logs with < 1 second latency
-- MCP servers operational for all devices
-- Basic dashboards functional
-
----
-
-### 16.2 Phase 2: Configuration Intelligence (Q2 2026)
-
-**Duration**: 3 months
-
-**Deliverables**:
-- Knowledge base setup (MongoDB)
-- RAG database (Pinecone)
-- Configuration analysis agent (10-section scoring)
-- Best practices validation engine
-- Recommendation agent
-- Configuration Compliance Dashboard
-
-**Team**:
-- 2 AI/ML Engineers
-- 2 Backend Engineers
-- 1 Frontend Engineer
-
-**Success Criteria**:
-- Score all devices against 10 sections
-- Generate recommendations with > 60% acceptance rate
-- Knowledge base contains 500+ documents
+**Success Criteria:**
+- Collect and parse 10,000 logs/second per device
+- Search latency < 3 seconds for 24-hour queries
 - RAG retrieval accuracy > 85%
 
----
+### Phase 2: Configuration Intelligence (Q2 2026)
 
-### 16.3 Phase 3: Autonomous Configuration Management (Q3 2026)
+**Duration**: 3 months
+
+**Deliverables:**
+- Configuration Analysis Agent with scoring system
+- Recommendation Agent
+- Configuration backup and versioning
+- Compliance reporting
+- Enhanced UI dashboards
+
+**Success Criteria:**
+- Configuration analysis accuracy > 90%
+- Generate actionable recommendations for 80%+ of devices
+- Daily automated config backups
+
+### Phase 3: Autonomous Configuration Management (Q3 2026)
 
 **Duration**: 4 months
 
-**Deliverables**:
-- Intent-based config generation
-- Human-in-the-loop approval system
-- Dual authentication implementation
-- Impact analysis engine
-- Risk profiling system
+**Deliverables:**
+- Intent-based configuration (Intent Parser Agent)
+- Human-in-the-loop approval workflows
+- MFA and dual authorization
+- Impact Analysis Agent
+- Risk Assessment Agent
+- Deployment Orchestration Agent
 - Scheduled deployment manager
-- Change Management Dashboard
-- Impact Analysis Dashboard
 
-**Team**:
-- 2 AI/ML Engineers
-- 3 Backend Engineers
-- 2 Frontend Engineers
-- 1 Security Engineer
-
-**Success Criteria**:
+**Success Criteria:**
 - Intent parsing accuracy > 90%
 - Configuration deployment success rate > 98%
 - Risk scoring accuracy > 85%
 - Zero unauthorized deployments
 
----
-
-### 16.4 Phase 4: Advanced Analytics & Optimization (Q4 2026)
+### Phase 4: Advanced Analytics & Optimization (Q4 2026)
 
 **Duration**: 3 months
 
-**Deliverables**:
-- Predictive maintenance models
+**Deliverables:**
+- Anomaly Detection Agent
+- Predictive maintenance (5-15 min lead time)
 - Capacity planning automation
 - Advanced threat correlation
-- Compliance reporting automation
 - Performance optimization
 
-**Team**:
-- 2 AI/ML Engineers
-- 2 Backend Engineers
-- 1 Data Scientist
-
-**Success Criteria**:
+**Success Criteria:**
 - Predict issues 15 minutes in advance (80% accuracy)
+- Reduce false positives by 60%
 - Automate capacity planning with 90% accuracy
-- Generate compliance reports automatically
 
 ---
 
-### 16.5 Implementation Timeline
+## Appendices
 
-```
-Q1 2026          Q2 2026          Q3 2026          Q4 2026          Q1 2027
-│                │                │                │                │
-├─ Phase 1 ──────┤                │                │                │
-                 ├─ Phase 2 ──────┤                │                │
-                                  ├─ Phase 3 ──────────────────────┤
-                                                   ├─ Phase 4 ──────┤
-                                                                    │
-                                                              GA Release
-```
+### A. Project References
 
----
+**Live Demo**: <https://ai-firewall-mgmt.ciscoaidemo.com/>
 
-## 17. Appendices
+**Demo Features Available**:
 
-### Appendix A: Glossary
+- Real-time firewall monitoring dashboards
+- AI-powered chatbot for firewall queries
+- Configuration compliance scoring
+- Change management workflows
+- AI agent investigation demonstrations
+- Interactive mock data visualizations
+
+**Note**: The live demo uses simulated data and mock Cisco FTD/FMC devices for demonstration purposes.
+
+### B. Glossary
 
 | Term | Definition |
 |------|------------|
@@ -2961,52 +2070,314 @@ Q1 2026          Q2 2026          Q3 2026          Q4 2026          Q1 2027
 | **RCA** | Root Cause Analysis |
 | **TAC** | Technical Assistance Center (Cisco support) |
 | **HITL** | Human-in-the-Loop - Requiring human approval/oversight |
-| **Showtech** | Diagnostic output bundle from Cisco devices |
 
-### Appendix B: Reference Documents
+### C. Infrastructure Prerequisites & Data Sources
 
-1. Cisco FTD Configuration Guide (v7.2)
-2. Cisco FMC REST API Guide (v7.2)
-3. Cisco Syslog Message Reference
-4. SNMP MIB References (CISCO-FIREWALL-MIB)
-5. AWS Bedrock Developer Guide
-6. Pinecone Documentation
-7. TimescaleDB Best Practices
+**CRITICAL**: The following infrastructure components and configurations MUST be in place for the system to function. The MCP servers cannot collect data without these prerequisites.
 
-### Appendix C: Assumptions
+#### C.1 Cisco FTD/FMC Requirements
 
-1. All FTD devices are running version 7.0 or later
-2. FMC is accessible via API (REST API enabled)
-3. Network connectivity between management platform and devices (SSH, SNMP, Syslog)
-4. AWS infrastructure is available and approved
-5. Budget allocated for cloud services and third-party APIs
-6. Security approvals obtained for AI/ML usage
+**1. Cisco FTD Devices**:
+- **Minimum Version**: FTD 7.0 or later
+- **Required Configurations**:
+  - SSH enabled with authentication (username/password or SSH keys)
+  - SNMP v2c or v3 enabled with community strings/credentials
+  - Syslog forwarding configured to central Splunk server
+  - Management interface accessible from MCP servers
+  - NTP configured (time synchronization critical for log correlation)
 
-### Appendix D: Risks & Mitigations
+**2. Firepower Management Center (FMC)**:
+- **Minimum Version**: FMC 7.0 or later
+- **Required Configurations**:
+  - REST API enabled
+  - API user account with appropriate permissions (read/write access)
+  - HTTPS access from MCP servers
+  - Device registration (all FTD devices managed by FMC)
+  - Valid SSL/TLS certificate (or accept self-signed for testing)
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| AI model hallucinations | High | Medium | Implement confidence scoring, human review for critical changes |
-| Configuration deployment failures | High | Low | Pre-deployment validation, automatic rollback, phased rollouts |
-| Scalability bottlenecks | Medium | Medium | Load testing, auto-scaling, performance optimization |
-| Security vulnerabilities | High | Low | Security audits, penetration testing, code reviews |
-| Compliance violations | High | Low | Continuous compliance monitoring, automated checks |
-| Vendor API changes (Cisco FMC) | Medium | Medium | API versioning, compatibility testing, abstraction layer |
-| Third-party service outages (AWS, Pinecone) | Medium | Low | Multi-region deployment, fallback mechanisms |
+**3. Network Connectivity**:
+- **SSH Access**: TCP port 22 from MCP servers to FTD devices
+- **SNMP Access**: UDP port 161 from MCP servers to FTD devices
+- **FMC API Access**: HTTPS (TCP 443) from MCP servers to FMC
+- **Syslog**: TCP/UDP port 514 or custom port from FTD to Splunk
+- **Firewall Rules**: Allow traffic between MCP servers and all managed devices
 
----
+#### C.2 Syslog Configuration Requirements
 
-## Document Approval
+**On FTD Devices**:
+```
+# Minimum syslog configuration required on each FTD device
 
-| Role | Name | Signature | Date |
-|------|------|-----------|------|
-| Product Manager | _______________ | _______________ | _______________ |
-| Engineering Lead | _______________ | _______________ | _______________ |
-| Security Architect | _______________ | _______________ | _______________ |
-| Operations Manager | _______________ | _______________ | _______________ |
+configure manager add <SPLUNK_IP>
+logging enable
+logging timestamp
+logging emblem
+logging trap informational
+logging host <SPLUNK_IP> <PROTOCOL>/<PORT>
+logging device-id hostname
+```
+
+**Required Syslog Fields**:
+- Timestamp (RFC 3164 or RFC 5424 format)
+- Device hostname/IP
+- Severity level (0-7)
+- Facility
+- Message text
+- Source IP, Destination IP (for connection logs)
+- Protocol, Ports (for connection logs)
+- Action (permit/deny)
+- Interface names
+
+**Syslog Volume Estimate**:
+- **Low Traffic Device**: 1,000 - 5,000 logs/second
+- **Medium Traffic Device**: 5,000 - 10,000 logs/second
+- **High Traffic Device**: 10,000 - 50,000 logs/second
+
+#### C.3 SNMP Configuration Requirements
+
+**On FTD Devices**:
+```
+# SNMPv3 Configuration (Recommended)
+snmp-server group <GROUP_NAME> v3 priv
+snmp-server user <USERNAME> <GROUP_NAME> v3 auth sha <AUTH_PASSWORD> priv aes 256 <PRIV_PASSWORD>
+snmp-server host <MCP_SERVER_IP> version 3 <USERNAME>
+snmp-server enable
+
+# OR SNMPv2c Configuration (Less Secure)
+snmp-server community <COMMUNITY_STRING> RO
+snmp-server host <MCP_SERVER_IP> version 2c <COMMUNITY_STRING>
+snmp-server enable
+```
+
+**Required MIBs**:
+- **Standard MIBs**:
+  - IF-MIB (interface statistics)
+  - IP-MIB (IP statistics)
+  - TCP-MIB (TCP connections)
+  - UDP-MIB (UDP statistics)
+
+- **Cisco-Specific MIBs**:
+  - CISCO-FIREWALL-MIB
+  - CISCO-MEMORY-POOL-MIB
+  - CISCO-PROCESS-MIB
+  - CISCO-ENHANCED-MEMPOOL-MIB
+  - CISCO-ENTITY-SENSOR-MIB
+
+**Required OIDs** (Minimum):
+- CPU Utilization: `.1.3.6.1.4.1.9.9.109.1.1.1.1.3`
+- Memory Usage: `.1.3.6.1.4.1.9.9.48.1.1.1.5`
+- Interface In Octets: `.1.3.6.1.2.1.2.2.1.10`
+- Interface Out Octets: `.1.3.6.1.2.1.2.1.16`
+- Interface Status: `.1.3.6.1.2.1.2.2.1.8`
+- Connection Count: `.1.3.6.1.4.1.9.9.147.1.2.2.2.1.5`
+
+**Polling Frequency**:
+- Default: Every 60 seconds
+- High-frequency metrics (CPU, memory): Every 30 seconds
+- Interface metrics: Every 60 seconds
+
+#### C.4 FMC REST API Requirements
+
+**API Endpoint Base URL**:
+```
+https://<FMC_IP>/api/fmc_platform/v1/
+```
+
+**Required API Permissions**:
+- **Read Access**:
+  - `/devices/devicerecords` (device inventory)
+  - `/policy/accesspolicies` (access control policies)
+  - `/object/networks` (network objects)
+  - `/object/ports` (port objects)
+  - `/deployment/deployabledevices` (deployment status)
+
+- **Write Access** (for configuration changes):
+  - `/policy/accesspolicies/{id}/accessrules` (create/modify rules)
+  - `/deployment/deploymentrequests` (deploy configurations)
+
+**Authentication**:
+- Username/password authentication
+- OAuth token (30-minute expiration, requires refresh)
+- Store credentials in secure vault (TBD by development agency)
+
+**Rate Limits**:
+- Maximum 120 requests per minute
+- Implement exponential backoff for rate limit errors
+
+**Required API Responses**:
+- Device inventory (JSON)
+- Policy configurations (JSON)
+- Deployment status (JSON)
+- Object definitions (JSON)
+
+#### C.5 SSH Access Requirements
+
+**On FTD Devices**:
+```
+# SSH Configuration
+configure manager add <MANAGEMENT_IP>
+ssh <MCP_SERVER_IP> <NETMASK> management
+ssh timeout 60
+ssh version 2
+```
+
+**Authentication Methods**:
+1. **SSH Keys (Recommended)**:
+   - Generate RSA 4096-bit or ED25519 keys
+   - Deploy public key to all FTD devices
+   - Store private key in secure vault
+
+2. **Username/Password**:
+   - Create dedicated service account (e.g., `mcp_automation`)
+   - Strong password (16+ characters)
+   - Store in secure vault
+
+**Required CLI Commands Access**:
+- `show version`
+- `show running-config`
+- `show tech-support`
+- `show interface`
+- `show conn count`
+- `show cpu usage`
+- `show memory`
+- `show logging`
+- `show failover` (for HA devices)
+
+**Command Output Format**:
+- Plain text output
+- Consistent format across FTD versions
+- Complete output (no pagination or truncation)
+
+#### C.6 Splunk Enterprise Requirements
+
+**Splunk Configuration**:
+- **Splunk Version**: 9.0 or later
+- **Deployment**: On-premises Splunk Enterprise
+- **Index**: `cisco_ftd_logs` (pre-created)
+- **Source Type**: `cisco:ftd:syslog`
+
+**HTTP Event Collector (HEC)**:
+```
+# Splunk HEC Configuration
+Enable HEC: Settings > Data Inputs > HTTP Event Collector
+Create HEC Token: <TOKEN_VALUE>
+HEC Endpoint: https://<SPLUNK_IP>:8088/services/collector
+SSL Certificate: Valid or accept self-signed
+```
+
+**Required Splunk Apps** (Optional but Recommended):
+- Cisco Security Suite App for Splunk
+- Cisco Firepower App for Splunk
+- Splunk Common Information Model (CIM) Add-on
+
+**Index Settings**:
+- Max index size: 500 GB (or based on log volume)
+- Retention: 90 days (hot), 1 year (warm), 7 years (cold)
+- Replication factor: 2 (for clustering)
+- Search factor: 2
+
+**Parsing Rules**:
+- Field extractions for Cisco FTD logs
+- Timestamp recognition
+- Severity mapping
+- Automatic field discovery
+
+#### C.7 Network Infrastructure Requirements
+
+**Bandwidth Requirements**:
+- **Syslog Traffic**: 10-50 Mbps per device (depends on log volume)
+- **SNMP Polling**: 1-5 Mbps aggregate
+- **SSH/API**: 1-10 Mbps aggregate
+- **Total Estimate**: 100-500 Mbps for 50 devices
+
+**Network Segmentation**:
+- Management network for FTD/FMC access
+- Separate VLAN for MCP servers (recommended)
+- Firewall rules allowing required protocols
+
+**DNS Requirements**:
+- Forward DNS resolution for FMC hostname
+- Reverse DNS for IP-to-hostname mapping (optional)
+
+**NTP Requirements**:
+- All devices synchronized to same NTP server
+- Time drift < 5 seconds (critical for log correlation)
+
+#### C.8 Storage Requirements
+
+**On-Premises Storage Allocation**:
+
+| Component | Storage Needed | Purpose |
+|-----------|----------------|---------|
+| **PostgreSQL** | 100-500 GB | User data, configurations, change requests |
+| **TimescaleDB** | 500 GB - 2 TB | Metrics (2 years retention) |
+| **Splunk** | 2-10 TB | Logs (90 days hot, 1 year warm, 7 years cold) |
+| **MongoDB** | 100-500 GB | Knowledge base documents |
+| **MinIO** | 1-5 TB | Config backups, showtechs, reports |
+| **Redis** | 10-50 GB | Cache (in-memory) |
+| **Vector DB** | 50-200 GB | Embeddings for RAG |
+
+**Total Storage**: 5-20 TB (depends on scale)
+
+#### C.9 Credentials & Secrets Required
+
+The following credentials must be provided and stored securely:
+
+**FTD Devices**:
+- SSH username/password or SSH private key (per device or shared)
+- SNMP community string (SNMPv2c) or username/auth/priv passwords (SNMPv3)
+
+**FMC**:
+- FMC API username/password
+- FMC HTTPS certificate (if using custom CA)
+
+**Splunk**:
+- HEC token
+- Splunk admin credentials (for initial setup)
+
+**Databases**:
+- PostgreSQL admin password
+- MongoDB admin password
+- Redis password
+- Vector DB credentials
+
+**MCP System**:
+- Vault master key (for unsealing)
+- Encryption keys for data at rest
+- JWT signing keys for API authentication
+
+#### C.10 Licensing Requirements
+
+**Cisco Licenses**:
+- FTD device licenses (essential, threat, malware)
+- FMC license (for API access)
+- Splunk Enterprise license (based on daily ingestion volume)
+- Cisco Duo Security license (per user)
+
+**Development Agency to Confirm**:
+- Vector database licensing (if commercial)
+- Any third-party libraries with commercial licenses
+- Claude API licensing (if using API vs. self-hosted)
+
+### D. Key Assumptions
+
+1. All infrastructure prerequisites (Section C) are met before deployment
+2. **Cisco FTD-only support** (no ASA, PIX, or older Cisco firewall platforms)
+3. No third-party vendor firewall support (Palo Alto, Fortinet, Check Point, etc.)
+4. Development agency to provide hardware sizing recommendations based on scale
+5. Network team responsible for configuring syslog, SNMP, SSH on all FTD devices
+6. Splunk Enterprise already deployed and configured (or will be as part of this project)
+
+### D. Risk Mitigation
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| AI model hallucinations | High | Confidence scoring, human review for critical changes |
+| Configuration deployment failures | High | Pre-deployment validation, automatic rollback, phased rollouts |
+| Scalability bottlenecks | Medium | Load testing, auto-scaling, performance optimization |
+| Security vulnerabilities | High | Security audits, penetration testing, code reviews |
+| Third-party service outages | Medium | Multi-region deployment, fallback mechanisms |
 
 ---
 
 **END OF DOCUMENT**
-
-*This Product Requirements Document is a living document and will be updated as requirements evolve and new insights are gained during development.*

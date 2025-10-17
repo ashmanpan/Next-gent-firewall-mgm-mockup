@@ -1,8 +1,11 @@
 'use client'
 
+import { useState } from 'react'
 import { Activity, TrendingUp, AlertTriangle, Cpu, Zap, Bot } from 'lucide-react'
 import MetricCard from '../ui/MetricCard'
 import ProgressBar from '../ui/ProgressBar'
+import AIActionButton from '../ui/AIActionButton'
+import AIResponseModal from '../ui/AIResponseModal'
 
 interface ProtocolMonitorProps {
   onInvestigate?: (context: {
@@ -15,6 +18,8 @@ interface ProtocolMonitorProps {
 }
 
 export default function ProtocolMonitor({ onInvestigate }: ProtocolMonitorProps) {
+  const [aiResponse, setAiResponse] = useState<any>(null)
+  const [showAIModal, setShowAIModal] = useState(false)
   const protocols = [
     {
       name: 'RTSP',
@@ -191,6 +196,111 @@ export default function ProtocolMonitor({ onInvestigate }: ProtocolMonitorProps)
                 </span>
               </div>
             </div>
+
+            {/* AI Action Buttons */}
+            <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-dark-border">
+              <AIActionButton
+                config={{
+                  action: 'troubleshoot_this',
+                  label: 'Troubleshoot',
+                  icon: '🔧',
+                  color: 'yellow',
+                  size: 'sm'
+                }}
+                context={{
+                  type: `${protocol.name}_high_cpu`,
+                  device: 'FTD-Mumbai-DC1',
+                  metric: `${protocol.currentCPU}%`,
+                  data: protocol
+                }}
+                onSuccess={(result) => {
+                  setAiResponse(result)
+                  setShowAIModal(true)
+                }}
+                onError={(error) => console.error('AI Error:', error)}
+              />
+
+              <AIActionButton
+                config={{
+                  action: 'root_cause_analysis',
+                  label: 'RCA',
+                  icon: '🎯',
+                  color: 'blue',
+                  size: 'sm'
+                }}
+                context={{
+                  type: `${protocol.name}_cpu_analysis`,
+                  device: 'FTD-Mumbai-DC1',
+                  metric: `${protocol.currentCPU}%`,
+                  data: protocol
+                }}
+                onSuccess={(result) => {
+                  setAiResponse(result)
+                  setShowAIModal(true)
+                }}
+                onError={(error) => console.error('AI Error:', error)}
+              />
+
+              <AIActionButton
+                config={{
+                  action: 'get_recommendation',
+                  label: 'Recommend',
+                  icon: '💡',
+                  color: 'green',
+                  size: 'sm'
+                }}
+                context={{
+                  type: `${protocol.name}_optimization`,
+                  device: 'FTD-Mumbai-DC1',
+                  data: protocol
+                }}
+                onSuccess={(result) => {
+                  setAiResponse(result)
+                  setShowAIModal(true)
+                }}
+                onError={(error) => console.error('AI Error:', error)}
+              />
+
+              <AIActionButton
+                config={{
+                  action: 'find_anomalies',
+                  label: 'Find Anomalies',
+                  icon: '🚨',
+                  color: 'orange',
+                  size: 'sm'
+                }}
+                context={{
+                  type: `${protocol.name}_traffic_anomaly`,
+                  device: 'FTD-Mumbai-DC1',
+                  data: protocol
+                }}
+                onSuccess={(result) => {
+                  setAiResponse(result)
+                  setShowAIModal(true)
+                }}
+                onError={(error) => console.error('AI Error:', error)}
+              />
+
+              <AIActionButton
+                config={{
+                  action: 'optimize_this',
+                  label: 'Optimize',
+                  icon: '⚡',
+                  color: 'green',
+                  size: 'sm'
+                }}
+                context={{
+                  type: `${protocol.name}_performance`,
+                  device: 'FTD-Mumbai-DC1',
+                  data: protocol
+                }}
+                onSuccess={(result) => {
+                  setAiResponse(result)
+                  setShowAIModal(true)
+                }}
+                onError={(error) => console.error('AI Error:', error)}
+              />
+            </div>
           </div>
         ))}
       </div>
@@ -242,6 +352,16 @@ export default function ProtocolMonitor({ onInvestigate }: ProtocolMonitorProps)
           </div>
         </div>
       </div>
+
+      {/* AI Response Modal */}
+      <AIResponseModal
+        isOpen={showAIModal}
+        onClose={() => setShowAIModal(false)}
+        action={aiResponse?.action || ''}
+        response={aiResponse?.response || ''}
+        context={aiResponse?.context}
+        timestamp={aiResponse?.timestamp}
+      />
     </div>
   )
 }
